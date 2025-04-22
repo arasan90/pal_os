@@ -18,7 +18,7 @@ This module includes abstractions for:
 
 The main goal is to provide a consistent, minimal API for abstracting OS features, enabling:
 
-- seamless portability between embedded systems (e.g., FreeRTOS, ESP-IDF) and host platforms (Linux/macOS/Windows)
+- seamless portability between embedded systems (e.g., FreeRTOS, ESP-IDF) and host platforms (Linux)
 - modular and testable code
 - integration in complex projects without heavyweight dependencies
 

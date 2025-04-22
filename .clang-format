@@ -11,7 +11,7 @@ ColumnLimit: '160'
 CompactNamespaces: 'false'
 IncludeBlocks: Regroup
 IndentWidth: '4'
-KeepEmptyLinesAtTheStartOfBlocks: 'false'
+IndentExternBlock: false
 Language: Cpp
 MaxEmptyLinesToKeep: '1'
 NamespaceIndentation: All

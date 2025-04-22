@@ -1,0 +1,57 @@
+version: 2.1
+
+executors:
+  c-executor:
+    docker:
+      - image: gcc:latest
+    working_directory: ~/project
+
+jobs:
+  build-linux:
+    executor: c-executor
+    steps:
+      - checkout
+      - run:
+          name: Install dependencies
+          command: |
+            apt-get update
+            apt-get install -y make cmake gdb
+      - run:
+          name: Configure project
+          command: cmake -DCMAKE_BUILD_TYPE=Debug -DTARGET_PLATFORM=linux -DPERFORM_UNIT_TESTS=true -DCOMPILE_TEST_APP=false -Bbuild -G"Unix Makefiles" .
+      - run:
+          name: Build project
+          command: cd build && make
+      - persist_to_workspace:
+          root: .
+          paths:
+            - build
+
+  test-linux:
+    executor: c-executor
+    steps:
+      - checkout
+      - attach_workspace:
+          at: ~/project
+      - run:
+          name: Install test dependencies
+          command: |
+            apt-get update 
+            apt-get install -y cmake valgrind
+      - run:
+          name: Run tests
+          command: cd build && ctest --output-junit test.xml
+      - store_test_results:
+            path: build/test.xml
+      - run:
+          name: Run valgrind
+          command: cd build && valgrind --leak-check=full --error-exitcode=1 test/pal_osal_test
+
+workflows:
+  version: 2
+  build-and-test:
+    jobs:
+      - build-linux
+      - test-linux:
+          requires:
+            - build-linux
