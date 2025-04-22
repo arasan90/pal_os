@@ -1,0 +1,41 @@
+{
+    "version": 4,
+    "configurePresets": [
+        {
+            "name": "esp32",
+            "displayName": "ESP32",
+            "description": "esp32 compilation",
+            "generator": "Ninja",
+            "binaryDir": "${sourceDir}/buildEsp32/",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Debug",
+                "TARGET_PLATFORM": "esp32"
+            }
+        },
+        {
+            "name": "linux",
+            "displayName": "LINUX",
+            "description": "linux compilation",
+            "generator": "Unix Makefiles",
+            "binaryDir": "${sourceDir}/buildLinux/",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Debug",
+                "TARGET_PLATFORM": "linux",
+                "PERFORM_UNIT_TESTS": true,
+                "COMPILE_TEST_APP": true
+            }
+        }
+    ],
+    "buildPresets": [
+        {
+            "name": "esp32",
+            "configurePreset": "esp32",
+            "jobs": 4
+        },
+        {
+            "name": "linux",
+            "configurePreset": "linux",
+            "jobs": 4
+        }
+    ]
+}
