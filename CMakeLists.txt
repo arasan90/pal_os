@@ -27,7 +27,9 @@ if(${TARGET_PLATFORM} STREQUAL "linux")
 endif()
 
 set(${PROJECT_NAME}_SRCS
-    src/${TARGET_PLATFORM}/thread.c)
+    src/${TARGET_PLATFORM}/thread.c
+    src/${TARGET_PLATFORM}/fs.c
+    )
 
 add_library(${PROJECT_NAME} ${${PROJECT_NAME}_SRCS})
 target_include_directories(${PROJECT_NAME} PUBLIC include)
