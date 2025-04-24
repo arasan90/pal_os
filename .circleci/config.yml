@@ -1,5 +1,8 @@
 version: 2.1
 
+orbs:
+  codecov: codecov/codecov@5
+
 executors:
   c-executor:
     docker:
@@ -36,13 +39,14 @@ jobs:
       - run:
           name: Install test dependencies
           command: |
-            apt-get update 
+            apt-get update
             apt-get install -y cmake valgrind
       - run:
           name: Run tests
-          command: cd build && ctest --output-junit test.xml
+          command: cd build && ctest --output-junit test.xml && ctest -T Coverage
       - store_test_results:
             path: build/test.xml
+      - codecov/upload
       - run:
           name: Run valgrind
           command: cd build && valgrind --leak-check=full --error-exitcode=1 test/pal_osal_test

@@ -12,6 +12,7 @@ FetchContent_MakeAvailable(gtest)
 set(${PROJECT_NAME}_SRC
     pal_osal_thread_test.cpp
     pal_osal_fs_test.cpp
+    pal_osal_queue_test.cpp
     )
 
 # Aggiungi il target per il test

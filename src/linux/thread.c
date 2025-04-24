@@ -4,8 +4,6 @@
  * Author: Massimiliano Ianniello
  */
 
-#include "pal_os/thread.h"	// Include the public header file
-
 #include <pthread.h>  // POSIX threads for thread management
 #include <stdint.h>	  // For SIZE_MAX
 #include <stdlib.h>	  // For malloc and free
