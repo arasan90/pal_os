@@ -9,7 +9,7 @@
 #include <stdlib.h>	  // For malloc and free
 #include <string.h>	  // For strlen
 
-#include "pal_os/thread_priv.h"	 // Include the private header file
+#include "thread_priv.h"  // Include the private header file
 
 /* ---------------------------------------------------------------------------
  * Type Definitions

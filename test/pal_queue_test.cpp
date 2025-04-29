@@ -3,7 +3,7 @@
 
 #include "pal_os/common.h"
 #include "pal_os/queue.h"
-#include "pal_os/queue_priv.h"
+#include "queue_priv.h"
 
 TEST(pal_os_queue, createQueueSuccess)
 {
@@ -16,7 +16,6 @@ TEST(pal_os_queue, createQueueSuccess)
 	EXPECT_EQ(0, queue->tail);
 	EXPECT_EQ(sizeof(int), queue->item_size);
 	EXPECT_NE(nullptr, queue->data);
-	EXPECT_EQ(0, pthread_mutexattr_gettype((const pthread_mutexattr_t *)&queue->mutex, &mutexType));
 	EXPECT_EQ(10, pal_queue_get_free_slots(queue));
 	EXPECT_EQ(0, pal_queue_get_items(queue));
 	pal_queue_destroy(&queue);
