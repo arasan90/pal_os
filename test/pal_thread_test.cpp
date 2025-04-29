@@ -1,7 +1,7 @@
 #include <gtest/gtest.h>
 
 #include "pal_os/thread.h"
-#include "pal_os/thread_priv.h"
+#include "thread_priv.h"
 
 void thread_function(void *arg)
 {
@@ -32,7 +32,7 @@ TEST(pal_os_thread, createThreadOkNullArg)
 
 TEST(pal_os_thread, createThreadOkWithArg)
 {
-	int exit = 0;
+	int			  exit	 = 0;
 	pal_thread_t *thread = NULL;
 	EXPECT_EQ(0, pal_thread_create(&thread, PAL_THREAD_PRIORITY_NORMAL, 1024, thread_function, "TestThread", &exit));
 	struct pal_thread_s *thread_struct = thread;

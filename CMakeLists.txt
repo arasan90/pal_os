@@ -32,11 +32,12 @@ set(${PROJECT_NAME}_SRCS
     src/${TARGET_PLATFORM}/thread.c
     src/${TARGET_PLATFORM}/fs.c
     src/${TARGET_PLATFORM}/queue.c
+    src/${TARGET_PLATFORM}/mutex.c
     )
 
 add_library(${PROJECT_NAME} ${${PROJECT_NAME}_SRCS})
 target_include_directories(${PROJECT_NAME} PUBLIC include)
-target_include_directories(${PROJECT_NAME} PRIVATE private/include)
+target_include_directories(${PROJECT_NAME} PRIVATE src)
 
 if(NOT ${TARGET_PLATFORM} STREQUAL "esp32" AND PERFORM_UNIT_TESTS)
     include(CTest)

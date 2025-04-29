@@ -10,7 +10,7 @@
 #include <time.h>
 
 #include "pal_os/common.h"
-#include "pal_os/queue_priv.h"
+#include "queue_priv.h"
 
 /* ---------------------------------------------------------------------------
  * Type Definitions
@@ -58,7 +58,7 @@ int pal_queue_create(pal_queue_t **queue, size_t item_size, size_t max_items)
 				(*queue)->tail		= 0;
 				pthread_mutexattr_t attr;
 				pthread_mutexattr_init(&attr);
-				pthread_mutexattr_settype(&attr, PTHREAD_MUTEX_RECURSIVE_NP);
+				pthread_mutexattr_settype(&attr, PTHREAD_MUTEX_RECURSIVE);
 				pthread_mutex_init(&(*queue)->mutex, &attr);
 				pthread_cond_init(&(*queue)->full, NULL);
 				pthread_cond_init(&(*queue)->empty, NULL);
