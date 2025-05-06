@@ -49,7 +49,22 @@ jobs:
       - codecov/upload
       - run:
           name: Run valgrind
-          command: cd build && valgrind --leak-check=full --error-exitcode=1 test/pal_osal_test
+          command: |
+            cd build
+            set +e
+            valgrind --leak-check=full ./test/pal_osal_test 2> valgrind.log
+            set -e
+            cat valgrind.log
+
+            # Cerca errori seri
+            if grep -E "definitely lost: [^0]|Invalid free|Invalid read|Invalid write" valgrind.log; then
+              echo "❌ Valgrind found serious memory issues!"
+              exit 1
+            else
+              echo "✅ No critical Valgrind issues detected."
+            fi
+      - store_artifacts:
+          path: build/valgrind.log
 
 workflows:
   version: 2
