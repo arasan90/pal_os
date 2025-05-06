@@ -15,6 +15,7 @@ set(${PROJECT_NAME}_SRC
     pal_queue_test.cpp
     pal_mutex_test.cpp
     pal_signal_test.cpp
+    pal_socket_test.cpp
     )
 
 # Aggiungi il target per il test

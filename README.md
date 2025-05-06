@@ -8,7 +8,7 @@ This module includes abstractions for:
 
 - 🧵 **Threads** — Platform-independent thread creation and management [NOT IMPLEMENTED YET]
 - 💾 **File system** — Unified API for file I/O operations [NOT IMPLEMENTED YET]
-- 🔒 **Mutexes, queues, and semaphores** — Synchronization and inter-task communication (FreeRTOS-style) [NOT IMPLEMENTED YET]
+- 🔒 **Mutexes/queues** — Synchronization and inter-task communication (FreeRTOS-style) [NOT IMPLEMENTED YET]
 - 📶 **Signals/events** — Lightweight mechanisms for asynchronous notification [NOT IMPLEMENTED YET]
 - 🌐 **Network sockets** — Portable TCP/UDP networking API [NOT IMPLEMENTED YET]
 - ⏱️ **Time management** — Absolute and relative time, delays, time measurement [NOT IMPLEMENTED YET]
