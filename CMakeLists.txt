@@ -34,6 +34,7 @@ set(${PROJECT_NAME}_SRCS
     src/${TARGET_PLATFORM}/queue.c
     src/${TARGET_PLATFORM}/mutex.c
     src/${TARGET_PLATFORM}/signal.c
+    src/${TARGET_PLATFORM}/socket.c
     )
 
 add_library(${PROJECT_NAME} ${${PROJECT_NAME}_SRCS})
