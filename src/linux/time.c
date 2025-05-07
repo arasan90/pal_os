@@ -38,7 +38,7 @@
  * ---------------------------------------------------------------------------
  */
 
-size_t pal_os_get_unix_time(void)
+size_t pal_get_unix_time(void)
 {
 	size_t			unix_time = -1;
 	struct timespec ts;
@@ -49,7 +49,7 @@ size_t pal_os_get_unix_time(void)
 	return unix_time;
 }
 
-size_t pal_os_get_system_time(void)
+size_t pal_get_system_time(void)
 {
 	size_t			system_time = -1;
 	struct timespec ts;
