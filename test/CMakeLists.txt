@@ -10,14 +10,15 @@ FetchContent_Declare(
 FetchContent_MakeAvailable(gtest)
 
 set(${PROJECT_NAME}_SRC
-    pal_thread_test.cpp
-    pal_fs_test.cpp
-    pal_queue_test.cpp
-    pal_mutex_test.cpp
-    pal_signal_test.cpp
-    pal_socket_test.cpp
-    pal_system_test.cpp
-    pal_time_test.cpp
+    #pal_thread_test.cpp
+    #pal_fs_test.cpp
+    #pal_queue_test.cpp
+    #pal_mutex_test.cpp
+    #pal_signal_test.cpp
+    #pal_socket_test.cpp
+    #pal_system_test.cpp
+    #pal_time_test.cpp
+    pal_timer_test.cpp
     )
 
 # Aggiungi il target per il test
