@@ -71,6 +71,12 @@ int pal_os_timer_time_cmp(const struct timespec *a, const struct timespec *b);
 void pal_os_timer_insert_sorted(pal_timer_t *timer);
 
 /**
+ * @brief Remove a timer from the sorted timer list
+ * @param timer Pointer to the timer to be inserted
+ */
+void pal_os_timer_remove(pal_timer_t *timer);
+
+/**
  * @brief Timer thread function
  * @param arg Pointer to user-defined argument passed to the thread function
  * @return NULL

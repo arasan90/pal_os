@@ -10,6 +10,7 @@ FetchContent_Declare(
 FetchContent_MakeAvailable(gtest)
 
 set(${PROJECT_NAME}_SRC
+
     pal_thread_test.cpp
     pal_fs_test.cpp
     pal_queue_test.cpp

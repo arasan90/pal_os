@@ -46,7 +46,7 @@ int pal_timer_start(pal_timer_t *timer);
 
 int pal_timer_stop(pal_timer_t *timer);
 
-int pal_timer_reset(pal_timer_t *timer);
+int pal_timer_restart(pal_timer_t *timer);
 
 int pal_timer_change_period(pal_timer_t *timer, size_t new_period);
 

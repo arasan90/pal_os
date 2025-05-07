@@ -114,6 +114,31 @@ void pal_os_timer_insert_sorted(pal_timer_t *timer)
 	timer->next = cur;
 }
 
+void pal_os_timer_remove(pal_timer_t *timer)
+{
+	// Remove the timer from the sorted list
+	pal_timer_t *prev = NULL;
+	pal_timer_t *cur  = pal_timer_environment.timer_list;
+
+	while (cur && cur != timer)
+	{
+		prev = cur;
+		cur	 = cur->next;
+	}
+
+	if (cur)
+	{
+		if (prev)
+		{
+			prev->next = cur->next;
+		}
+		else
+		{
+			pal_timer_environment.timer_list = cur->next;
+		}
+	}
+}
+
 void *pal_timer_thread_fn(void *arg)
 {
 	(void)arg;
@@ -169,11 +194,9 @@ void *pal_timer_thread_fn(void *arg)
 				}
 				else
 				{
-					// Remove the timer from the list and free resources if it is one-shot
+					// Remove the timer from the list if it is one-shot
 					pal_timer_environment.timer_list = timer->next;
-					free(timer);
 					pthread_mutex_unlock(&pal_timer_environment.mutex);
-					break;
 				}
 			}
 		}
@@ -203,17 +226,17 @@ int pal_timer_create(pal_timer_t **timer, pal_timer_type_t type, size_t period, 
 			(*timer)->arg		  = arg;
 			(*timer)->is_periodic = (type == PAL_TIMER_TYPE_PERIODIC);
 			(*timer)->period_ms	  = period;
-			struct timespec current_time;
-			clock_gettime(CLOCK_MONOTONIC, &current_time);
-			(*timer)->expiry_time.tv_sec  = current_time.tv_sec + period / 1000;
-			(*timer)->expiry_time.tv_nsec = current_time.tv_nsec + (period % 1000) * 1000000;
-			if ((*timer)->expiry_time.tv_nsec >= 1000000000)
-			{
-				(*timer)->expiry_time.tv_sec++;
-				(*timer)->expiry_time.tv_nsec -= 1000000000;
-			}
 			if (auto_start)
 			{
+				struct timespec current_time;
+				clock_gettime(CLOCK_MONOTONIC, &current_time);
+				(*timer)->expiry_time.tv_sec  = current_time.tv_sec + period / 1000;
+				(*timer)->expiry_time.tv_nsec = current_time.tv_nsec + (period % 1000) * 1000000;
+				if ((*timer)->expiry_time.tv_nsec >= 1000000000)
+				{
+					(*timer)->expiry_time.tv_sec++;
+					(*timer)->expiry_time.tv_nsec -= 1000000000;
+				}
 				pal_os_timer_insert_sorted(*timer);
 			}
 			pthread_cond_signal(&pal_timer_environment.cond);
@@ -228,8 +251,40 @@ int pal_timer_start(pal_timer_t *timer)
 	int ret_code = -1;
 	if (timer)
 	{
+		struct timespec current_time;
+		clock_gettime(CLOCK_MONOTONIC, &current_time);
+		timer->expiry_time.tv_sec  = current_time.tv_sec + timer->period_ms / 1000;
+		timer->expiry_time.tv_nsec = current_time.tv_nsec + (timer->period_ms % 1000) * 1000000;
+		if (timer->expiry_time.tv_nsec >= 1000000000)
+		{
+			timer->expiry_time.tv_sec++;
+			timer->expiry_time.tv_nsec -= 1000000000;
+		}
 		pal_os_timer_insert_sorted(timer);
 		pthread_cond_signal(&pal_timer_environment.cond);
+		ret_code = 0;
+	}
+	return ret_code;
+}
+
+int pal_timer_stop(pal_timer_t *timer)
+{
+	int ret_code = -1;
+	if (timer)
+	{
+		pal_os_timer_remove(timer);
+		pthread_cond_signal(&pal_timer_environment.cond);
+		ret_code = 0;
+	}
+	return ret_code;
+}
+
+int pal_timer_restart(pal_timer_t *timer)
+{
+	int ret_code = -1;
+	if (timer)
+	{
+		pal_timer_start(timer);
 		ret_code = 0;
 	}
 	return ret_code;
