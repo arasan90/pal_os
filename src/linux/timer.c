@@ -71,7 +71,8 @@ void pal_timer_deinit(void)
 			free(timer);
 			timer = next;
 		}
-		pal_timer_environment.timer_list = NULL;
+		pal_timer_environment.timer_list	= NULL;
+		pal_timer_environment.shutdown_flag = 0;
 	}
 }
 
@@ -147,7 +148,7 @@ void *pal_timer_thread_fn(void *arg)
 		if (wait_result == ETIMEDOUT)
 		{
 			// Execute timer callback if the timer has expired
-			if (timer->is_started && pal_os_timer_time_cmp(&timer->expiry_time, &current_time) <= 0)
+			if (pal_os_timer_time_cmp(&timer->expiry_time, &current_time) <= 0)
 			{
 				// Call the timer callback function
 				timer->callback(timer->arg);
@@ -163,6 +164,7 @@ void *pal_timer_thread_fn(void *arg)
 						timer->expiry_time.tv_sec++;
 						timer->expiry_time.tv_nsec -= 1000000000;
 					}
+					pal_timer_environment.timer_list = timer->next;
 					pal_os_timer_insert_sorted(timer);
 				}
 				else
@@ -170,6 +172,7 @@ void *pal_timer_thread_fn(void *arg)
 					// Remove the timer from the list and free resources if it is one-shot
 					pal_timer_environment.timer_list = timer->next;
 					free(timer);
+					pthread_mutex_unlock(&pal_timer_environment.mutex);
 					break;
 				}
 			}
@@ -186,4 +189,48 @@ void *pal_timer_thread_fn(void *arg)
 		pthread_mutex_unlock(&pal_timer_environment.mutex);
 	}
 	return NULL;
+}
+
+int pal_timer_create(pal_timer_t **timer, pal_timer_type_t type, size_t period, pal_timer_callback_t callback, int auto_start, void *arg)
+{
+	int ret_code = -1;
+	if (timer && callback && period)
+	{
+		*timer = (pal_timer_t *)calloc(1, sizeof(pal_timer_t));
+		if (*timer)
+		{
+			(*timer)->callback	  = callback;
+			(*timer)->arg		  = arg;
+			(*timer)->is_periodic = (type == PAL_TIMER_TYPE_PERIODIC);
+			(*timer)->period_ms	  = period;
+			struct timespec current_time;
+			clock_gettime(CLOCK_MONOTONIC, &current_time);
+			(*timer)->expiry_time.tv_sec  = current_time.tv_sec + period / 1000;
+			(*timer)->expiry_time.tv_nsec = current_time.tv_nsec + (period % 1000) * 1000000;
+			if ((*timer)->expiry_time.tv_nsec >= 1000000000)
+			{
+				(*timer)->expiry_time.tv_sec++;
+				(*timer)->expiry_time.tv_nsec -= 1000000000;
+			}
+			if (auto_start)
+			{
+				pal_os_timer_insert_sorted(*timer);
+			}
+			pthread_cond_signal(&pal_timer_environment.cond);
+			ret_code = 0;
+		}
+	}
+	return ret_code;
+}
+
+int pal_timer_start(pal_timer_t *timer)
+{
+	int ret_code = -1;
+	if (timer)
+	{
+		pal_os_timer_insert_sorted(timer);
+		pthread_cond_signal(&pal_timer_environment.cond);
+		ret_code = 0;
+	}
+	return ret_code;
 }

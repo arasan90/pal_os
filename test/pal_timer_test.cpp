@@ -2,6 +2,9 @@
 
 #include "timer_priv.h"
 
+static int timerCounter = 0;
+void	   timerCallback(void *arg) { timerCounter++; }
+
 TEST(pal_timer, compareTimesNegativeResult)
 {
 	struct timespec time1 = {1, 0};
@@ -143,4 +146,58 @@ TEST(pal_timer, killThreadWithTimers)
 	pal_timer_deinit();
 	EXPECT_EQ(0, pal_timer_environment.thread_handle);
 	EXPECT_EQ(nullptr, pal_timer_environment.timer_list);
+}
+
+TEST(pal_timer, createTimerAutoStartOneShot)
+{
+	timerCounter					 = 0;
+	pal_timer_environment.timer_list = nullptr;
+	pal_timer_t *timer				 = nullptr;
+	pal_timer_init();
+	EXPECT_EQ(0, pal_timer_create(&timer, PAL_TIMER_TYPE_ONESHOT, 300, timerCallback, 1, nullptr));
+	EXPECT_NE(nullptr, timer);
+	sleep(1);
+	EXPECT_EQ(1, timerCounter);
+	EXPECT_EQ(nullptr, pal_timer_environment.timer_list);
+	pal_timer_deinit();
+}
+
+TEST(pal_timer, createTimerAutoStartPeriodic)
+{
+	timerCounter					 = 0;
+	pal_timer_environment.timer_list = nullptr;
+	pal_timer_t *timer				 = nullptr;
+	pal_timer_init();
+	EXPECT_EQ(0, pal_timer_create(&timer, PAL_TIMER_TYPE_PERIODIC, 300, timerCallback, 1, nullptr));
+	EXPECT_NE(nullptr, timer);
+	sleep(1);
+	EXPECT_EQ(3, timerCounter);
+	EXPECT_NE(nullptr, pal_timer_environment.timer_list);
+	pal_timer_deinit();
+}
+
+TEST(pal_timer, createTimerNoAutoStartOneShot)
+{
+	timerCounter						= 0;
+	pal_timer_environment.timer_list	= nullptr;
+	pal_timer_environment.shutdown_flag = 0;
+	pal_timer_t *timer					= nullptr;
+	pal_timer_init();
+	EXPECT_EQ(0, pal_timer_create(&timer, PAL_TIMER_TYPE_ONESHOT, 100, timerCallback, 0, nullptr));
+	EXPECT_NE(nullptr, timer);
+	sleep(1);
+	EXPECT_EQ(0, timerCounter);
+	EXPECT_EQ(0, pal_timer_start(timer));
+	sleep(1);
+	EXPECT_EQ(1, timerCounter);
+	EXPECT_EQ(nullptr, pal_timer_environment.timer_list);
+	pal_timer_deinit();
+}
+
+TEST(pal_timer, startTimerNullPtrFailure) { EXPECT_EQ(-1, pal_timer_start(nullptr)); }
+
+TEST(pal_timer, startTimerNotCreatedFailure)
+{
+	pal_timer_t *timer = nullptr;
+	EXPECT_EQ(-1, pal_timer_start(timer));
 }
