@@ -36,6 +36,7 @@ set(${PROJECT_NAME}_SRCS
     src/${TARGET_PLATFORM}/signal.c
     src/${TARGET_PLATFORM}/socket.c
     src/${TARGET_PLATFORM}/system.c
+    src/${TARGET_PLATFORM}/time.c
     )
 
 add_library(${PROJECT_NAME} ${${PROJECT_NAME}_SRCS})
