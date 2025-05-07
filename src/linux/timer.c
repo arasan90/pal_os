@@ -71,6 +71,7 @@ void pal_timer_deinit(void)
 			free(timer);
 			timer = next;
 		}
+		pal_timer_environment.timer_list = NULL;
 	}
 }
 
@@ -102,17 +103,14 @@ void pal_os_timer_insert_sorted(pal_timer_t *timer)
 
 	if (prev)
 	{
-		prev->next	= timer;
-		timer->prev = prev;
+		prev->next = timer;
 	}
 	else
 	{
 		pal_timer_environment.timer_list = timer;
-		timer->prev						 = NULL;
 	}
 
 	timer->next = cur;
-	if (cur) cur->prev = timer;
 }
 
 void *pal_timer_thread_fn(void *arg)
@@ -149,7 +147,7 @@ void *pal_timer_thread_fn(void *arg)
 		if (wait_result == ETIMEDOUT)
 		{
 			// Execute timer callback if the timer has expired
-			if (pal_os_timer_time_cmp(&timer->expiry_time, &current_time) <= 0)
+			if (timer->is_started && pal_os_timer_time_cmp(&timer->expiry_time, &current_time) <= 0)
 			{
 				// Call the timer callback function
 				timer->callback(timer->arg);
@@ -170,13 +168,7 @@ void *pal_timer_thread_fn(void *arg)
 				else
 				{
 					// Remove the timer from the list and free resources if it is one-shot
-					if (timer->prev)
-						timer->prev->next = timer->next;
-					else
-						pal_timer_environment.timer_list = timer->next;
-
-					if (timer->next) timer->next->prev = timer->prev;
-
+					pal_timer_environment.timer_list = timer->next;
 					free(timer);
 					break;
 				}

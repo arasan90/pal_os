@@ -26,9 +26,9 @@ struct pal_timer_s
 	pal_timer_callback_t callback;	   //!< Callback function to be called when the timer expires
 	void				*arg;		   //!< User-defined argument passed to the callback function
 	int					 is_periodic;  //!< Flag indicating if the timer is periodic
+	int					 is_started;   //!< Flag indicating if the timer is started
 	size_t				 period_ms;	   //!< Timer period in milliseconds
 	struct pal_timer_s	*next;		   //!< Pointer to the next timer in the list
-	struct pal_timer_s	*prev;		   //!< Pointer to the previous timer in the list
 };
 
 typedef struct pal_timer_env_s
