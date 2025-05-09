@@ -51,7 +51,8 @@ elseif(${TARGET_PLATFORM} STREQUAL "esp32")
         src/freeRTOS/signal.c
 
         # src/${TARGET_PLATFORM}/socket.c
-        # src/${TARGET_PLATFORM}/system.c
+        src/freeRTOS/system.c
+
         # src/${TARGET_PLATFORM}/time.c
         # src/${TARGET_PLATFORM}/timer.c
     )
