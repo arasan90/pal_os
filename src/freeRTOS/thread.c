@@ -23,6 +23,11 @@
  * Macros
  * ---------------------------------------------------------------------------
  */
+#ifndef ESP_PLATFORM
+#define malloc pvPortMalloc
+#define free   vPortFree
+#define calloc pvPortCalloc
+#endif
 
 /* ---------------------------------------------------------------------------
  * Constants
@@ -64,6 +69,7 @@ void pal_thread_generic_func(void *const arg)
 	pal_thread_t *thread = (pal_thread_t *)arg;
 	if (thread->func)
 	{
+		thread->state = PAL_THREAD_STATE_RUNNING;
 		thread->func(thread->arg);
 	}
 	xEventGroupSetBits(thread->event_group_handle, PAL_THREAD_THREAD_EXITED_EVENT_BITS);
@@ -84,6 +90,7 @@ int pal_thread_create(pal_thread_t **thread, pal_thread_priority_t priority, siz
 				UBaseType_t freertos_priority = pal_thread_convert_priority(priority);
 				(*thread)->func				  = func;
 				(*thread)->arg				  = arg;
+				(*thread)->state			  = PAL_THREAD_STATE_STOPPED;
 				if (pdPASS == xTaskCreate(pal_thread_generic_func, name, stack_size / sizeof(StackType_t), arg, freertos_priority,
 										  (TaskHandle_t *)(*thread)->thread_handle))
 				{
@@ -117,6 +124,7 @@ void pal_thread_scheduler_start(void) { vTaskStartScheduler(); }
 void pal_thread_join(pal_thread_t *const thread)
 {
 	xEventGroupWaitBits(thread->event_group_handle, PAL_THREAD_THREAD_EXITED_EVENT_BITS, pdTRUE, pdTRUE, portMAX_DELAY);
+	thread->state = PAL_THREAD_STATE_TERMINATED;
 }
 
 const char *pal_thread_get_name(pal_thread_t *const thread)
@@ -143,7 +151,7 @@ size_t pal_thread_get_stack_watermark(pal_thread_t *const thread)
 
 void pal_thread_free(pal_thread_t **thread)
 {
-	if (thread && *thread)
+	if (thread && *thread && PAL_THREAD_STATE_TERMINATED == (*thread)->state)
 	{
 		vEventGroupDelete((*thread)->event_group_handle);
 		(*thread)->event_group_handle = NULL;

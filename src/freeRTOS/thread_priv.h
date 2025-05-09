@@ -8,11 +8,11 @@ extern "C"
 // ============================
 // Includes
 // ============================
+#include "esp_heap_caps.h"
 #include "freertos/FreeRTOS.h"
 #include "freertos/event_groups.h"
 #include "freertos/task.h"
 #include "pal_os/thread.h"
-
 // ============================
 // Macros and Constants
 // ============================
@@ -26,6 +26,7 @@ struct pal_thread_s
 	EventGroupHandle_t event_group_handle;	//!< Event group handle for synchronization
 	pal_thread_func_t  func;				//!< Function to be executed by the thread
 	void			  *arg;					//!< Argument to be passed to the thread function
+	pal_thread_state_t state;				//!< Thread state
 };
 
 // ============================

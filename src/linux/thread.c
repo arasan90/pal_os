@@ -114,7 +114,7 @@ size_t pal_thread_get_stack_watermark(pal_thread_t *const thread)
 
 void pal_thread_free(pal_thread_t **thread)
 {
-	if (PAL_THREAD_STATE_TERMINATED == (*thread)->state)
+	if (thread && *thread && PAL_THREAD_STATE_TERMINATED == (*thread)->state)
 	{
 		free(*thread);
 		*thread = NULL;
