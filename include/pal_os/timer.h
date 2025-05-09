@@ -35,7 +35,7 @@ typedef struct pal_timer_s pal_timer_t;
  *
  * @param arg Pointer to user-defined argument passed to the callback function
  */
-typedef void (*pal_timer_callback_t)(void *arg);
+typedef void (*pal_timer_callback_t)(pal_timer_t *arg);
 
 // ============================
 // Function Declarations
@@ -44,6 +44,8 @@ typedef void (*pal_timer_callback_t)(void *arg);
  * @brief Creates a new timer.
  *
  * @param[out] timer Pointer to the timer handle to be created.
+ * @param[in] name Name of the timer. This is used for debugging purposes.
+ * @note Not available in linux.
  * @param[in] type Type of the timer (one-shot or periodic).
  * @param[in] period Timer period in milliseconds. Cannot be 0.
  * @param[in] callback Function to be called when the timer expires.
@@ -51,40 +53,44 @@ typedef void (*pal_timer_callback_t)(void *arg);
  * @param[in] arg User-defined argument passed to the callback function.
  * @return 0 on success, or -1 on failure.
  */
-int pal_timer_create(pal_timer_t **timer, pal_timer_type_t type, size_t period, pal_timer_callback_t callback, int auto_start, void *arg);
+int pal_timer_create(pal_timer_t **timer, const char *name, pal_timer_type_t type, size_t period, pal_timer_callback_t callback, int auto_start, void *arg);
 
 /**
  * @brief Starts a stopped timer.
  *
  * @param[in] timer Pointer to the timer handle.
+ * @param[in] from_isr If non-zero, the function is called from an ISR context.
  * @return 0 on success, or -1 on failure.
  */
-int pal_timer_start(pal_timer_t *timer);
+int pal_timer_start(pal_timer_t *timer, int from_isr);
 
 /**
  * @brief Stops a running timer.
  *
  * @param[in] timer Pointer to the timer handle.
+ * @param[in] from_isr If non-zero, the function is called from an ISR context.
  * @return 0 on success, or -1 on failure.
  */
-int pal_timer_stop(pal_timer_t *timer);
+int pal_timer_stop(pal_timer_t *timer, int from_isr);
 
 /**
  * @brief Restarts a timer.
  *
  * @param[in] timer Pointer to the timer handle.
+ * @param[in] from_isr If non-zero, the function is called from an ISR context.
  * @return 0 on success, or -1 on failure.
  */
-int pal_timer_restart(pal_timer_t *timer);
+int pal_timer_restart(pal_timer_t *timer, int from_isr);
 
 /**
  * @brief Changes the period of a timer.
  *
  * @param[in] timer Pointer to the timer handle.
  * @param[in] new_period New timer period in milliseconds. Cannot be 0.
+ * @param[in] from_isr If non-zero, the function is called from an ISR context.
  * @return 0 on success, or -1 on failure.
  */
-int pal_timer_change_period(pal_timer_t *timer, size_t new_period);
+int pal_timer_change_period(pal_timer_t *timer, size_t new_period, int from_isr);
 
 /**
  * @brief Checks if a timer is active.

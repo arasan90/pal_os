@@ -182,7 +182,7 @@ void *pal_timer_thread_fn(void *arg)
 				if (timer->is_periodic)
 				{
 					// Add the period to the expiry time
-					pal_timer_restart(timer);
+					pal_timer_restart(timer, 0);
 				}
 				else
 				{
@@ -206,9 +206,10 @@ void *pal_timer_thread_fn(void *arg)
 	return NULL;
 }
 
-int pal_timer_create(pal_timer_t **timer, pal_timer_type_t type, size_t period, pal_timer_callback_t callback, int auto_start, void *arg)
+int pal_timer_create(pal_timer_t **timer, const char *name, pal_timer_type_t type, size_t period, pal_timer_callback_t callback, int auto_start, void *arg)
 {
 	int ret_code = -1;
+	(void)name;
 	if (timer && callback && period)
 	{
 		*timer = (pal_timer_t *)calloc(1, sizeof(pal_timer_t));
@@ -220,7 +221,7 @@ int pal_timer_create(pal_timer_t **timer, pal_timer_type_t type, size_t period, 
 			(*timer)->period_ms	  = period;
 			if (auto_start)
 			{
-				pal_timer_start(*timer);
+				pal_timer_start(*timer, 0);
 			}
 			pthread_cond_signal(&pal_timer_environment.cond);
 			ret_code = 0;
@@ -229,9 +230,10 @@ int pal_timer_create(pal_timer_t **timer, pal_timer_type_t type, size_t period, 
 	return ret_code;
 }
 
-int pal_timer_start(pal_timer_t *timer)
+int pal_timer_start(pal_timer_t *timer, int from_isr)
 {
 	int ret_code = -1;
+	(void)from_isr;
 	if (timer && !timer->is_started)
 	{
 		struct timespec current_time;
@@ -251,9 +253,10 @@ int pal_timer_start(pal_timer_t *timer)
 	return ret_code;
 }
 
-int pal_timer_stop(pal_timer_t *timer)
+int pal_timer_stop(pal_timer_t *timer, int from_isr)
 {
 	int ret_code = -1;
+	(void)from_isr;
 	if (timer)
 	{
 		pal_os_timer_remove(timer);
@@ -264,25 +267,27 @@ int pal_timer_stop(pal_timer_t *timer)
 	return ret_code;
 }
 
-int pal_timer_restart(pal_timer_t *timer)
+int pal_timer_restart(pal_timer_t *timer, int from_isr)
 {
 	int ret_code = -1;
+	(void)from_isr;
 	if (timer)
 	{
-		pal_timer_stop(timer);
-		pal_timer_start(timer);
+		pal_timer_stop(timer, 0);
+		pal_timer_start(timer, 0);
 		ret_code = 0;
 	}
 	return ret_code;
 }
 
-int pal_timer_change_period(pal_timer_t *timer, size_t new_period)
+int pal_timer_change_period(pal_timer_t *timer, size_t new_period, int from_isr)
 {
 	int ret_code = -1;
+	(void)from_isr;
 	if (timer && new_period)
 	{
 		timer->period_ms = new_period;
-		pal_timer_restart(timer);
+		pal_timer_restart(timer, 0);
 		ret_code = 0;
 	}
 	return ret_code;
@@ -303,7 +308,7 @@ int pal_timer_delete(pal_timer_t **timer)
 	int ret_code = -1;
 	if (timer && *timer)
 	{
-		pal_timer_stop(*timer);
+		pal_timer_stop(*timer, 0);
 		free(*timer);
 		*timer = NULL;
 		return 0;

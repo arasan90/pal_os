@@ -53,8 +53,7 @@ elseif(${TARGET_PLATFORM} STREQUAL "esp32")
         # src/${TARGET_PLATFORM}/socket.c
         src/freeRTOS/system.c
         src/freeRTOS/time.c
-
-        # src/${TARGET_PLATFORM}/timer.c
+        src/freeRTOS/timer.c
     )
     set(${PROJECT_NAME}_LIBS idf::freertos)
 endif()

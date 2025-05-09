@@ -10,7 +10,7 @@
 #include <string.h>	  // For strlen
 
 #include "thread_priv.h"  // Include the private header file
-
+#include "timer_priv.h"
 /* ---------------------------------------------------------------------------
  * Type Definitions
  * ---------------------------------------------------------------------------
@@ -92,7 +92,7 @@ void pal_thread_scheduler_start(void)
 {
 	while (1)
 	{
-		// This function is a placeholder for starting the thread scheduler.
+		pal_timer_init();
 		// In a real implementation, this would block execution until all threads are terminated.
 		pal_thread_sleep(SIZE_MAX);	 // Sleep indefinitely
 	}

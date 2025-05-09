@@ -88,8 +88,8 @@ int pal_signal_set(pal_signal_t *signal, size_t mask, int from_isr)
 				if (xHigherPriorityTaskWoken)
 				{
 					portYIELD_FROM_ISR();
-					ret_code = 0;
 				}
+				ret_code = 0;
 			}
 		}
 		else

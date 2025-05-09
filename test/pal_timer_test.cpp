@@ -3,7 +3,7 @@
 #include "timer_priv.h"
 
 static int timerCounter = 0;
-void	   timerCallback(void *arg) { timerCounter++; }
+void	   timerCallback(pal_timer_t *arg) { timerCounter++; }
 
 TEST(pal_timer, compareTimesNegativeResult)
 {
@@ -219,7 +219,7 @@ TEST(pal_timer, createTimerAutoStartOneShot)
 	pal_timer_environment.timer_list = nullptr;
 	pal_timer_t *timer				 = nullptr;
 	pal_timer_init();
-	EXPECT_EQ(0, pal_timer_create(&timer, PAL_TIMER_TYPE_ONESHOT, 300, timerCallback, 1, nullptr));
+	EXPECT_EQ(0, pal_timer_create(&timer, "", PAL_TIMER_TYPE_ONESHOT, 300, timerCallback, 1, nullptr));
 	EXPECT_NE(nullptr, timer);
 	sleep(1);
 	EXPECT_EQ(1, timerCounter);
@@ -234,7 +234,7 @@ TEST(pal_timer, createTimerAutoStartPeriodic)
 	pal_timer_environment.timer_list = nullptr;
 	pal_timer_t *timer				 = nullptr;
 	pal_timer_init();
-	EXPECT_EQ(0, pal_timer_create(&timer, PAL_TIMER_TYPE_PERIODIC, 300, timerCallback, 1, nullptr));
+	EXPECT_EQ(0, pal_timer_create(&timer, "", PAL_TIMER_TYPE_PERIODIC, 300, timerCallback, 1, nullptr));
 	EXPECT_NE(nullptr, timer);
 	sleep(1);
 	EXPECT_EQ(3, timerCounter);
@@ -249,11 +249,11 @@ TEST(pal_timer, createTimerNoAutoStartOneShot)
 	pal_timer_environment.shutdown_flag = 0;
 	pal_timer_t *timer					= nullptr;
 	pal_timer_init();
-	EXPECT_EQ(0, pal_timer_create(&timer, PAL_TIMER_TYPE_ONESHOT, 100, timerCallback, 0, nullptr));
+	EXPECT_EQ(0, pal_timer_create(&timer, "", PAL_TIMER_TYPE_ONESHOT, 100, timerCallback, 0, nullptr));
 	EXPECT_NE(nullptr, timer);
 	sleep(1);
 	EXPECT_EQ(0, timerCounter);
-	EXPECT_EQ(0, pal_timer_start(timer));
+	EXPECT_EQ(0, pal_timer_start(timer, 0));
 	sleep(1);
 	EXPECT_EQ(1, timerCounter);
 	EXPECT_EQ(nullptr, pal_timer_environment.timer_list);
@@ -268,47 +268,47 @@ TEST(pal_timer, stopPeriodicTimer)
 	pal_timer_environment.shutdown_flag = 0;
 	pal_timer_t *timer					= nullptr;
 	pal_timer_init();
-	EXPECT_EQ(0, pal_timer_create(&timer, PAL_TIMER_TYPE_PERIODIC, 300, timerCallback, 0, nullptr));
+	EXPECT_EQ(0, pal_timer_create(&timer, "", PAL_TIMER_TYPE_PERIODIC, 300, timerCallback, 0, nullptr));
 	EXPECT_NE(nullptr, timer);
 	sleep(1);
 	EXPECT_EQ(0, timerCounter);
-	EXPECT_EQ(0, pal_timer_start(timer));
+	EXPECT_EQ(0, pal_timer_start(timer, 0));
 	sleep(1);
 	EXPECT_EQ(3, timerCounter);
-	EXPECT_EQ(0, pal_timer_stop(timer));
+	EXPECT_EQ(0, pal_timer_stop(timer, 0));
 	EXPECT_EQ(nullptr, pal_timer_environment.timer_list);
 	sleep(1);
 	EXPECT_EQ(3, timerCounter);
-	EXPECT_EQ(0, pal_timer_start(timer));
+	EXPECT_EQ(0, pal_timer_start(timer, 0));
 	sleep(1);
 	EXPECT_EQ(6, timerCounter);
-	EXPECT_EQ(0, pal_timer_stop(timer));
+	EXPECT_EQ(0, pal_timer_stop(timer, 0));
 	pal_timer_deinit();
 	free(timer);
 }
 
-TEST(pal_timer, stopTimerNullPtrFailure) { EXPECT_EQ(-1, pal_timer_stop(nullptr)); }
+TEST(pal_timer, stopTimerNullPtrFailure) { EXPECT_EQ(-1, pal_timer_stop(nullptr, 0)); }
 
 TEST(pal_timer, stopTimerNotCreatedFailure)
 {
 	pal_timer_t *timer = nullptr;
-	EXPECT_EQ(-1, pal_timer_stop(timer));
+	EXPECT_EQ(-1, pal_timer_stop(timer, 0));
 }
 
 TEST(pal_timer, stopNotStartedTimerSuccess)
 {
 	pal_timer_t *timer = nullptr;
-	pal_timer_create(&timer, PAL_TIMER_TYPE_PERIODIC, 300, timerCallback, 0, nullptr);
-	EXPECT_EQ(0, pal_timer_stop(timer));
+	pal_timer_create(&timer, "", PAL_TIMER_TYPE_PERIODIC, 300, timerCallback, 0, nullptr);
+	EXPECT_EQ(0, pal_timer_stop(timer, 0));
 	free(timer);
 }
 
-TEST(pal_timer, startTimerNullPtrFailure) { EXPECT_EQ(-1, pal_timer_start(nullptr)); }
+TEST(pal_timer, startTimerNullPtrFailure) { EXPECT_EQ(-1, pal_timer_start(nullptr, 0)); }
 
 TEST(pal_timer, startTimerNotCreatedFailure)
 {
 	pal_timer_t *timer = nullptr;
-	EXPECT_EQ(-1, pal_timer_start(timer));
+	EXPECT_EQ(-1, pal_timer_start(timer, 0));
 }
 
 TEST(pal_timer, restartOneShotTimer)
@@ -318,12 +318,12 @@ TEST(pal_timer, restartOneShotTimer)
 	pal_timer_environment.shutdown_flag = 0;
 	pal_timer_t *timer					= nullptr;
 	pal_timer_init();
-	EXPECT_EQ(0, pal_timer_create(&timer, PAL_TIMER_TYPE_ONESHOT, 100, timerCallback, 0, nullptr));
+	EXPECT_EQ(0, pal_timer_create(&timer, "", PAL_TIMER_TYPE_ONESHOT, 100, timerCallback, 0, nullptr));
 	EXPECT_NE(nullptr, timer);
-	pal_timer_start(timer);
+	pal_timer_start(timer, 0);
 	sleep(1);
 	EXPECT_EQ(1, timerCounter);
-	EXPECT_EQ(0, pal_timer_restart(timer));
+	EXPECT_EQ(0, pal_timer_restart(timer, 0));
 	sleep(1);
 	EXPECT_EQ(2, timerCounter);
 	pal_timer_deinit();
@@ -337,10 +337,10 @@ TEST(pal_timer, changePeriodOneShotTimer)
 	pal_timer_environment.shutdown_flag = 0;
 	pal_timer_t *timer					= nullptr;
 	pal_timer_init();
-	EXPECT_EQ(0, pal_timer_create(&timer, PAL_TIMER_TYPE_ONESHOT, 100, timerCallback, 1, nullptr));
+	EXPECT_EQ(0, pal_timer_create(&timer, "", PAL_TIMER_TYPE_ONESHOT, 100, timerCallback, 1, nullptr));
 	sleep(1);
 	EXPECT_EQ(1, timerCounter);
-	EXPECT_EQ(0, pal_timer_change_period(timer, 200));
+	EXPECT_EQ(0, pal_timer_change_period(timer, 200, 0));
 	sleep(1);
 	EXPECT_EQ(2, timerCounter);
 	pal_timer_deinit();
@@ -354,12 +354,12 @@ TEST(pal_timer, changePeriodPeriodicTimer)
 	pal_timer_environment.shutdown_flag = 0;
 	pal_timer_t *timer					= nullptr;
 	pal_timer_init();
-	EXPECT_EQ(0, pal_timer_create(&timer, PAL_TIMER_TYPE_PERIODIC, 300, timerCallback, 1, nullptr));
+	EXPECT_EQ(0, pal_timer_create(&timer, "", PAL_TIMER_TYPE_PERIODIC, 300, timerCallback, 1, nullptr));
 	EXPECT_NE(nullptr, timer);
 	sleep(1);
 	EXPECT_EQ(3, timerCounter);
-	EXPECT_EQ(0, pal_timer_stop(timer));
-	EXPECT_EQ(0, pal_timer_change_period(timer, 400));
+	EXPECT_EQ(0, pal_timer_stop(timer, 0));
+	EXPECT_EQ(0, pal_timer_change_period(timer, 400, 0));
 	sleep(1);
 	EXPECT_EQ(5, timerCounter);
 	pal_timer_deinit();
@@ -369,31 +369,31 @@ TEST(pal_timer, changePeriodWith0Failure)
 {
 	pal_timer_t *timer				 = nullptr;
 	pal_timer_environment.timer_list = nullptr;
-	EXPECT_EQ(0, pal_timer_create(&timer, PAL_TIMER_TYPE_PERIODIC, 300, timerCallback, 1, nullptr));
-	EXPECT_EQ(-1, pal_timer_change_period(timer, 0));
+	EXPECT_EQ(0, pal_timer_create(&timer, "", PAL_TIMER_TYPE_PERIODIC, 300, timerCallback, 1, nullptr));
+	EXPECT_EQ(-1, pal_timer_change_period(timer, 0, 0));
 	free(timer);
 }
 
 TEST(pal_timer, changePeriodWithNullPtrFailure)
 {
 	pal_timer_environment.timer_list = nullptr;
-	EXPECT_EQ(-1, pal_timer_change_period(nullptr, 300));
+	EXPECT_EQ(-1, pal_timer_change_period(nullptr, 300, 0));
 }
 
 TEST(pal_timer, changePeriodWithNotCreatedFailure)
 {
 	pal_timer_t *timer				 = nullptr;
 	pal_timer_environment.timer_list = nullptr;
-	EXPECT_EQ(-1, pal_timer_change_period(timer, 300));
+	EXPECT_EQ(-1, pal_timer_change_period(timer, 300, 0));
 }
 
 TEST(pal_timer, isTimerActiveNoAutoStart)
 {
 	pal_timer_environment.timer_list = nullptr;
 	pal_timer_t *timer				 = nullptr;
-	EXPECT_EQ(0, pal_timer_create(&timer, PAL_TIMER_TYPE_PERIODIC, 300, timerCallback, 0, nullptr));
+	EXPECT_EQ(0, pal_timer_create(&timer, "", PAL_TIMER_TYPE_PERIODIC, 300, timerCallback, 0, nullptr));
 	EXPECT_EQ(0, pal_is_timer_active(timer));
-	EXPECT_EQ(0, pal_timer_start(timer));
+	EXPECT_EQ(0, pal_timer_start(timer, 0));
 	EXPECT_EQ(1, pal_is_timer_active(timer));
 	pal_timer_deinit();
 	free(timer);
@@ -403,11 +403,11 @@ TEST(pal_timer, isTimerActiveAutoStart)
 {
 	pal_timer_t *timer				 = nullptr;
 	pal_timer_environment.timer_list = nullptr;
-	EXPECT_EQ(0, pal_timer_create(&timer, PAL_TIMER_TYPE_PERIODIC, 300, timerCallback, 1, nullptr));
+	EXPECT_EQ(0, pal_timer_create(&timer, "", PAL_TIMER_TYPE_PERIODIC, 300, timerCallback, 1, nullptr));
 	EXPECT_EQ(1, pal_is_timer_active(timer));
-	EXPECT_EQ(0, pal_timer_stop(timer));
+	EXPECT_EQ(0, pal_timer_stop(timer, 0));
 	EXPECT_EQ(0, pal_is_timer_active(timer));
-	EXPECT_EQ(0, pal_timer_restart(timer));
+	EXPECT_EQ(0, pal_timer_restart(timer, 0));
 	EXPECT_EQ(1, pal_is_timer_active(timer));
 	pal_timer_deinit();
 	free(timer);
@@ -417,7 +417,7 @@ TEST(pal_timer, timerDeleteSuccess)
 {
 	pal_timer_t *timer				 = nullptr;
 	pal_timer_environment.timer_list = nullptr;
-	EXPECT_EQ(0, pal_timer_create(&timer, PAL_TIMER_TYPE_PERIODIC, 300, timerCallback, 1, nullptr));
+	EXPECT_EQ(0, pal_timer_create(&timer, "", PAL_TIMER_TYPE_PERIODIC, 300, timerCallback, 1, nullptr));
 	EXPECT_NE(nullptr, timer);
 	EXPECT_EQ(0, pal_timer_delete(&timer));
 	EXPECT_EQ(nullptr, timer);
