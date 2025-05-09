@@ -66,9 +66,10 @@ pal_signal_ret_code_t pal_signal_wait(pal_signal_t *signal, size_t mask, size_t 
  *
  * @param[in] signal Signal object to modify.
  * @param[in] mask Bitmask of signals to set.
+ * @param[in] from_isr Flag indicating if the function is called from an ISR context.
  * @return 0 on success, or -1 on failure.
  */
-int pal_signal_set(pal_signal_t *signal, size_t mask);
+int pal_signal_set(pal_signal_t *signal, size_t mask, int from_isr);
 
 /**
  * @brief Clears one or more signals.

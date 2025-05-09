@@ -11,8 +11,10 @@ extern "C"
 #include "esp_heap_caps.h"
 #include "freertos/FreeRTOS.h"
 #include "freertos/event_groups.h"
+#include "freertos/portable.h"
 #include "freertos/task.h"
 #include "pal_os/thread.h"
+
 // ============================
 // Macros and Constants
 // ============================

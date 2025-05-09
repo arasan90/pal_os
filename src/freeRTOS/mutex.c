@@ -4,7 +4,10 @@
  * Author: Massimiliano Ianniello
  */
 
+#include <string.h>
+
 #include "freertos/FreeRTOS.h"
+#include "freertos/portable.h"
 #include "freertos/semphr.h"
 #include "mutex_priv.h"
 #include "pal_os/common.h"
@@ -23,11 +26,6 @@
  * Macros
  * ---------------------------------------------------------------------------
  */
-#ifndef ESP_PLATFORM
-#define malloc pvPortMalloc
-#define free   vPortFree
-#define calloc pvPortCalloc
-#endif
 
 /* ---------------------------------------------------------------------------
  * Constants
@@ -48,9 +46,10 @@ int pal_mutex_create(pal_mutex_t **mutex, int recursive)
 	int ret_code = -1;
 	if (mutex)
 	{
-		*mutex = calloc(1, sizeof(pal_mutex_t));
+		*mutex = pvPortMalloc(sizeof(pal_mutex_t));
 		if (*mutex)
 		{
+			memset(*mutex, 0, sizeof(pal_mutex_t));
 			if (recursive)
 			{
 				(*mutex)->is_recursive = 1;
@@ -114,7 +113,7 @@ int pal_mutex_destroy(pal_mutex_t **mutex)
 	if (mutex && *mutex)
 	{
 		vSemaphoreDelete((*mutex)->mutex_handle);
-		free(*mutex);
+		vPortFree(*mutex);
 		*mutex	 = NULL;
 		ret_code = 0;
 	}

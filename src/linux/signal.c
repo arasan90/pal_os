@@ -126,9 +126,10 @@ pal_signal_ret_code_t pal_signal_wait(pal_signal_t *signal, size_t mask, size_t 
 	return ret_code;
 }
 
-int pal_signal_set(pal_signal_t *signal, size_t mask)
+int pal_signal_set(pal_signal_t *signal, size_t mask, int from_isr)
 {
 	int ret_code = -1;
+	(void)from_isr;
 	if (NULL != signal)
 	{
 		pthread_mutex_lock(&signal->mutex);

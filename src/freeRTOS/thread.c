@@ -6,7 +6,7 @@
 
 #include "pal_os/thread.h"
 
-#include <malloc.h>
+#include <string.h>
 
 #include "thread_priv.h"
 /* ---------------------------------------------------------------------------
@@ -23,11 +23,6 @@
  * Macros
  * ---------------------------------------------------------------------------
  */
-#ifndef ESP_PLATFORM
-#define malloc pvPortMalloc
-#define free   vPortFree
-#define calloc pvPortCalloc
-#endif
 
 /* ---------------------------------------------------------------------------
  * Constants
@@ -81,9 +76,10 @@ int pal_thread_create(pal_thread_t **thread, pal_thread_priority_t priority, siz
 	int ret_code = -1;
 	if (thread)
 	{
-		*thread = calloc(1, sizeof(pal_thread_t));
+		*thread = pvPortMalloc(sizeof(pal_thread_t));
 		if (*thread)
 		{
+			memset(*thread, 0, sizeof(pal_thread_t));
 			(*thread)->event_group_handle = xEventGroupCreate();
 			if ((*thread)->event_group_handle)
 			{
@@ -99,13 +95,13 @@ int pal_thread_create(pal_thread_t **thread, pal_thread_priority_t priority, siz
 				else
 				{
 					vEventGroupDelete((*thread)->event_group_handle);
-					free(*thread);
+					vPortFree(*thread);
 					*thread = NULL;
 				}
 			}
 			else
 			{
-				free(*thread);
+				vPortFree(*thread);
 				*thread = NULL;
 			}
 		}
@@ -155,7 +151,7 @@ void pal_thread_free(pal_thread_t **thread)
 	{
 		vEventGroupDelete((*thread)->event_group_handle);
 		(*thread)->event_group_handle = NULL;
-		free(*thread);
+		vPortFree(*thread);
 		*thread = NULL;
 	}
 }
