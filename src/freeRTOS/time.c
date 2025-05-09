@@ -6,7 +6,8 @@
 
 #include "pal_os/time.h"
 
-#include <time.h>
+#include "freertos/FreeRTOS.h"
+#include "freertos/task.h"
 
 /* ---------------------------------------------------------------------------
  * Type Definitions
@@ -29,6 +30,12 @@
  */
 
 /* ---------------------------------------------------------------------------
+ * Variables
+ * ---------------------------------------------------------------------------
+ */
+static size_t pal_unix_time = 0;
+
+/* ---------------------------------------------------------------------------
  * Static Functions
  * ---------------------------------------------------------------------------
  */
@@ -38,31 +45,8 @@
  * ---------------------------------------------------------------------------
  */
 
-size_t pal_get_unix_time(void)
-{
-	size_t			unix_time = -1;
-	struct timespec ts;
-	if (0 == clock_gettime(CLOCK_REALTIME, &ts))
-	{
-		unix_time = (size_t)(ts.tv_sec + ts.tv_nsec / 1000000000);
-	}
-	return unix_time;
-}
+size_t pal_get_unix_time(void) { return pal_unix_time; }
 
-size_t pal_get_system_time(void)
-{
-	size_t			system_time = -1;
-	struct timespec ts;
-	if (0 == clock_gettime(CLOCK_MONOTONIC, &ts))
-	{
-		system_time = (size_t)(ts.tv_sec * 1000 + ts.tv_nsec / 1000000);
-	}
-	return system_time;
-}
+size_t pal_get_system_time(void) { return (pdTICKS_TO_MS(xTaskGetTickCount())); }
 
-void pal_set_unix_time(size_t unix_time)
-{
-	// This function is not implemented for Linux.
-	(void)unix_time;
-	return;
-}
+void pal_set_unix_time(size_t unix_time) { pal_unix_time = unix_time; }
