@@ -46,7 +46,8 @@ elseif(${TARGET_PLATFORM} STREQUAL "esp32")
         src/freeRTOS/thread.c
 
         # src/${TARGET_PLATFORM}/fs.c
-        # src/${TARGET_PLATFORM}/queue.c
+        src/freeRTOS/queue.c
+
         # src/${TARGET_PLATFORM}/mutex.c
         # src/${TARGET_PLATFORM}/signal.c
         # src/${TARGET_PLATFORM}/socket.c
