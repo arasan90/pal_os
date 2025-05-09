@@ -1,12 +1,16 @@
 /*
- * File: time.c
- * Description: Implementation of time-related functionality for the Linux platform.
+ * File: system.c
+ * Description: Implementation of system-related functionality for the freeRTOS platform.
  * Author: Massimiliano Ianniello
  */
 
-#include "pal_os/time.h"
+#include "pal_os/system.h"
 
-#include <time.h>
+#include <stdarg.h>
+#include <stdio.h>
+
+#include "freertos/FreeRTOS.h"
+#include "freertos/portable.h"
 
 /* ---------------------------------------------------------------------------
  * Type Definitions
@@ -29,6 +33,12 @@
  */
 
 /* ---------------------------------------------------------------------------
+ * Variables
+ * ---------------------------------------------------------------------------
+ */
+static pal_system_t pal_system_stats = {0};
+
+/* ---------------------------------------------------------------------------
  * Static Functions
  * ---------------------------------------------------------------------------
  */
@@ -37,32 +47,17 @@
  * Function Implementations
  * ---------------------------------------------------------------------------
  */
-
-size_t pal_get_unix_time(void)
+void pal_system_printf(const char *format, ...)
 {
-	size_t			unix_time = -1;
-	struct timespec ts;
-	if (0 == clock_gettime(CLOCK_REALTIME, &ts))
-	{
-		unix_time = (size_t)(ts.tv_sec + ts.tv_nsec / 1000000000);
-	}
-	return unix_time;
+	va_list args;
+	va_start(args, format);
+	vprintf(format, args);
+	va_end(args);
 }
 
-size_t pal_get_system_time(void)
+pal_system_t *pal_system_get_stats(void)
 {
-	size_t			system_time = -1;
-	struct timespec ts;
-	if (0 == clock_gettime(CLOCK_MONOTONIC, &ts))
-	{
-		system_time = (size_t)(ts.tv_sec * 1000 + ts.tv_nsec / 1000000);
-	}
-	return system_time;
-}
-
-void pal_set_unix_time(size_t unix_time)
-{
-	// This function is not implemented for Linux.
-	(void)unix_time;
-	return;
+	pal_system_stats.free_heap_size		= xPortGetFreeHeapSize();
+	pal_system_stats.min_free_heap_size = xPortGetMinimumEverFreeHeapSize();
+	return &pal_system_stats;
 }

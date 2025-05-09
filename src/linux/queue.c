@@ -74,10 +74,11 @@ int pal_queue_create(pal_queue_t **queue, size_t item_size, size_t max_items)
 	return ret_code;
 }
 
-int pal_queue_enqueue(pal_queue_t *queue, void *const item, size_t timeout_ms)
+int pal_queue_enqueue(pal_queue_t *queue, void *const item, size_t timeout_ms, int from_isr)
 {
 	int ret_code = -1;
 	int error	 = 0;
+	(void)from_isr;
 	if (NULL != queue && NULL != item)
 	{
 		pthread_mutex_lock(&queue->mutex);
@@ -119,10 +120,11 @@ int pal_queue_enqueue(pal_queue_t *queue, void *const item, size_t timeout_ms)
 	return ret_code;
 }
 
-int pal_queue_dequeue(pal_queue_t *queue, void *const item, size_t timeout_ms)
+int pal_queue_dequeue(pal_queue_t *queue, void *const item, size_t timeout_ms, int from_isr)
 {
 	int ret_code = -1;
 	int error	 = 0;
+	(void)from_isr;
 	if (NULL != queue && NULL != item)
 	{
 		pthread_mutex_lock(&queue->mutex);
@@ -183,9 +185,10 @@ size_t pal_queue_get_free_slots(pal_queue_t *queue)
 	return free_slots;
 }
 
-size_t pal_queue_get_items(pal_queue_t *queue)
+size_t pal_queue_get_items(pal_queue_t *queue, int from_isr)
 {
 	size_t items = 0;
+	(void)from_isr;
 	if (NULL != queue)
 	{
 		pthread_mutex_lock(&queue->mutex);

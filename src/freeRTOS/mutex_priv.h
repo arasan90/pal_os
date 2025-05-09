@@ -8,8 +8,8 @@ extern "C"
 // ============================
 // Includes
 // ============================
-#include <pthread.h>
-
+#include "freertos/FreeRTOS.h"
+#include "freertos/semphr.h"
 #include "pal_os/mutex.h"
 
 // ============================
@@ -21,7 +21,8 @@ extern "C"
 // ============================
 struct pal_mutex_s
 {
-	pthread_mutex_t mutex;	//!< Mutex for thread safety
+	SemaphoreHandle_t mutex_handle;	 //!< Mutex handle
+	int				  is_recursive;	 //!< Flag indicating if the mutex is recursive
 };
 
 // ============================
