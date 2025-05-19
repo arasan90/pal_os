@@ -347,6 +347,24 @@ TEST(pal_timer, changePeriodOneShotTimer)
 	free(timer);
 }
 
+TEST(pal_timer, changePeriodPeriodicTimer)
+{
+	timerCounter						= 0;
+	pal_timer_environment.timer_list	= nullptr;
+	pal_timer_environment.shutdown_flag = 0;
+	pal_timer_t *timer					= nullptr;
+	pal_timer_init();
+	EXPECT_EQ(0, pal_timer_create(&timer, "", PAL_TIMER_TYPE_PERIODIC, 300, timerCallback, 1, nullptr));
+	EXPECT_NE(nullptr, timer);
+	sleep(1);
+	EXPECT_EQ(3, timerCounter);
+	EXPECT_EQ(0, pal_timer_stop(timer, 0));
+	EXPECT_EQ(0, pal_timer_change_period(timer, 400, 0));
+	sleep(1);
+	EXPECT_EQ(5, timerCounter);
+	pal_timer_deinit();
+}
+
 TEST(pal_timer, changePeriodWith0Failure)
 {
 	pal_timer_t *timer				 = nullptr;

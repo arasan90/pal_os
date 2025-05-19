@@ -166,11 +166,17 @@ void *pal_timer_thread_fn(void *arg)
 		// Check the first timer in the list (the one that expires first)
 		pal_timer_t *timer = pal_timer_environment.timer_list;
 
+		// Check if a timer has already expired
+		int already_expired = pal_os_timer_time_cmp(&timer->expiry_time, &current_time) <= 0;
+		int wait_result		= 0;
 		// Wait for the timer to expire or for a shutdown signal
-		int wait_result = pthread_cond_timedwait(&pal_timer_environment.cond, &pal_timer_environment.mutex, &timer->expiry_time);
+		if (!already_expired)
+		{
+			wait_result = pthread_cond_timedwait(&pal_timer_environment.cond, &pal_timer_environment.mutex, &timer->expiry_time);
+		}
 
 		// If the wait timed out, check if the timer has expired
-		if (wait_result == ETIMEDOUT)
+		if (already_expired || wait_result == ETIMEDOUT)
 		{
 			// Execute timer callback if the timer has expired
 			if (pal_os_timer_time_cmp(&timer->expiry_time, &current_time) <= 0)
