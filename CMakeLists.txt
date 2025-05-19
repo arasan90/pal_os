@@ -28,7 +28,6 @@ if(${TARGET_PLATFORM} STREQUAL "linux")
     set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} ${GCC_COVERAGE_LINK_FLAGS}")
     set(${PROJECT_NAME}_SRCS
         src/${TARGET_PLATFORM}/thread.c
-        src/${TARGET_PLATFORM}/fs.c
         src/${TARGET_PLATFORM}/queue.c
         src/${TARGET_PLATFORM}/mutex.c
         src/${TARGET_PLATFORM}/signal.c
@@ -44,13 +43,9 @@ elseif(${TARGET_PLATFORM} STREQUAL "esp32")
     add_definitions(-DESP_PLATFORM)
     set(${PROJECT_NAME}_SRCS
         src/freeRTOS/thread.c
-
-        # src/${TARGET_PLATFORM}/fs.c
         src/freeRTOS/queue.c
         src/freeRTOS/mutex.c
         src/freeRTOS/signal.c
-
-        # src/${TARGET_PLATFORM}/socket.c
         src/freeRTOS/system.c
         src/freeRTOS/time.c
         src/freeRTOS/timer.c
