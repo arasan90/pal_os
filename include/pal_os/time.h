@@ -31,7 +31,7 @@ size_t pal_get_unix_time(void);
  * @brief Set the current time in seconds since the epoch (1970-01-01 00:00:00 UTC).
  * @param[in] unix_time The time to set in seconds since the epoch.
  */
-void pal_st_unix_time(size_t unix_time);
+void pal_set_unix_time(size_t unix_time);
 
 /**
  * @brief Get the current time in milliseconds since the system started.
