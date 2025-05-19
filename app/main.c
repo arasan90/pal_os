@@ -8,3 +8,5 @@ int app_main(void)
 	printf("Hello, World!\n");
 	return 0;
 }
+
+int main(void) { return app_main(); }

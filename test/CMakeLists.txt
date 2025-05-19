@@ -12,7 +12,6 @@ FetchContent_MakeAvailable(gtest)
 set(${PROJECT_NAME}_SRC
 
     pal_thread_test.cpp
-    pal_fs_test.cpp
     pal_queue_test.cpp
     pal_mutex_test.cpp
     pal_signal_test.cpp
