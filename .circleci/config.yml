@@ -43,7 +43,7 @@ jobs:
             apt-get install -y cmake valgrind
       - run:
           name: Run tests
-          command: cd build && ctest --output-junit test.xml && ctest -T Coverage
+          command: cd build && ctest --output-junit test.xml --parallel 4 --schedule-random && ctest -T Coverage
       - store_test_results:
             path: build/test.xml
       - codecov/upload
