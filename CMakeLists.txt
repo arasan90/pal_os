@@ -31,7 +31,6 @@ if(${TARGET_PLATFORM} STREQUAL "linux")
         src/${TARGET_PLATFORM}/queue.c
         src/${TARGET_PLATFORM}/mutex.c
         src/${TARGET_PLATFORM}/signal.c
-        src/${TARGET_PLATFORM}/socket.c
         src/${TARGET_PLATFORM}/system.c
         src/${TARGET_PLATFORM}/time.c
         src/${TARGET_PLATFORM}/timer.c

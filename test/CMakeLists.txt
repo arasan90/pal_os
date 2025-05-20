@@ -14,7 +14,6 @@ set(${PROJECT_NAME}_SRC
     pal_queue_test.cpp
     pal_mutex_test.cpp
     pal_signal_test.cpp
-    pal_socket_test.cpp
     pal_system_test.cpp
     pal_time_test.cpp
     pal_timer_test.cpp
