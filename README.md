@@ -18,7 +18,7 @@ The main goal is to provide a consistent, minimal API for abstracting OS feature
 
 - seamless portability between embedded systems (e.g., FreeRTOS, ESP-IDF) and host platforms (Linux)
 - modular and testable code
-- integration in complex projects without heavyweight dependencies
+- integration in complex projects without heavyweight dependencieP
 
 ## 📦 Repository structure
 
@@ -33,8 +33,17 @@ Private/          --> Internal headers and private helpers
 ## 🔧 Build
 
 The library can be built both for host systems and embedded targets (e.g., ESP32).
-Refer to the CMake documentation for instructions on how to configure builds for each platform.
+```sh
+   cmake -B build -DTARGET_PLATFORM=linux
+```
 
+   You can set `TARGET_PLATFORM` to `linux` or `esp32` (default is `linux`).
+   To enable unit tests and mocks, add the following options:
+
+```sh
+   cmake -B build -DTARGET_PLATFORM=linux -DPERFORM_UNIT_TESTS=ON -DCOMPILE_MOCK=ON
+```
+For ESP32, make sure you have ESP-IDF installed and configured.
 ## 📄 License
 
 This project is licensed under the **GNU General Public License v3.0**.
