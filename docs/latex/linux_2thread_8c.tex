@@ -1,0 +1,190 @@
+\doxysection{src/linux/thread.c File Reference}
+\hypertarget{linux_2thread_8c}{}\label{linux_2thread_8c}\index{src/linux/thread.c@{src/linux/thread.c}}
+{\ttfamily \#include $<$pthread.\+h$>$}\newline
+{\ttfamily \#include $<$stdint.\+h$>$}\newline
+{\ttfamily \#include $<$stdlib.\+h$>$}\newline
+{\ttfamily \#include $<$string.\+h$>$}\newline
+{\ttfamily \#include "{}thread\+\_\+priv.\+h"{}}\newline
+{\ttfamily \#include "{}timer\+\_\+priv.\+h"{}}\newline
+Include dependency graph for thread.\+c\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{linux_2thread_8c__incl}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \mbox{\hyperlink{linux_2thread_8c_ac1c8154e0bcd2e7ca58b968bde82df39}{pal\+\_\+thread\+\_\+create}} (\mbox{\hyperlink{thread_8h_af3448323c3f8733862e088e3ba2ed8cf}{pal\+\_\+thread\+\_\+t}} \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}thread, const \mbox{\hyperlink{thread_8h_a7458e05bb0041818333963792acd51c6}{pal\+\_\+thread\+\_\+priority\+\_\+t}} priority, size\+\_\+t stack\+\_\+size, const \mbox{\hyperlink{thread_8h_ae27c2948d079394af7db4cc282e0cb15}{pal\+\_\+thread\+\_\+func\+\_\+t}} func, const char \texorpdfstring{$\ast$}{*}name, void \texorpdfstring{$\ast$}{*}const arg)
+\begin{DoxyCompactList}\small\item\em Create a thread. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{linux_2thread_8c_a50f96c299c17ea307c65f561145a883c}{pal\+\_\+thread\+\_\+sleep}} (const size\+\_\+t time\+\_\+ms)
+\begin{DoxyCompactList}\small\item\em Suspend the current thread for a specified time. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{linux_2thread_8c_a9ea73f1d0b348b39b9e5d7261ed9e75a}{pal\+\_\+thread\+\_\+scheduler\+\_\+start}} (void)
+\begin{DoxyCompactList}\small\item\em Start the thread scheduler and block execution. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{linux_2thread_8c_a77e2c028aab9cfb43d75539f26b44275}{pal\+\_\+thread\+\_\+join}} (\mbox{\hyperlink{thread_8h_af3448323c3f8733862e088e3ba2ed8cf}{pal\+\_\+thread\+\_\+t}} \texorpdfstring{$\ast$}{*}const thread)
+\begin{DoxyCompactList}\small\item\em Wait for thread pointed by thread to terminate. \end{DoxyCompactList}\item 
+const char \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{linux_2thread_8c_af153d1d438c624b83ee9c085d7ebd352}{pal\+\_\+thread\+\_\+get\+\_\+name}} (\mbox{\hyperlink{thread_8h_af3448323c3f8733862e088e3ba2ed8cf}{pal\+\_\+thread\+\_\+t}} \texorpdfstring{$\ast$}{*}const thread)
+\begin{DoxyCompactList}\small\item\em Get the name of the thread pointed by thread. \end{DoxyCompactList}\item 
+size\+\_\+t \mbox{\hyperlink{linux_2thread_8c_a8fbdc05be469f02cf75ce3bf639a11c3}{pal\+\_\+thread\+\_\+get\+\_\+stack\+\_\+watermark}} (\mbox{\hyperlink{thread_8h_af3448323c3f8733862e088e3ba2ed8cf}{pal\+\_\+thread\+\_\+t}} \texorpdfstring{$\ast$}{*}const thread)
+\begin{DoxyCompactList}\small\item\em Get the maximum used stack size of the thread. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{linux_2thread_8c_af452d0ce3708ee5a142a42f6bacea818}{pal\+\_\+thread\+\_\+free}} (\mbox{\hyperlink{thread_8h_af3448323c3f8733862e088e3ba2ed8cf}{pal\+\_\+thread\+\_\+t}} \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}thread)
+\begin{DoxyCompactList}\small\item\em Free the thread structure. \end{DoxyCompactList}\item 
+void \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{linux_2thread_8c_a257a41cc0341649b1677397fc30e4c46}{pal\+\_\+thread\+\_\+generic\+\_\+func}} (void \texorpdfstring{$\ast$}{*}const arg)
+\begin{DoxyCompactList}\small\item\em Thread function wrapper. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Function Documentation}
+\Hypertarget{linux_2thread_8c_ac1c8154e0bcd2e7ca58b968bde82df39}\label{linux_2thread_8c_ac1c8154e0bcd2e7ca58b968bde82df39} 
+\index{thread.c@{thread.c}!pal\_thread\_create@{pal\_thread\_create}}
+\index{pal\_thread\_create@{pal\_thread\_create}!thread.c@{thread.c}}
+\doxysubsubsection{\texorpdfstring{pal\_thread\_create()}{pal\_thread\_create()}}
+{\footnotesize\ttfamily int pal\+\_\+thread\+\_\+create (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{thread_8h_af3448323c3f8733862e088e3ba2ed8cf}{pal\+\_\+thread\+\_\+t}} \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}}]{thread,  }\item[{\mbox{\hyperlink{thread_8h_a7458e05bb0041818333963792acd51c6}{pal\+\_\+thread\+\_\+priority\+\_\+t}}}]{priority,  }\item[{size\+\_\+t}]{stack\+\_\+size,  }\item[{\mbox{\hyperlink{thread_8h_ae27c2948d079394af7db4cc282e0cb15}{pal\+\_\+thread\+\_\+func\+\_\+t}}}]{func,  }\item[{const char \texorpdfstring{$\ast$}{*}}]{name,  }\item[{void \texorpdfstring{$\ast$}{*}}]{arg }\end{DoxyParamCaption})}
+
+
+
+Create a thread. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em thread} & Pointer to the thread structure. \\
+\hline
+{\em priority} & Thread priority. \\
+\hline
+{\em stack\+\_\+size} & Size of the stack in bytes. \\
+\hline
+{\em func} & Function to be executed by the thread. \\
+\hline
+{\em name} & Thread name. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyNote}{Note}
+The name is used for debugging purposes and may not be supported on all platforms. 
+
+If used, the name should be a null-\/terminated string and should be a costant string. 
+\end{DoxyNote}
+
+\begin{DoxyParams}{Parameters}
+{\em arg} & Argument to be passed to the function.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+0 on success, negative error code on failure. 
+\end{DoxyReturn}
+\Hypertarget{linux_2thread_8c_af452d0ce3708ee5a142a42f6bacea818}\label{linux_2thread_8c_af452d0ce3708ee5a142a42f6bacea818} 
+\index{thread.c@{thread.c}!pal\_thread\_free@{pal\_thread\_free}}
+\index{pal\_thread\_free@{pal\_thread\_free}!thread.c@{thread.c}}
+\doxysubsubsection{\texorpdfstring{pal\_thread\_free()}{pal\_thread\_free()}}
+{\footnotesize\ttfamily void pal\+\_\+thread\+\_\+free (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{thread_8h_af3448323c3f8733862e088e3ba2ed8cf}{pal\+\_\+thread\+\_\+t}} \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}}]{thread }\end{DoxyParamCaption})}
+
+
+
+Free the thread structure. 
+
+\begin{DoxyNote}{Note}
+The thread should be joined before calling this function. 
+
+This function takes care of setting the thread pointer to NULL. 
+\end{DoxyNote}
+
+\begin{DoxyParams}{Parameters}
+{\em thread} & Pointer to the thread to free. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{linux_2thread_8c_a257a41cc0341649b1677397fc30e4c46}\label{linux_2thread_8c_a257a41cc0341649b1677397fc30e4c46} 
+\index{thread.c@{thread.c}!pal\_thread\_generic\_func@{pal\_thread\_generic\_func}}
+\index{pal\_thread\_generic\_func@{pal\_thread\_generic\_func}!thread.c@{thread.c}}
+\doxysubsubsection{\texorpdfstring{pal\_thread\_generic\_func()}{pal\_thread\_generic\_func()}}
+{\footnotesize\ttfamily void \texorpdfstring{$\ast$}{*} pal\+\_\+thread\+\_\+generic\+\_\+func (\begin{DoxyParamCaption}\item[{void \texorpdfstring{$\ast$}{*}const}]{arg }\end{DoxyParamCaption})}
+
+
+
+Thread function wrapper. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em arg} & Pointer to the thread structure. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+NULL. 
+\end{DoxyReturn}
+\Hypertarget{linux_2thread_8c_af153d1d438c624b83ee9c085d7ebd352}\label{linux_2thread_8c_af153d1d438c624b83ee9c085d7ebd352} 
+\index{thread.c@{thread.c}!pal\_thread\_get\_name@{pal\_thread\_get\_name}}
+\index{pal\_thread\_get\_name@{pal\_thread\_get\_name}!thread.c@{thread.c}}
+\doxysubsubsection{\texorpdfstring{pal\_thread\_get\_name()}{pal\_thread\_get\_name()}}
+{\footnotesize\ttfamily const char \texorpdfstring{$\ast$}{*} pal\+\_\+thread\+\_\+get\+\_\+name (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{thread_8h_af3448323c3f8733862e088e3ba2ed8cf}{pal\+\_\+thread\+\_\+t}} \texorpdfstring{$\ast$}{*}const}]{thread }\end{DoxyParamCaption})}
+
+
+
+Get the name of the thread pointed by thread. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em thread} & Pointer to the thread. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Pointer to the thread name. 
+\end{DoxyReturn}
+\Hypertarget{linux_2thread_8c_a8fbdc05be469f02cf75ce3bf639a11c3}\label{linux_2thread_8c_a8fbdc05be469f02cf75ce3bf639a11c3} 
+\index{thread.c@{thread.c}!pal\_thread\_get\_stack\_watermark@{pal\_thread\_get\_stack\_watermark}}
+\index{pal\_thread\_get\_stack\_watermark@{pal\_thread\_get\_stack\_watermark}!thread.c@{thread.c}}
+\doxysubsubsection{\texorpdfstring{pal\_thread\_get\_stack\_watermark()}{pal\_thread\_get\_stack\_watermark()}}
+{\footnotesize\ttfamily size\+\_\+t pal\+\_\+thread\+\_\+get\+\_\+stack\+\_\+watermark (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{thread_8h_af3448323c3f8733862e088e3ba2ed8cf}{pal\+\_\+thread\+\_\+t}} \texorpdfstring{$\ast$}{*}const}]{thread }\end{DoxyParamCaption})}
+
+
+
+Get the maximum used stack size of the thread. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em thread} & Pointer to the thread. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Maximum used stack size in bytes. 
+\end{DoxyReturn}
+\Hypertarget{linux_2thread_8c_a77e2c028aab9cfb43d75539f26b44275}\label{linux_2thread_8c_a77e2c028aab9cfb43d75539f26b44275} 
+\index{thread.c@{thread.c}!pal\_thread\_join@{pal\_thread\_join}}
+\index{pal\_thread\_join@{pal\_thread\_join}!thread.c@{thread.c}}
+\doxysubsubsection{\texorpdfstring{pal\_thread\_join()}{pal\_thread\_join()}}
+{\footnotesize\ttfamily void pal\+\_\+thread\+\_\+join (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{thread_8h_af3448323c3f8733862e088e3ba2ed8cf}{pal\+\_\+thread\+\_\+t}} \texorpdfstring{$\ast$}{*}const}]{thread }\end{DoxyParamCaption})}
+
+
+
+Wait for thread pointed by thread to terminate. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em thread} & Pointer to the thread to wait on. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{linux_2thread_8c_a9ea73f1d0b348b39b9e5d7261ed9e75a}\label{linux_2thread_8c_a9ea73f1d0b348b39b9e5d7261ed9e75a} 
+\index{thread.c@{thread.c}!pal\_thread\_scheduler\_start@{pal\_thread\_scheduler\_start}}
+\index{pal\_thread\_scheduler\_start@{pal\_thread\_scheduler\_start}!thread.c@{thread.c}}
+\doxysubsubsection{\texorpdfstring{pal\_thread\_scheduler\_start()}{pal\_thread\_scheduler\_start()}}
+{\footnotesize\ttfamily void pal\+\_\+thread\+\_\+scheduler\+\_\+start (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Start the thread scheduler and block execution. 
+
+\begin{DoxyNote}{Note}
+This function may not be available on all platforms. 
+\end{DoxyNote}
+\Hypertarget{linux_2thread_8c_a50f96c299c17ea307c65f561145a883c}\label{linux_2thread_8c_a50f96c299c17ea307c65f561145a883c} 
+\index{thread.c@{thread.c}!pal\_thread\_sleep@{pal\_thread\_sleep}}
+\index{pal\_thread\_sleep@{pal\_thread\_sleep}!thread.c@{thread.c}}
+\doxysubsubsection{\texorpdfstring{pal\_thread\_sleep()}{pal\_thread\_sleep()}}
+{\footnotesize\ttfamily void pal\+\_\+thread\+\_\+sleep (\begin{DoxyParamCaption}\item[{size\+\_\+t}]{time\+\_\+ms }\end{DoxyParamCaption})}
+
+
+
+Suspend the current thread for a specified time. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em time\+\_\+ms} & Time to sleep in milliseconds. \\
+\hline
+\end{DoxyParams}

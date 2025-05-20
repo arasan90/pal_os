@@ -1,0 +1,69 @@
+\doxysection{system.\+c}
+\hypertarget{freeRTOS_2system_8c_source}{}\label{freeRTOS_2system_8c_source}\index{src/freeRTOS/system.c@{src/freeRTOS/system.c}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{freeRTOS_2system_8c_source_l00001}00001\ \textcolor{comment}{/*}}
+\DoxyCodeLine{\Hypertarget{freeRTOS_2system_8c_source_l00002}00002\ \textcolor{comment}{\ *\ File:\ system.c}}
+\DoxyCodeLine{\Hypertarget{freeRTOS_2system_8c_source_l00003}00003\ \textcolor{comment}{\ *\ Description:\ Implementation\ of\ system-\/related\ functionality\ for\ the\ freeRTOS\ platform.}}
+\DoxyCodeLine{\Hypertarget{freeRTOS_2system_8c_source_l00004}00004\ \textcolor{comment}{\ *\ Author:\ Massimiliano\ Ianniello}}
+\DoxyCodeLine{\Hypertarget{freeRTOS_2system_8c_source_l00005}00005\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{freeRTOS_2system_8c_source_l00006}00006\ }
+\DoxyCodeLine{\Hypertarget{freeRTOS_2system_8c_source_l00007}00007\ \textcolor{preprocessor}{\#include\ "{}pal\_os/system.h"{}}}
+\DoxyCodeLine{\Hypertarget{freeRTOS_2system_8c_source_l00008}00008\ }
+\DoxyCodeLine{\Hypertarget{freeRTOS_2system_8c_source_l00009}00009\ \textcolor{preprocessor}{\#include\ <stdarg.h>}}
+\DoxyCodeLine{\Hypertarget{freeRTOS_2system_8c_source_l00010}00010\ \textcolor{preprocessor}{\#include\ <stdio.h>}}
+\DoxyCodeLine{\Hypertarget{freeRTOS_2system_8c_source_l00011}00011\ }
+\DoxyCodeLine{\Hypertarget{freeRTOS_2system_8c_source_l00012}00012\ \textcolor{preprocessor}{\#include\ "{}freertos/FreeRTOS.h"{}}}
+\DoxyCodeLine{\Hypertarget{freeRTOS_2system_8c_source_l00013}00013\ \textcolor{preprocessor}{\#include\ "{}freertos/portable.h"{}}}
+\DoxyCodeLine{\Hypertarget{freeRTOS_2system_8c_source_l00014}00014\ }
+\DoxyCodeLine{\Hypertarget{freeRTOS_2system_8c_source_l00015}00015\ \textcolor{comment}{/*\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{\Hypertarget{freeRTOS_2system_8c_source_l00016}00016\ \textcolor{comment}{\ *\ Type\ Definitions}}
+\DoxyCodeLine{\Hypertarget{freeRTOS_2system_8c_source_l00017}00017\ \textcolor{comment}{\ *\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{\Hypertarget{freeRTOS_2system_8c_source_l00018}00018\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{freeRTOS_2system_8c_source_l00019}00019\ }
+\DoxyCodeLine{\Hypertarget{freeRTOS_2system_8c_source_l00020}00020\ \textcolor{comment}{/*\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{\Hypertarget{freeRTOS_2system_8c_source_l00021}00021\ \textcolor{comment}{\ *\ Static\ Definitions}}
+\DoxyCodeLine{\Hypertarget{freeRTOS_2system_8c_source_l00022}00022\ \textcolor{comment}{\ *\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{\Hypertarget{freeRTOS_2system_8c_source_l00023}00023\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{freeRTOS_2system_8c_source_l00024}00024\ }
+\DoxyCodeLine{\Hypertarget{freeRTOS_2system_8c_source_l00025}00025\ \textcolor{comment}{/*\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{\Hypertarget{freeRTOS_2system_8c_source_l00026}00026\ \textcolor{comment}{\ *\ Macros}}
+\DoxyCodeLine{\Hypertarget{freeRTOS_2system_8c_source_l00027}00027\ \textcolor{comment}{\ *\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{\Hypertarget{freeRTOS_2system_8c_source_l00028}00028\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{freeRTOS_2system_8c_source_l00029}00029\ }
+\DoxyCodeLine{\Hypertarget{freeRTOS_2system_8c_source_l00030}00030\ \textcolor{comment}{/*\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{\Hypertarget{freeRTOS_2system_8c_source_l00031}00031\ \textcolor{comment}{\ *\ Constants}}
+\DoxyCodeLine{\Hypertarget{freeRTOS_2system_8c_source_l00032}00032\ \textcolor{comment}{\ *\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{\Hypertarget{freeRTOS_2system_8c_source_l00033}00033\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{freeRTOS_2system_8c_source_l00034}00034\ }
+\DoxyCodeLine{\Hypertarget{freeRTOS_2system_8c_source_l00035}00035\ \textcolor{comment}{/*\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{\Hypertarget{freeRTOS_2system_8c_source_l00036}00036\ \textcolor{comment}{\ *\ Variables}}
+\DoxyCodeLine{\Hypertarget{freeRTOS_2system_8c_source_l00037}00037\ \textcolor{comment}{\ *\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{\Hypertarget{freeRTOS_2system_8c_source_l00038}00038\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{freeRTOS_2system_8c_source_l00039}00039\ \textcolor{keyword}{static}\ \mbox{\hyperlink{structpal__system__s}{pal\_system\_t}}\ pal\_system\_stats\ =\ \{0\};}
+\DoxyCodeLine{\Hypertarget{freeRTOS_2system_8c_source_l00040}00040\ }
+\DoxyCodeLine{\Hypertarget{freeRTOS_2system_8c_source_l00041}00041\ \textcolor{comment}{/*\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{\Hypertarget{freeRTOS_2system_8c_source_l00042}00042\ \textcolor{comment}{\ *\ Static\ Functions}}
+\DoxyCodeLine{\Hypertarget{freeRTOS_2system_8c_source_l00043}00043\ \textcolor{comment}{\ *\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{\Hypertarget{freeRTOS_2system_8c_source_l00044}00044\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{freeRTOS_2system_8c_source_l00045}00045\ }
+\DoxyCodeLine{\Hypertarget{freeRTOS_2system_8c_source_l00046}00046\ \textcolor{comment}{/*\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{\Hypertarget{freeRTOS_2system_8c_source_l00047}00047\ \textcolor{comment}{\ *\ Function\ Implementations}}
+\DoxyCodeLine{\Hypertarget{freeRTOS_2system_8c_source_l00048}00048\ \textcolor{comment}{\ *\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{\Hypertarget{freeRTOS_2system_8c_source_l00049}00049\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{freeRTOS_2system_8c_source_l00050}00050\ \textcolor{keywordtype}{void}\ pal\_system\_printf(\textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *format,\ ...)}
+\DoxyCodeLine{\Hypertarget{freeRTOS_2system_8c_source_l00051}00051\ \{}
+\DoxyCodeLine{\Hypertarget{freeRTOS_2system_8c_source_l00052}00052\ \ \ \ \ va\_list\ args;}
+\DoxyCodeLine{\Hypertarget{freeRTOS_2system_8c_source_l00053}00053\ \ \ \ \ va\_start(args,\ format);}
+\DoxyCodeLine{\Hypertarget{freeRTOS_2system_8c_source_l00054}00054\ \ \ \ \ vprintf(format,\ args);}
+\DoxyCodeLine{\Hypertarget{freeRTOS_2system_8c_source_l00055}00055\ \ \ \ \ va\_end(args);}
+\DoxyCodeLine{\Hypertarget{freeRTOS_2system_8c_source_l00056}00056\ \}}
+\DoxyCodeLine{\Hypertarget{freeRTOS_2system_8c_source_l00057}00057\ }
+\DoxyCodeLine{\Hypertarget{freeRTOS_2system_8c_source_l00058}00058\ \mbox{\hyperlink{structpal__system__s}{pal\_system\_t}}\ *pal\_system\_get\_stats(\textcolor{keywordtype}{void})}
+\DoxyCodeLine{\Hypertarget{freeRTOS_2system_8c_source_l00059}00059\ \{}
+\DoxyCodeLine{\Hypertarget{freeRTOS_2system_8c_source_l00060}00060\ \ \ \ \ pal\_system\_stats.\mbox{\hyperlink{structpal__system__s_a6aeba97915312de6e745934a2c92ca4e}{free\_heap\_size}}\ \ \ \ \ \ \ =\ xPortGetFreeHeapSize();}
+\DoxyCodeLine{\Hypertarget{freeRTOS_2system_8c_source_l00061}00061\ \ \ \ \ pal\_system\_stats.\mbox{\hyperlink{structpal__system__s_aa9078551bf05cdcd20a8220c191313c3}{min\_free\_heap\_size}}\ =\ xPortGetMinimumEverFreeHeapSize();}
+\DoxyCodeLine{\Hypertarget{freeRTOS_2system_8c_source_l00062}00062\ \ \ \ \ \textcolor{keywordflow}{return}\ \&pal\_system\_stats;}
+\DoxyCodeLine{\Hypertarget{freeRTOS_2system_8c_source_l00063}00063\ \}}
+
+\end{DoxyCode}

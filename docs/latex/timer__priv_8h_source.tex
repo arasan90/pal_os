@@ -1,0 +1,68 @@
+\doxysection{timer\+\_\+priv.\+h}
+\hypertarget{timer__priv_8h_source}{}\label{timer__priv_8h_source}\index{src/linux/timer\_priv.h@{src/linux/timer\_priv.h}}
+\mbox{\hyperlink{timer__priv_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00002\ }
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#ifdef\ \_\_cplusplus}}
+\DoxyCodeLine{00004\ \textcolor{keyword}{extern}\ \textcolor{stringliteral}{"{}C"{}}}
+\DoxyCodeLine{00005\ \{}
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00007\ }
+\DoxyCodeLine{00008\ \textcolor{comment}{//\ ============================}}
+\DoxyCodeLine{00009\ \textcolor{comment}{//\ Includes}}
+\DoxyCodeLine{00010\ \textcolor{comment}{//\ ============================}}
+\DoxyCodeLine{00011\ \textcolor{preprocessor}{\#include\ <pthread.h>}}
+\DoxyCodeLine{00012\ \textcolor{preprocessor}{\#include\ <stddef.h>}}
+\DoxyCodeLine{00013\ \textcolor{preprocessor}{\#include\ <\mbox{\hyperlink{time_8h}{time.h}}>}}
+\DoxyCodeLine{00014\ }
+\DoxyCodeLine{00015\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{timer_8h}{pal\_os/timer.h}}"{}}}
+\DoxyCodeLine{00016\ \textcolor{comment}{//\ ============================}}
+\DoxyCodeLine{00017\ \textcolor{comment}{//\ Macros\ and\ Constants}}
+\DoxyCodeLine{00018\ \textcolor{comment}{//\ ============================}}
+\DoxyCodeLine{00019\ }
+\DoxyCodeLine{00020\ \textcolor{comment}{//\ ============================}}
+\DoxyCodeLine{00021\ \textcolor{comment}{//\ Type\ Definitions}}
+\DoxyCodeLine{00022\ \textcolor{comment}{//\ ============================}}
+\DoxyCodeLine{00023\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structpal__timer__s}{pal\_timer\_s}}}
+\DoxyCodeLine{00024\ \{}
+\DoxyCodeLine{00025\ \ \ \ \ \textcolor{keyword}{struct\ }timespec\ \ \ \ \ \ \mbox{\hyperlink{structpal__timer__s_a89ed491443e755b87cbe74bfb5c37253}{expiry\_time}};\ \ }
+\DoxyCodeLine{00026\ \ \ \ \ \mbox{\hyperlink{timer_8h_a0836d11137e5979330dfc2b0312c2005}{pal\_timer\_callback\_t}}\ \mbox{\hyperlink{structpal__timer__s_aa6b6a19f7aa62912510390d40908d633}{callback}};\ \ \ \ \ }
+\DoxyCodeLine{00027\ \ \ \ \ \textcolor{keywordtype}{void}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ *\mbox{\hyperlink{structpal__timer__s_a69a381df9a166c11d759fdd7645ee0a9}{arg}};\ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00028\ \ \ \ \ \textcolor{keywordtype}{int}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structpal__timer__s_a81e567d0306fe70d85664b5762e0289d}{is\_periodic}};\ \ }
+\DoxyCodeLine{00029\ \ \ \ \ \textcolor{keywordtype}{int}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structpal__timer__s_ab878d3e91d51506be7686d85f34eacb7}{is\_started}};\ \ \ }
+\DoxyCodeLine{00030\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structpal__timer__s_ae81739541685792b811d16662db586ad}{period\_ms}};\ \ \ \ \ \ \ }
+\DoxyCodeLine{00031\ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structpal__timer__s}{pal\_timer\_s}}\ \ \ *\mbox{\hyperlink{structpal__timer__s_a35cfa7417f3367d5c4eb81daa55a46a8}{next}};\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00032\ \};}
+\DoxyCodeLine{00033\ }
+\DoxyCodeLine{00034\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structpal__timer__env__s}{pal\_timer\_env\_s}}}
+\DoxyCodeLine{00035\ \{}
+\DoxyCodeLine{00036\ \ \ \ \ pthread\_t\ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structpal__timer__env__s_ad69668cfda75fe9ab9d6a0bb8e84480f}{thread\_handle}};\ }
+\DoxyCodeLine{00037\ \ \ \ \ pthread\_mutex\_t\ \ \ \ \ \mbox{\hyperlink{structpal__timer__env__s_a7d9df30aaab3fca043a9e0c01b280e6e}{mutex}};\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00038\ \ \ \ \ pthread\_cond\_t\ \ \ \ \ \ \mbox{\hyperlink{structpal__timer__env__s_ad8b5f293936e69f1e3d176180965cd13}{cond}};\ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00039\ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structpal__timer__s}{pal\_timer\_s}}\ *\mbox{\hyperlink{structpal__timer__env__s_a4044777030d8478e8cfe680b407fc1d4}{timer\_list}};\ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00040\ \ \ \ \ \textcolor{keywordtype}{int}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structpal__timer__env__s_a90145b57532a46fc7fbd8f2731a399e8}{shutdown\_flag}};\ }
+\DoxyCodeLine{00041\ \}\ \mbox{\hyperlink{timer__priv_8h_a510f14fa44e2895d67be8f4be3bc78e7}{pal\_timer\_env\_t}};}
+\DoxyCodeLine{00042\ }
+\DoxyCodeLine{00043\ \textcolor{keyword}{extern}\ \mbox{\hyperlink{structpal__timer__env__s}{pal\_timer\_env\_t}}\ \mbox{\hyperlink{timer__priv_8h_aa15c36071a749a37d28d8d0ad54a471f}{pal\_timer\_environment}};\ \ }
+\DoxyCodeLine{00044\ }
+\DoxyCodeLine{00045\ \textcolor{comment}{//\ ============================}}
+\DoxyCodeLine{00046\ \textcolor{comment}{//\ Function\ Declarations}}
+\DoxyCodeLine{00047\ \textcolor{comment}{//\ ============================}}
+\DoxyCodeLine{00052\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{timer__priv_8h_af99e4f72be010ebd08693778e191d84b}{pal\_timer\_init}}(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{00053\ }
+\DoxyCodeLine{00057\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{timer__priv_8h_af5b8298e9a6a4974ff9bf33d408fe55b}{pal\_timer\_deinit}}(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{00058\ }
+\DoxyCodeLine{00065\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{timer__priv_8h_ab810bc56d6ebb96de55756d4208f99d1}{pal\_os\_timer\_time\_cmp}}(\textcolor{keyword}{const}\ \textcolor{keyword}{struct}\ timespec\ *a,\ \textcolor{keyword}{const}\ \textcolor{keyword}{struct}\ timespec\ *b);}
+\DoxyCodeLine{00066\ }
+\DoxyCodeLine{00071\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{timer__priv_8h_a20bdd8caea18bbccc670a08e78d03a8b}{pal\_os\_timer\_insert\_sorted}}(\mbox{\hyperlink{structpal__timer__s}{pal\_timer\_t}}\ *timer);}
+\DoxyCodeLine{00072\ }
+\DoxyCodeLine{00077\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{timer__priv_8h_aec524543047b8634546d02015a03a326}{pal\_os\_timer\_remove}}(\mbox{\hyperlink{structpal__timer__s}{pal\_timer\_t}}\ *timer);}
+\DoxyCodeLine{00078\ }
+\DoxyCodeLine{00085\ \textcolor{keywordtype}{void}\ *\mbox{\hyperlink{timer__priv_8h_a32f7b13d3d2448554b71f4acb6b5b5a4}{pal\_timer\_thread\_fn}}(\textcolor{keywordtype}{void}\ *\mbox{\hyperlink{structpal__timer__s_a69a381df9a166c11d759fdd7645ee0a9}{arg}});}
+\DoxyCodeLine{00086\ }
+\DoxyCodeLine{00087\ \textcolor{preprocessor}{\#ifdef\ \_\_cplusplus}}
+\DoxyCodeLine{00088\ \}}
+\DoxyCodeLine{00089\ \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

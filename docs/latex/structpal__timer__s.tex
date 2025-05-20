@@ -1,0 +1,110 @@
+\doxysection{pal\+\_\+timer\+\_\+s Struct Reference}
+\hypertarget{structpal__timer__s}{}\label{structpal__timer__s}\index{pal\_timer\_s@{pal\_timer\_s}}
+
+
+{\ttfamily \#include $<$timer\+\_\+priv.\+h$>$}
+
+
+
+Collaboration diagram for pal\+\_\+timer\+\_\+s\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=216pt]{structpal__timer__s__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+struct timespec \mbox{\hyperlink{structpal__timer__s_a89ed491443e755b87cbe74bfb5c37253}{expiry\+\_\+time}}
+\begin{DoxyCompactList}\small\item\em Expiry time of the timer. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{timer_8h_a0836d11137e5979330dfc2b0312c2005}{pal\+\_\+timer\+\_\+callback\+\_\+t}} \mbox{\hyperlink{structpal__timer__s_aa6b6a19f7aa62912510390d40908d633}{callback}}
+\begin{DoxyCompactList}\small\item\em Callback function to be called when the timer expires. \end{DoxyCompactList}\item 
+void \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{structpal__timer__s_a69a381df9a166c11d759fdd7645ee0a9}{arg}}
+\begin{DoxyCompactList}\small\item\em User-\/defined argument passed to the callback function. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{structpal__timer__s_a81e567d0306fe70d85664b5762e0289d}{is\+\_\+periodic}}
+\begin{DoxyCompactList}\small\item\em Flag indicating if the timer is periodic. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{structpal__timer__s_ab878d3e91d51506be7686d85f34eacb7}{is\+\_\+started}}
+\begin{DoxyCompactList}\small\item\em Flag indicating if the timer is started. \end{DoxyCompactList}\item 
+size\+\_\+t \mbox{\hyperlink{structpal__timer__s_ae81739541685792b811d16662db586ad}{period\+\_\+ms}}
+\begin{DoxyCompactList}\small\item\em Timer period in milliseconds. \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{structpal__timer__s}{pal\+\_\+timer\+\_\+s}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{structpal__timer__s_a35cfa7417f3367d5c4eb81daa55a46a8}{next}}
+\begin{DoxyCompactList}\small\item\em Pointer to the next timer in the list. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Member Data Documentation}
+\Hypertarget{structpal__timer__s_a69a381df9a166c11d759fdd7645ee0a9}\label{structpal__timer__s_a69a381df9a166c11d759fdd7645ee0a9} 
+\index{pal\_timer\_s@{pal\_timer\_s}!arg@{arg}}
+\index{arg@{arg}!pal\_timer\_s@{pal\_timer\_s}}
+\doxysubsubsection{\texorpdfstring{arg}{arg}}
+{\footnotesize\ttfamily void\texorpdfstring{$\ast$}{*} pal\+\_\+timer\+\_\+s\+::arg}
+
+
+
+User-\/defined argument passed to the callback function. 
+
+\Hypertarget{structpal__timer__s_aa6b6a19f7aa62912510390d40908d633}\label{structpal__timer__s_aa6b6a19f7aa62912510390d40908d633} 
+\index{pal\_timer\_s@{pal\_timer\_s}!callback@{callback}}
+\index{callback@{callback}!pal\_timer\_s@{pal\_timer\_s}}
+\doxysubsubsection{\texorpdfstring{callback}{callback}}
+{\footnotesize\ttfamily \mbox{\hyperlink{timer_8h_a0836d11137e5979330dfc2b0312c2005}{pal\+\_\+timer\+\_\+callback\+\_\+t}} pal\+\_\+timer\+\_\+s\+::callback}
+
+
+
+Callback function to be called when the timer expires. 
+
+\Hypertarget{structpal__timer__s_a89ed491443e755b87cbe74bfb5c37253}\label{structpal__timer__s_a89ed491443e755b87cbe74bfb5c37253} 
+\index{pal\_timer\_s@{pal\_timer\_s}!expiry\_time@{expiry\_time}}
+\index{expiry\_time@{expiry\_time}!pal\_timer\_s@{pal\_timer\_s}}
+\doxysubsubsection{\texorpdfstring{expiry\_time}{expiry\_time}}
+{\footnotesize\ttfamily struct timespec pal\+\_\+timer\+\_\+s\+::expiry\+\_\+time}
+
+
+
+Expiry time of the timer. 
+
+\Hypertarget{structpal__timer__s_a81e567d0306fe70d85664b5762e0289d}\label{structpal__timer__s_a81e567d0306fe70d85664b5762e0289d} 
+\index{pal\_timer\_s@{pal\_timer\_s}!is\_periodic@{is\_periodic}}
+\index{is\_periodic@{is\_periodic}!pal\_timer\_s@{pal\_timer\_s}}
+\doxysubsubsection{\texorpdfstring{is\_periodic}{is\_periodic}}
+{\footnotesize\ttfamily int pal\+\_\+timer\+\_\+s\+::is\+\_\+periodic}
+
+
+
+Flag indicating if the timer is periodic. 
+
+\Hypertarget{structpal__timer__s_ab878d3e91d51506be7686d85f34eacb7}\label{structpal__timer__s_ab878d3e91d51506be7686d85f34eacb7} 
+\index{pal\_timer\_s@{pal\_timer\_s}!is\_started@{is\_started}}
+\index{is\_started@{is\_started}!pal\_timer\_s@{pal\_timer\_s}}
+\doxysubsubsection{\texorpdfstring{is\_started}{is\_started}}
+{\footnotesize\ttfamily int pal\+\_\+timer\+\_\+s\+::is\+\_\+started}
+
+
+
+Flag indicating if the timer is started. 
+
+\Hypertarget{structpal__timer__s_a35cfa7417f3367d5c4eb81daa55a46a8}\label{structpal__timer__s_a35cfa7417f3367d5c4eb81daa55a46a8} 
+\index{pal\_timer\_s@{pal\_timer\_s}!next@{next}}
+\index{next@{next}!pal\_timer\_s@{pal\_timer\_s}}
+\doxysubsubsection{\texorpdfstring{next}{next}}
+{\footnotesize\ttfamily struct \mbox{\hyperlink{structpal__timer__s}{pal\+\_\+timer\+\_\+s}}\texorpdfstring{$\ast$}{*} pal\+\_\+timer\+\_\+s\+::next}
+
+
+
+Pointer to the next timer in the list. 
+
+\Hypertarget{structpal__timer__s_ae81739541685792b811d16662db586ad}\label{structpal__timer__s_ae81739541685792b811d16662db586ad} 
+\index{pal\_timer\_s@{pal\_timer\_s}!period\_ms@{period\_ms}}
+\index{period\_ms@{period\_ms}!pal\_timer\_s@{pal\_timer\_s}}
+\doxysubsubsection{\texorpdfstring{period\_ms}{period\_ms}}
+{\footnotesize\ttfamily size\+\_\+t pal\+\_\+timer\+\_\+s\+::period\+\_\+ms}
+
+
+
+Timer period in milliseconds. 
+
+
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+src/linux/\mbox{\hyperlink{timer__priv_8h}{timer\+\_\+priv.\+h}}\end{DoxyCompactItemize}

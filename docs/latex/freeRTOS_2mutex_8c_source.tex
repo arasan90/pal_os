@@ -1,0 +1,127 @@
+\doxysection{mutex.\+c}
+\hypertarget{freeRTOS_2mutex_8c_source}{}\label{freeRTOS_2mutex_8c_source}\index{src/freeRTOS/mutex.c@{src/freeRTOS/mutex.c}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{freeRTOS_2mutex_8c_source_l00001}00001\ \textcolor{comment}{/*}}
+\DoxyCodeLine{\Hypertarget{freeRTOS_2mutex_8c_source_l00002}00002\ \textcolor{comment}{\ *\ File:\ mutex.c}}
+\DoxyCodeLine{\Hypertarget{freeRTOS_2mutex_8c_source_l00003}00003\ \textcolor{comment}{\ *\ Description:\ Implementation\ of\ mutex-\/related\ functionality\ for\ the\ Linux\ platform.}}
+\DoxyCodeLine{\Hypertarget{freeRTOS_2mutex_8c_source_l00004}00004\ \textcolor{comment}{\ *\ Author:\ Massimiliano\ Ianniello}}
+\DoxyCodeLine{\Hypertarget{freeRTOS_2mutex_8c_source_l00005}00005\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{freeRTOS_2mutex_8c_source_l00006}00006\ }
+\DoxyCodeLine{\Hypertarget{freeRTOS_2mutex_8c_source_l00007}00007\ \textcolor{preprocessor}{\#include\ <string.h>}}
+\DoxyCodeLine{\Hypertarget{freeRTOS_2mutex_8c_source_l00008}00008\ }
+\DoxyCodeLine{\Hypertarget{freeRTOS_2mutex_8c_source_l00009}00009\ \textcolor{preprocessor}{\#include\ "{}freertos/FreeRTOS.h"{}}}
+\DoxyCodeLine{\Hypertarget{freeRTOS_2mutex_8c_source_l00010}00010\ \textcolor{preprocessor}{\#include\ "{}freertos/portable.h"{}}}
+\DoxyCodeLine{\Hypertarget{freeRTOS_2mutex_8c_source_l00011}00011\ \textcolor{preprocessor}{\#include\ "{}freertos/semphr.h"{}}}
+\DoxyCodeLine{\Hypertarget{freeRTOS_2mutex_8c_source_l00012}00012\ \textcolor{preprocessor}{\#include\ "{}mutex\_priv.h"{}}}
+\DoxyCodeLine{\Hypertarget{freeRTOS_2mutex_8c_source_l00013}00013\ \textcolor{preprocessor}{\#include\ "{}pal\_os/common.h"{}}}
+\DoxyCodeLine{\Hypertarget{freeRTOS_2mutex_8c_source_l00014}00014\ }
+\DoxyCodeLine{\Hypertarget{freeRTOS_2mutex_8c_source_l00015}00015\ \textcolor{comment}{/*\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{\Hypertarget{freeRTOS_2mutex_8c_source_l00016}00016\ \textcolor{comment}{\ *\ Type\ Definitions}}
+\DoxyCodeLine{\Hypertarget{freeRTOS_2mutex_8c_source_l00017}00017\ \textcolor{comment}{\ *\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{\Hypertarget{freeRTOS_2mutex_8c_source_l00018}00018\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{freeRTOS_2mutex_8c_source_l00019}00019\ }
+\DoxyCodeLine{\Hypertarget{freeRTOS_2mutex_8c_source_l00020}00020\ \textcolor{comment}{/*\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{\Hypertarget{freeRTOS_2mutex_8c_source_l00021}00021\ \textcolor{comment}{\ *\ Static\ Definitions}}
+\DoxyCodeLine{\Hypertarget{freeRTOS_2mutex_8c_source_l00022}00022\ \textcolor{comment}{\ *\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{\Hypertarget{freeRTOS_2mutex_8c_source_l00023}00023\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{freeRTOS_2mutex_8c_source_l00024}00024\ }
+\DoxyCodeLine{\Hypertarget{freeRTOS_2mutex_8c_source_l00025}00025\ \textcolor{comment}{/*\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{\Hypertarget{freeRTOS_2mutex_8c_source_l00026}00026\ \textcolor{comment}{\ *\ Macros}}
+\DoxyCodeLine{\Hypertarget{freeRTOS_2mutex_8c_source_l00027}00027\ \textcolor{comment}{\ *\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{\Hypertarget{freeRTOS_2mutex_8c_source_l00028}00028\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{freeRTOS_2mutex_8c_source_l00029}00029\ }
+\DoxyCodeLine{\Hypertarget{freeRTOS_2mutex_8c_source_l00030}00030\ \textcolor{comment}{/*\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{\Hypertarget{freeRTOS_2mutex_8c_source_l00031}00031\ \textcolor{comment}{\ *\ Constants}}
+\DoxyCodeLine{\Hypertarget{freeRTOS_2mutex_8c_source_l00032}00032\ \textcolor{comment}{\ *\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{\Hypertarget{freeRTOS_2mutex_8c_source_l00033}00033\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{freeRTOS_2mutex_8c_source_l00034}00034\ }
+\DoxyCodeLine{\Hypertarget{freeRTOS_2mutex_8c_source_l00035}00035\ \textcolor{comment}{/*\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{\Hypertarget{freeRTOS_2mutex_8c_source_l00036}00036\ \textcolor{comment}{\ *\ Static\ Functions}}
+\DoxyCodeLine{\Hypertarget{freeRTOS_2mutex_8c_source_l00037}00037\ \textcolor{comment}{\ *\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{\Hypertarget{freeRTOS_2mutex_8c_source_l00038}00038\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{freeRTOS_2mutex_8c_source_l00039}00039\ }
+\DoxyCodeLine{\Hypertarget{freeRTOS_2mutex_8c_source_l00040}00040\ \textcolor{comment}{/*\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{\Hypertarget{freeRTOS_2mutex_8c_source_l00041}00041\ \textcolor{comment}{\ *\ Function\ Implementations}}
+\DoxyCodeLine{\Hypertarget{freeRTOS_2mutex_8c_source_l00042}00042\ \textcolor{comment}{\ *\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{\Hypertarget{freeRTOS_2mutex_8c_source_l00043}00043\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{freeRTOS_2mutex_8c_source_l00044}00044\ \textcolor{keywordtype}{int}\ pal\_mutex\_create(\mbox{\hyperlink{structpal__mutex__s}{pal\_mutex\_t}}\ **mutex,\ \textcolor{keywordtype}{int}\ recursive)}
+\DoxyCodeLine{\Hypertarget{freeRTOS_2mutex_8c_source_l00045}00045\ \{}
+\DoxyCodeLine{\Hypertarget{freeRTOS_2mutex_8c_source_l00046}00046\ \ \ \ \ \textcolor{keywordtype}{int}\ ret\_code\ =\ -\/1;}
+\DoxyCodeLine{\Hypertarget{freeRTOS_2mutex_8c_source_l00047}00047\ \ \ \ \ \textcolor{keywordflow}{if}\ (mutex)}
+\DoxyCodeLine{\Hypertarget{freeRTOS_2mutex_8c_source_l00048}00048\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{freeRTOS_2mutex_8c_source_l00049}00049\ \ \ \ \ \ \ \ \ *mutex\ =\ pvPortMalloc(\textcolor{keyword}{sizeof}(\mbox{\hyperlink{structpal__mutex__s}{pal\_mutex\_t}}));}
+\DoxyCodeLine{\Hypertarget{freeRTOS_2mutex_8c_source_l00050}00050\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (*mutex)}
+\DoxyCodeLine{\Hypertarget{freeRTOS_2mutex_8c_source_l00051}00051\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{freeRTOS_2mutex_8c_source_l00052}00052\ \ \ \ \ \ \ \ \ \ \ \ \ memset(*mutex,\ 0,\ \textcolor{keyword}{sizeof}(\mbox{\hyperlink{structpal__mutex__s}{pal\_mutex\_t}}));}
+\DoxyCodeLine{\Hypertarget{freeRTOS_2mutex_8c_source_l00053}00053\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (recursive)}
+\DoxyCodeLine{\Hypertarget{freeRTOS_2mutex_8c_source_l00054}00054\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{freeRTOS_2mutex_8c_source_l00055}00055\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (*mutex)-\/>is\_recursive\ =\ 1;}
+\DoxyCodeLine{\Hypertarget{freeRTOS_2mutex_8c_source_l00056}00056\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (*mutex)-\/>mutex\_handle\ =\ xSemaphoreCreateRecursiveMutex();}
+\DoxyCodeLine{\Hypertarget{freeRTOS_2mutex_8c_source_l00057}00057\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{freeRTOS_2mutex_8c_source_l00058}00058\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{freeRTOS_2mutex_8c_source_l00059}00059\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{freeRTOS_2mutex_8c_source_l00060}00060\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (*mutex)-\/>mutex\_handle\ =\ xSemaphoreCreateMutex();}
+\DoxyCodeLine{\Hypertarget{freeRTOS_2mutex_8c_source_l00061}00061\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{freeRTOS_2mutex_8c_source_l00062}00062\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (*mutex)}
+\DoxyCodeLine{\Hypertarget{freeRTOS_2mutex_8c_source_l00063}00063\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{freeRTOS_2mutex_8c_source_l00064}00064\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ret\_code\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{freeRTOS_2mutex_8c_source_l00065}00065\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{freeRTOS_2mutex_8c_source_l00066}00066\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{freeRTOS_2mutex_8c_source_l00067}00067\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{freeRTOS_2mutex_8c_source_l00068}00068\ \ \ \ \ \textcolor{keywordflow}{return}\ ret\_code;}
+\DoxyCodeLine{\Hypertarget{freeRTOS_2mutex_8c_source_l00069}00069\ \}}
+\DoxyCodeLine{\Hypertarget{freeRTOS_2mutex_8c_source_l00070}00070\ }
+\DoxyCodeLine{\Hypertarget{freeRTOS_2mutex_8c_source_l00071}00071\ \textcolor{keywordtype}{int}\ pal\_mutex\_lock(\mbox{\hyperlink{structpal__mutex__s}{pal\_mutex\_t}}\ *mutex,\ \textcolor{keywordtype}{size\_t}\ timeout\_ms)}
+\DoxyCodeLine{\Hypertarget{freeRTOS_2mutex_8c_source_l00072}00072\ \{}
+\DoxyCodeLine{\Hypertarget{freeRTOS_2mutex_8c_source_l00073}00073\ \ \ \ \ \textcolor{keywordtype}{int}\ ret\_code\ =\ -\/1;}
+\DoxyCodeLine{\Hypertarget{freeRTOS_2mutex_8c_source_l00074}00074\ \ \ \ \ \textcolor{keywordflow}{if}\ (mutex)}
+\DoxyCodeLine{\Hypertarget{freeRTOS_2mutex_8c_source_l00075}00075\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{freeRTOS_2mutex_8c_source_l00076}00076\ \ \ \ \ \ \ \ \ TickType\_t\ timeout\_ticks\ =\ portMAX\_DELAY;}
+\DoxyCodeLine{\Hypertarget{freeRTOS_2mutex_8c_source_l00077}00077\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (PAL\_OS\_INFINITE\_TIMEOUT\ !=\ timeout\_ms)}
+\DoxyCodeLine{\Hypertarget{freeRTOS_2mutex_8c_source_l00078}00078\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{freeRTOS_2mutex_8c_source_l00079}00079\ \ \ \ \ \ \ \ \ \ \ \ \ timeout\_ticks\ =\ pdMS\_TO\_TICKS(timeout\_ms);}
+\DoxyCodeLine{\Hypertarget{freeRTOS_2mutex_8c_source_l00080}00080\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{freeRTOS_2mutex_8c_source_l00081}00081\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (mutex-\/>\mbox{\hyperlink{structpal__mutex__s_a7a662e7845d63226955cb5b96f9e5a73}{is\_recursive}})}
+\DoxyCodeLine{\Hypertarget{freeRTOS_2mutex_8c_source_l00082}00082\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{freeRTOS_2mutex_8c_source_l00083}00083\ \ \ \ \ \ \ \ \ \ \ \ \ ret\_code\ =\ pdTRUE\ ==\ xSemaphoreTakeRecursive(mutex-\/>\mbox{\hyperlink{structpal__mutex__s_a923b5e4ca491436d61d755bf31879e83}{mutex\_handle}},\ timeout\_ticks)\ ?\ 0\ :\ -\/1;}
+\DoxyCodeLine{\Hypertarget{freeRTOS_2mutex_8c_source_l00084}00084\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{freeRTOS_2mutex_8c_source_l00085}00085\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{freeRTOS_2mutex_8c_source_l00086}00086\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{freeRTOS_2mutex_8c_source_l00087}00087\ \ \ \ \ \ \ \ \ \ \ \ \ ret\_code\ =\ pdTRUE\ ==\ xSemaphoreTake(mutex-\/>\mbox{\hyperlink{structpal__mutex__s_a923b5e4ca491436d61d755bf31879e83}{mutex\_handle}},\ timeout\_ticks)\ ?\ 0\ :\ -\/1;}
+\DoxyCodeLine{\Hypertarget{freeRTOS_2mutex_8c_source_l00088}00088\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{freeRTOS_2mutex_8c_source_l00089}00089\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{freeRTOS_2mutex_8c_source_l00090}00090\ \ \ \ \ \textcolor{keywordflow}{return}\ ret\_code;}
+\DoxyCodeLine{\Hypertarget{freeRTOS_2mutex_8c_source_l00091}00091\ \}}
+\DoxyCodeLine{\Hypertarget{freeRTOS_2mutex_8c_source_l00092}00092\ }
+\DoxyCodeLine{\Hypertarget{freeRTOS_2mutex_8c_source_l00093}00093\ \textcolor{keywordtype}{int}\ pal\_mutex\_unlock(\mbox{\hyperlink{structpal__mutex__s}{pal\_mutex\_t}}\ *mutex)}
+\DoxyCodeLine{\Hypertarget{freeRTOS_2mutex_8c_source_l00094}00094\ \{}
+\DoxyCodeLine{\Hypertarget{freeRTOS_2mutex_8c_source_l00095}00095\ \ \ \ \ \textcolor{keywordtype}{int}\ ret\_code\ =\ -\/1;}
+\DoxyCodeLine{\Hypertarget{freeRTOS_2mutex_8c_source_l00096}00096\ \ \ \ \ \textcolor{keywordflow}{if}\ (mutex)}
+\DoxyCodeLine{\Hypertarget{freeRTOS_2mutex_8c_source_l00097}00097\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{freeRTOS_2mutex_8c_source_l00098}00098\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (mutex-\/>\mbox{\hyperlink{structpal__mutex__s_a7a662e7845d63226955cb5b96f9e5a73}{is\_recursive}})}
+\DoxyCodeLine{\Hypertarget{freeRTOS_2mutex_8c_source_l00099}00099\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{freeRTOS_2mutex_8c_source_l00100}00100\ \ \ \ \ \ \ \ \ \ \ \ \ ret\_code\ =\ pdTRUE\ ==\ xSemaphoreGiveRecursive(mutex-\/>\mbox{\hyperlink{structpal__mutex__s_a923b5e4ca491436d61d755bf31879e83}{mutex\_handle}})\ ?\ 0\ :\ -\/1;}
+\DoxyCodeLine{\Hypertarget{freeRTOS_2mutex_8c_source_l00101}00101\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{freeRTOS_2mutex_8c_source_l00102}00102\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{freeRTOS_2mutex_8c_source_l00103}00103\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{freeRTOS_2mutex_8c_source_l00104}00104\ \ \ \ \ \ \ \ \ \ \ \ \ ret\_code\ =\ pdTRUE\ ==\ xSemaphoreGive(mutex-\/>\mbox{\hyperlink{structpal__mutex__s_a923b5e4ca491436d61d755bf31879e83}{mutex\_handle}})\ ?\ 0\ :\ -\/1;}
+\DoxyCodeLine{\Hypertarget{freeRTOS_2mutex_8c_source_l00105}00105\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{freeRTOS_2mutex_8c_source_l00106}00106\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{freeRTOS_2mutex_8c_source_l00107}00107\ \ \ \ \ \textcolor{keywordflow}{return}\ ret\_code;}
+\DoxyCodeLine{\Hypertarget{freeRTOS_2mutex_8c_source_l00108}00108\ \}}
+\DoxyCodeLine{\Hypertarget{freeRTOS_2mutex_8c_source_l00109}00109\ }
+\DoxyCodeLine{\Hypertarget{freeRTOS_2mutex_8c_source_l00110}00110\ \textcolor{keywordtype}{int}\ pal\_mutex\_destroy(\mbox{\hyperlink{structpal__mutex__s}{pal\_mutex\_t}}\ **mutex)}
+\DoxyCodeLine{\Hypertarget{freeRTOS_2mutex_8c_source_l00111}00111\ \{}
+\DoxyCodeLine{\Hypertarget{freeRTOS_2mutex_8c_source_l00112}00112\ \ \ \ \ \textcolor{keywordtype}{int}\ ret\_code\ =\ -\/1;}
+\DoxyCodeLine{\Hypertarget{freeRTOS_2mutex_8c_source_l00113}00113\ \ \ \ \ \textcolor{keywordflow}{if}\ (mutex\ \&\&\ *mutex)}
+\DoxyCodeLine{\Hypertarget{freeRTOS_2mutex_8c_source_l00114}00114\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{freeRTOS_2mutex_8c_source_l00115}00115\ \ \ \ \ \ \ \ \ vSemaphoreDelete((*mutex)-\/>mutex\_handle);}
+\DoxyCodeLine{\Hypertarget{freeRTOS_2mutex_8c_source_l00116}00116\ \ \ \ \ \ \ \ \ vPortFree(*mutex);}
+\DoxyCodeLine{\Hypertarget{freeRTOS_2mutex_8c_source_l00117}00117\ \ \ \ \ \ \ \ \ *mutex\ \ \ =\ NULL;}
+\DoxyCodeLine{\Hypertarget{freeRTOS_2mutex_8c_source_l00118}00118\ \ \ \ \ \ \ \ \ ret\_code\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{freeRTOS_2mutex_8c_source_l00119}00119\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{freeRTOS_2mutex_8c_source_l00120}00120\ \ \ \ \ \textcolor{keywordflow}{return}\ ret\_code;}
+\DoxyCodeLine{\Hypertarget{freeRTOS_2mutex_8c_source_l00121}00121\ \}}
+
+\end{DoxyCode}

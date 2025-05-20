@@ -1,0 +1,46 @@
+\doxysection{queue\+\_\+priv.\+h}
+\hypertarget{queue__priv_8h_source}{}\label{queue__priv_8h_source}\index{src/linux/queue\_priv.h@{src/linux/queue\_priv.h}}
+\mbox{\hyperlink{queue__priv_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00002\ }
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#ifdef\ \_\_cplusplus}}
+\DoxyCodeLine{00004\ \textcolor{keyword}{extern}\ \textcolor{stringliteral}{"{}C"{}}}
+\DoxyCodeLine{00005\ \{}
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00007\ }
+\DoxyCodeLine{00008\ \textcolor{comment}{//\ ============================}}
+\DoxyCodeLine{00009\ \textcolor{comment}{//\ Includes}}
+\DoxyCodeLine{00010\ \textcolor{comment}{//\ ============================}}
+\DoxyCodeLine{00011\ \textcolor{preprocessor}{\#include\ <pthread.h>}}
+\DoxyCodeLine{00012\ \textcolor{preprocessor}{\#include\ <semaphore.h>}}
+\DoxyCodeLine{00013\ }
+\DoxyCodeLine{00014\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{queue_8h}{pal\_os/queue.h}}"{}}}
+\DoxyCodeLine{00015\ \textcolor{comment}{//\ ============================}}
+\DoxyCodeLine{00016\ \textcolor{comment}{//\ Macros\ and\ Constants}}
+\DoxyCodeLine{00017\ \textcolor{comment}{//\ ============================}}
+\DoxyCodeLine{00018\ }
+\DoxyCodeLine{00019\ \textcolor{comment}{//\ ============================}}
+\DoxyCodeLine{00020\ \textcolor{comment}{//\ Type\ Definitions}}
+\DoxyCodeLine{00021\ \textcolor{comment}{//\ ============================}}
+\DoxyCodeLine{00022\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structpal__queue__s}{pal\_queue\_s}}}
+\DoxyCodeLine{00023\ \{}
+\DoxyCodeLine{00024\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structpal__queue__s_aeaedfd310d3eff9cab298d564c4693c2}{item\_size}};\ }
+\DoxyCodeLine{00025\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structpal__queue__s_a96e32fe237250edec28e14f85b760620}{max\_items}};\ }
+\DoxyCodeLine{00026\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structpal__queue__s_aacaac9c6efe1f71c674d9d253d1eae87}{head}};\ \ \ \ \ \ \ }
+\DoxyCodeLine{00027\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structpal__queue__s_ae607cf4380a4c8086d0a5fcbd2a5ad29}{tail}};\ \ \ \ \ \ \ }
+\DoxyCodeLine{00028\ \ \ \ \ pthread\_mutex\_t\ \mbox{\hyperlink{structpal__queue__s_ad799003b562b660bccc7683a4a2ac28c}{mutex}};\ \ \ \ \ }
+\DoxyCodeLine{00029\ \ \ \ \ pthread\_cond\_t\ \ \mbox{\hyperlink{structpal__queue__s_a413fa0be19a4280f89d792eb84cf9850}{full}};\ \ \ \ \ \ \ }
+\DoxyCodeLine{00030\ \ \ \ \ pthread\_cond\_t\ \ \mbox{\hyperlink{structpal__queue__s_ab60b822e6b5d99ed582463db70fe2afa}{empty}};\ \ \ \ \ }
+\DoxyCodeLine{00031\ \ \ \ \ \textcolor{keywordtype}{void}\ \ \ \ \ \ \ \ \ \ \ *\mbox{\hyperlink{structpal__queue__s_a30e7e8e2ddfb4cb61216a694ea17fe55}{data}};\ \ \ \ \ \ \ }
+\DoxyCodeLine{00032\ \};}
+\DoxyCodeLine{00033\ }
+\DoxyCodeLine{00034\ \textcolor{comment}{//\ ============================}}
+\DoxyCodeLine{00035\ \textcolor{comment}{//\ Function\ Declarations}}
+\DoxyCodeLine{00036\ \textcolor{comment}{//\ ============================}}
+\DoxyCodeLine{00037\ }
+\DoxyCodeLine{00038\ \textcolor{preprocessor}{\#ifdef\ \_\_cplusplus}}
+\DoxyCodeLine{00039\ \}}
+\DoxyCodeLine{00040\ \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

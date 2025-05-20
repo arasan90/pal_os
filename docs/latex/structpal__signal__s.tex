@@ -1,0 +1,61 @@
+\doxysection{pal\+\_\+signal\+\_\+s Struct Reference}
+\hypertarget{structpal__signal__s}{}\label{structpal__signal__s}\index{pal\_signal\_s@{pal\_signal\_s}}
+
+
+Internal structure representing a signal object.  
+
+
+
+
+{\ttfamily \#include $<$signal\+\_\+priv.\+h$>$}
+
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+pthread\+\_\+mutex\+\_\+t \mbox{\hyperlink{structpal__signal__s_a45198861037651738b4dd3d526ab927c}{mutex}}
+\begin{DoxyCompactList}\small\item\em Mutex for thread safety. \end{DoxyCompactList}\item 
+pthread\+\_\+cond\+\_\+t \mbox{\hyperlink{structpal__signal__s_ae47b6dbdc3853d77f7bb4235fd858dc1}{cond}}
+\begin{DoxyCompactList}\small\item\em Condition variable for signaling. \end{DoxyCompactList}\item 
+size\+\_\+t \mbox{\hyperlink{structpal__signal__s_aa5ed3a759226dd4999f049e7695da53a}{signals}}
+\begin{DoxyCompactList}\small\item\em Bitmask of active signals. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Internal structure representing a signal object. 
+
+\doxysubsection{Member Data Documentation}
+\Hypertarget{structpal__signal__s_ae47b6dbdc3853d77f7bb4235fd858dc1}\label{structpal__signal__s_ae47b6dbdc3853d77f7bb4235fd858dc1} 
+\index{pal\_signal\_s@{pal\_signal\_s}!cond@{cond}}
+\index{cond@{cond}!pal\_signal\_s@{pal\_signal\_s}}
+\doxysubsubsection{\texorpdfstring{cond}{cond}}
+{\footnotesize\ttfamily pthread\+\_\+cond\+\_\+t pal\+\_\+signal\+\_\+s\+::cond}
+
+
+
+Condition variable for signaling. 
+
+\Hypertarget{structpal__signal__s_a45198861037651738b4dd3d526ab927c}\label{structpal__signal__s_a45198861037651738b4dd3d526ab927c} 
+\index{pal\_signal\_s@{pal\_signal\_s}!mutex@{mutex}}
+\index{mutex@{mutex}!pal\_signal\_s@{pal\_signal\_s}}
+\doxysubsubsection{\texorpdfstring{mutex}{mutex}}
+{\footnotesize\ttfamily pthread\+\_\+mutex\+\_\+t pal\+\_\+signal\+\_\+s\+::mutex}
+
+
+
+Mutex for thread safety. 
+
+\Hypertarget{structpal__signal__s_aa5ed3a759226dd4999f049e7695da53a}\label{structpal__signal__s_aa5ed3a759226dd4999f049e7695da53a} 
+\index{pal\_signal\_s@{pal\_signal\_s}!signals@{signals}}
+\index{signals@{signals}!pal\_signal\_s@{pal\_signal\_s}}
+\doxysubsubsection{\texorpdfstring{signals}{signals}}
+{\footnotesize\ttfamily size\+\_\+t pal\+\_\+signal\+\_\+s\+::signals}
+
+
+
+Bitmask of active signals. 
+
+
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+src/linux/\mbox{\hyperlink{signal__priv_8h}{signal\+\_\+priv.\+h}}\end{DoxyCompactItemize}

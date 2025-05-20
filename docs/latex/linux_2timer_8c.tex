@@ -1,0 +1,323 @@
+\doxysection{src/linux/timer.c File Reference}
+\hypertarget{linux_2timer_8c}{}\label{linux_2timer_8c}\index{src/linux/timer.c@{src/linux/timer.c}}
+{\ttfamily \#include "{}pal\+\_\+os/timer.\+h"{}}\newline
+{\ttfamily \#include $<$errno.\+h$>$}\newline
+{\ttfamily \#include $<$malloc.\+h$>$}\newline
+{\ttfamily \#include $<$pthread.\+h$>$}\newline
+{\ttfamily \#include "{}timer\+\_\+priv.\+h"{}}\newline
+Include dependency graph for timer.\+c\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{linux_2timer_8c__incl}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \mbox{\hyperlink{linux_2timer_8c_af99e4f72be010ebd08693778e191d84b}{pal\+\_\+timer\+\_\+init}} (void)
+\begin{DoxyCompactList}\small\item\em Initialize the timer module. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{linux_2timer_8c_af5b8298e9a6a4974ff9bf33d408fe55b}{pal\+\_\+timer\+\_\+deinit}} (void)
+\begin{DoxyCompactList}\small\item\em Deinitialize the timer module. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{linux_2timer_8c_ab810bc56d6ebb96de55756d4208f99d1}{pal\+\_\+os\+\_\+timer\+\_\+time\+\_\+cmp}} (const struct timespec \texorpdfstring{$\ast$}{*}a, const struct timespec \texorpdfstring{$\ast$}{*}b)
+\begin{DoxyCompactList}\small\item\em Compare two timespec structures. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{linux_2timer_8c_a20bdd8caea18bbccc670a08e78d03a8b}{pal\+\_\+os\+\_\+timer\+\_\+insert\+\_\+sorted}} (\mbox{\hyperlink{timer_8h_a0be6e0051af71fa5bdbbce3ff91c45c3}{pal\+\_\+timer\+\_\+t}} \texorpdfstring{$\ast$}{*}timer)
+\begin{DoxyCompactList}\small\item\em Insert a timer into the sorted timer list. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{linux_2timer_8c_aec524543047b8634546d02015a03a326}{pal\+\_\+os\+\_\+timer\+\_\+remove}} (\mbox{\hyperlink{timer_8h_a0be6e0051af71fa5bdbbce3ff91c45c3}{pal\+\_\+timer\+\_\+t}} \texorpdfstring{$\ast$}{*}timer)
+\begin{DoxyCompactList}\small\item\em Remove a timer from the sorted timer list. \end{DoxyCompactList}\item 
+void \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{linux_2timer_8c_a32f7b13d3d2448554b71f4acb6b5b5a4}{pal\+\_\+timer\+\_\+thread\+\_\+fn}} (void \texorpdfstring{$\ast$}{*}arg)
+\begin{DoxyCompactList}\small\item\em Timer thread function. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{linux_2timer_8c_a6bc590bb6da25bf86d1434c4073f0734}{pal\+\_\+timer\+\_\+create}} (\mbox{\hyperlink{timer_8h_a0be6e0051af71fa5bdbbce3ff91c45c3}{pal\+\_\+timer\+\_\+t}} \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}timer, const char \texorpdfstring{$\ast$}{*}name, \mbox{\hyperlink{timer_8h_a49aeda558c65627ce92da8bc65e61f82}{pal\+\_\+timer\+\_\+type\+\_\+t}} type, size\+\_\+t period, \mbox{\hyperlink{timer_8h_a0836d11137e5979330dfc2b0312c2005}{pal\+\_\+timer\+\_\+callback\+\_\+t}} callback, int auto\+\_\+start, void \texorpdfstring{$\ast$}{*}arg)
+\begin{DoxyCompactList}\small\item\em Creates a new timer. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{linux_2timer_8c_a311822b4b255b1c6bc108829dfab0ad4}{pal\+\_\+timer\+\_\+start}} (\mbox{\hyperlink{timer_8h_a0be6e0051af71fa5bdbbce3ff91c45c3}{pal\+\_\+timer\+\_\+t}} \texorpdfstring{$\ast$}{*}timer, int from\+\_\+isr)
+\begin{DoxyCompactList}\small\item\em Starts a stopped timer. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{linux_2timer_8c_af01c57d47b3ad7be85eb8a2cca2a6cfc}{pal\+\_\+timer\+\_\+stop}} (\mbox{\hyperlink{timer_8h_a0be6e0051af71fa5bdbbce3ff91c45c3}{pal\+\_\+timer\+\_\+t}} \texorpdfstring{$\ast$}{*}timer, int from\+\_\+isr)
+\begin{DoxyCompactList}\small\item\em Stops a running timer. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{linux_2timer_8c_ab3402245fde831e63e8307bbe2913b9d}{pal\+\_\+timer\+\_\+restart}} (\mbox{\hyperlink{timer_8h_a0be6e0051af71fa5bdbbce3ff91c45c3}{pal\+\_\+timer\+\_\+t}} \texorpdfstring{$\ast$}{*}timer, int from\+\_\+isr)
+\begin{DoxyCompactList}\small\item\em Restarts a timer. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{linux_2timer_8c_a6009def5ad52ce46a2d517b887c1f820}{pal\+\_\+timer\+\_\+change\+\_\+period}} (\mbox{\hyperlink{timer_8h_a0be6e0051af71fa5bdbbce3ff91c45c3}{pal\+\_\+timer\+\_\+t}} \texorpdfstring{$\ast$}{*}timer, size\+\_\+t new\+\_\+period, int from\+\_\+isr)
+\begin{DoxyCompactList}\small\item\em Changes the period of a timer. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{linux_2timer_8c_aaa91d65a185cd987ca09d02f3ea37e3a}{pal\+\_\+is\+\_\+timer\+\_\+active}} (\mbox{\hyperlink{timer_8h_a0be6e0051af71fa5bdbbce3ff91c45c3}{pal\+\_\+timer\+\_\+t}} \texorpdfstring{$\ast$}{*}timer)
+\begin{DoxyCompactList}\small\item\em Checks if a timer is active. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{linux_2timer_8c_a7f8430b4cdebe822d74d5ce78033c10c}{pal\+\_\+timer\+\_\+delete}} (\mbox{\hyperlink{timer_8h_a0be6e0051af71fa5bdbbce3ff91c45c3}{pal\+\_\+timer\+\_\+t}} \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}timer)
+\begin{DoxyCompactList}\small\item\em Deletes a timer. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{timer__priv_8h_a510f14fa44e2895d67be8f4be3bc78e7}{pal\+\_\+timer\+\_\+env\+\_\+t}} \mbox{\hyperlink{linux_2timer_8c_aa15c36071a749a37d28d8d0ad54a471f}{pal\+\_\+timer\+\_\+environment}}
+\begin{DoxyCompactList}\small\item\em Global timer environment structure. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Function Documentation}
+\Hypertarget{linux_2timer_8c_aaa91d65a185cd987ca09d02f3ea37e3a}\label{linux_2timer_8c_aaa91d65a185cd987ca09d02f3ea37e3a} 
+\index{timer.c@{timer.c}!pal\_is\_timer\_active@{pal\_is\_timer\_active}}
+\index{pal\_is\_timer\_active@{pal\_is\_timer\_active}!timer.c@{timer.c}}
+\doxysubsubsection{\texorpdfstring{pal\_is\_timer\_active()}{pal\_is\_timer\_active()}}
+{\footnotesize\ttfamily int pal\+\_\+is\+\_\+timer\+\_\+active (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{timer_8h_a0be6e0051af71fa5bdbbce3ff91c45c3}{pal\+\_\+timer\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{timer }\end{DoxyParamCaption})}
+
+
+
+Checks if a timer is active. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em timer} & Pointer to the timer handle. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+1 if the timer is active, 0 if it is not active or timer does not exist. 
+\end{DoxyReturn}
+\Hypertarget{linux_2timer_8c_a20bdd8caea18bbccc670a08e78d03a8b}\label{linux_2timer_8c_a20bdd8caea18bbccc670a08e78d03a8b} 
+\index{timer.c@{timer.c}!pal\_os\_timer\_insert\_sorted@{pal\_os\_timer\_insert\_sorted}}
+\index{pal\_os\_timer\_insert\_sorted@{pal\_os\_timer\_insert\_sorted}!timer.c@{timer.c}}
+\doxysubsubsection{\texorpdfstring{pal\_os\_timer\_insert\_sorted()}{pal\_os\_timer\_insert\_sorted()}}
+{\footnotesize\ttfamily void pal\+\_\+os\+\_\+timer\+\_\+insert\+\_\+sorted (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{timer_8h_a0be6e0051af71fa5bdbbce3ff91c45c3}{pal\+\_\+timer\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{timer }\end{DoxyParamCaption})}
+
+
+
+Insert a timer into the sorted timer list. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em timer} & Pointer to the timer to be inserted \\
+\hline
+\end{DoxyParams}
+\Hypertarget{linux_2timer_8c_aec524543047b8634546d02015a03a326}\label{linux_2timer_8c_aec524543047b8634546d02015a03a326} 
+\index{timer.c@{timer.c}!pal\_os\_timer\_remove@{pal\_os\_timer\_remove}}
+\index{pal\_os\_timer\_remove@{pal\_os\_timer\_remove}!timer.c@{timer.c}}
+\doxysubsubsection{\texorpdfstring{pal\_os\_timer\_remove()}{pal\_os\_timer\_remove()}}
+{\footnotesize\ttfamily void pal\+\_\+os\+\_\+timer\+\_\+remove (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{timer_8h_a0be6e0051af71fa5bdbbce3ff91c45c3}{pal\+\_\+timer\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{timer }\end{DoxyParamCaption})}
+
+
+
+Remove a timer from the sorted timer list. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em timer} & Pointer to the timer to be inserted \\
+\hline
+\end{DoxyParams}
+\Hypertarget{linux_2timer_8c_ab810bc56d6ebb96de55756d4208f99d1}\label{linux_2timer_8c_ab810bc56d6ebb96de55756d4208f99d1} 
+\index{timer.c@{timer.c}!pal\_os\_timer\_time\_cmp@{pal\_os\_timer\_time\_cmp}}
+\index{pal\_os\_timer\_time\_cmp@{pal\_os\_timer\_time\_cmp}!timer.c@{timer.c}}
+\doxysubsubsection{\texorpdfstring{pal\_os\_timer\_time\_cmp()}{pal\_os\_timer\_time\_cmp()}}
+{\footnotesize\ttfamily int pal\+\_\+os\+\_\+timer\+\_\+time\+\_\+cmp (\begin{DoxyParamCaption}\item[{const struct timespec \texorpdfstring{$\ast$}{*}}]{a,  }\item[{const struct timespec \texorpdfstring{$\ast$}{*}}]{b }\end{DoxyParamCaption})}
+
+
+
+Compare two timespec structures. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em a} & Pointer to the first timespec structure \\
+\hline
+{\em b} & Pointer to the second timespec structure \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+0 if equal, negative value if a \texorpdfstring{$<$}{<} b, positive value if a \texorpdfstring{$>$}{>} b 
+\end{DoxyReturn}
+\Hypertarget{linux_2timer_8c_a6009def5ad52ce46a2d517b887c1f820}\label{linux_2timer_8c_a6009def5ad52ce46a2d517b887c1f820} 
+\index{timer.c@{timer.c}!pal\_timer\_change\_period@{pal\_timer\_change\_period}}
+\index{pal\_timer\_change\_period@{pal\_timer\_change\_period}!timer.c@{timer.c}}
+\doxysubsubsection{\texorpdfstring{pal\_timer\_change\_period()}{pal\_timer\_change\_period()}}
+{\footnotesize\ttfamily int pal\+\_\+timer\+\_\+change\+\_\+period (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{timer_8h_a0be6e0051af71fa5bdbbce3ff91c45c3}{pal\+\_\+timer\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{timer,  }\item[{size\+\_\+t}]{new\+\_\+period,  }\item[{int}]{from\+\_\+isr }\end{DoxyParamCaption})}
+
+
+
+Changes the period of a timer. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em timer} & Pointer to the timer handle. \\
+\hline
+\mbox{\texttt{ in}}  & {\em new\+\_\+period} & New timer period in milliseconds. Cannot be 0. \\
+\hline
+\mbox{\texttt{ in}}  & {\em from\+\_\+isr} & If non-\/zero, the function is called from an ISR context. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+0 on success, or -\/1 on failure. 
+\end{DoxyReturn}
+\Hypertarget{linux_2timer_8c_a6bc590bb6da25bf86d1434c4073f0734}\label{linux_2timer_8c_a6bc590bb6da25bf86d1434c4073f0734} 
+\index{timer.c@{timer.c}!pal\_timer\_create@{pal\_timer\_create}}
+\index{pal\_timer\_create@{pal\_timer\_create}!timer.c@{timer.c}}
+\doxysubsubsection{\texorpdfstring{pal\_timer\_create()}{pal\_timer\_create()}}
+{\footnotesize\ttfamily int pal\+\_\+timer\+\_\+create (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{timer_8h_a0be6e0051af71fa5bdbbce3ff91c45c3}{pal\+\_\+timer\+\_\+t}} \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}}]{timer,  }\item[{const char \texorpdfstring{$\ast$}{*}}]{name,  }\item[{\mbox{\hyperlink{timer_8h_a49aeda558c65627ce92da8bc65e61f82}{pal\+\_\+timer\+\_\+type\+\_\+t}}}]{type,  }\item[{size\+\_\+t}]{period,  }\item[{\mbox{\hyperlink{timer_8h_a0836d11137e5979330dfc2b0312c2005}{pal\+\_\+timer\+\_\+callback\+\_\+t}}}]{callback,  }\item[{int}]{auto\+\_\+start,  }\item[{void \texorpdfstring{$\ast$}{*}}]{arg }\end{DoxyParamCaption})}
+
+
+
+Creates a new timer. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ out}}  & {\em timer} & Pointer to the timer handle to be created. \\
+\hline
+\mbox{\texttt{ in}}  & {\em name} & Name of the timer. This is used for debugging purposes. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyNote}{Note}
+Not available in linux. 
+\end{DoxyNote}
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em type} & Type of the timer (one-\/shot or periodic). \\
+\hline
+\mbox{\texttt{ in}}  & {\em period} & Timer period in milliseconds. Cannot be 0. \\
+\hline
+\mbox{\texttt{ in}}  & {\em callback} & Function to be called when the timer expires. \\
+\hline
+\mbox{\texttt{ in}}  & {\em auto\+\_\+start} & If non-\/zero, the timer starts automatically after creation. \\
+\hline
+\mbox{\texttt{ in}}  & {\em arg} & User-\/defined argument passed to the callback function. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+0 on success, or -\/1 on failure. 
+\end{DoxyReturn}
+\Hypertarget{linux_2timer_8c_af5b8298e9a6a4974ff9bf33d408fe55b}\label{linux_2timer_8c_af5b8298e9a6a4974ff9bf33d408fe55b} 
+\index{timer.c@{timer.c}!pal\_timer\_deinit@{pal\_timer\_deinit}}
+\index{pal\_timer\_deinit@{pal\_timer\_deinit}!timer.c@{timer.c}}
+\doxysubsubsection{\texorpdfstring{pal\_timer\_deinit()}{pal\_timer\_deinit()}}
+{\footnotesize\ttfamily void pal\+\_\+timer\+\_\+deinit (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Deinitialize the timer module. 
+
+\Hypertarget{linux_2timer_8c_a7f8430b4cdebe822d74d5ce78033c10c}\label{linux_2timer_8c_a7f8430b4cdebe822d74d5ce78033c10c} 
+\index{timer.c@{timer.c}!pal\_timer\_delete@{pal\_timer\_delete}}
+\index{pal\_timer\_delete@{pal\_timer\_delete}!timer.c@{timer.c}}
+\doxysubsubsection{\texorpdfstring{pal\_timer\_delete()}{pal\_timer\_delete()}}
+{\footnotesize\ttfamily int pal\+\_\+timer\+\_\+delete (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{timer_8h_a0be6e0051af71fa5bdbbce3ff91c45c3}{pal\+\_\+timer\+\_\+t}} \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}}]{timer }\end{DoxyParamCaption})}
+
+
+
+Deletes a timer. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in,out}}  & {\em timer} & Pointer to the timer handle to be deleted. The pointer is set to NULL after deletion. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+0 on success, or -\/1 on failure. 
+\end{DoxyReturn}
+\Hypertarget{linux_2timer_8c_af99e4f72be010ebd08693778e191d84b}\label{linux_2timer_8c_af99e4f72be010ebd08693778e191d84b} 
+\index{timer.c@{timer.c}!pal\_timer\_init@{pal\_timer\_init}}
+\index{pal\_timer\_init@{pal\_timer\_init}!timer.c@{timer.c}}
+\doxysubsubsection{\texorpdfstring{pal\_timer\_init()}{pal\_timer\_init()}}
+{\footnotesize\ttfamily int pal\+\_\+timer\+\_\+init (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Initialize the timer module. 
+
+\begin{DoxyReturn}{Returns}
+0 on success, -\/1 on failure 
+\end{DoxyReturn}
+\Hypertarget{linux_2timer_8c_ab3402245fde831e63e8307bbe2913b9d}\label{linux_2timer_8c_ab3402245fde831e63e8307bbe2913b9d} 
+\index{timer.c@{timer.c}!pal\_timer\_restart@{pal\_timer\_restart}}
+\index{pal\_timer\_restart@{pal\_timer\_restart}!timer.c@{timer.c}}
+\doxysubsubsection{\texorpdfstring{pal\_timer\_restart()}{pal\_timer\_restart()}}
+{\footnotesize\ttfamily int pal\+\_\+timer\+\_\+restart (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{timer_8h_a0be6e0051af71fa5bdbbce3ff91c45c3}{pal\+\_\+timer\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{timer,  }\item[{int}]{from\+\_\+isr }\end{DoxyParamCaption})}
+
+
+
+Restarts a timer. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em timer} & Pointer to the timer handle. \\
+\hline
+\mbox{\texttt{ in}}  & {\em from\+\_\+isr} & If non-\/zero, the function is called from an ISR context. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+0 on success, or -\/1 on failure. 
+\end{DoxyReturn}
+\Hypertarget{linux_2timer_8c_a311822b4b255b1c6bc108829dfab0ad4}\label{linux_2timer_8c_a311822b4b255b1c6bc108829dfab0ad4} 
+\index{timer.c@{timer.c}!pal\_timer\_start@{pal\_timer\_start}}
+\index{pal\_timer\_start@{pal\_timer\_start}!timer.c@{timer.c}}
+\doxysubsubsection{\texorpdfstring{pal\_timer\_start()}{pal\_timer\_start()}}
+{\footnotesize\ttfamily int pal\+\_\+timer\+\_\+start (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{timer_8h_a0be6e0051af71fa5bdbbce3ff91c45c3}{pal\+\_\+timer\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{timer,  }\item[{int}]{from\+\_\+isr }\end{DoxyParamCaption})}
+
+
+
+Starts a stopped timer. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em timer} & Pointer to the timer handle. \\
+\hline
+\mbox{\texttt{ in}}  & {\em from\+\_\+isr} & If non-\/zero, the function is called from an ISR context. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+0 on success, or -\/1 on failure. 
+\end{DoxyReturn}
+\Hypertarget{linux_2timer_8c_af01c57d47b3ad7be85eb8a2cca2a6cfc}\label{linux_2timer_8c_af01c57d47b3ad7be85eb8a2cca2a6cfc} 
+\index{timer.c@{timer.c}!pal\_timer\_stop@{pal\_timer\_stop}}
+\index{pal\_timer\_stop@{pal\_timer\_stop}!timer.c@{timer.c}}
+\doxysubsubsection{\texorpdfstring{pal\_timer\_stop()}{pal\_timer\_stop()}}
+{\footnotesize\ttfamily int pal\+\_\+timer\+\_\+stop (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{timer_8h_a0be6e0051af71fa5bdbbce3ff91c45c3}{pal\+\_\+timer\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{timer,  }\item[{int}]{from\+\_\+isr }\end{DoxyParamCaption})}
+
+
+
+Stops a running timer. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em timer} & Pointer to the timer handle. \\
+\hline
+\mbox{\texttt{ in}}  & {\em from\+\_\+isr} & If non-\/zero, the function is called from an ISR context. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+0 on success, or -\/1 on failure. 
+\end{DoxyReturn}
+\Hypertarget{linux_2timer_8c_a32f7b13d3d2448554b71f4acb6b5b5a4}\label{linux_2timer_8c_a32f7b13d3d2448554b71f4acb6b5b5a4} 
+\index{timer.c@{timer.c}!pal\_timer\_thread\_fn@{pal\_timer\_thread\_fn}}
+\index{pal\_timer\_thread\_fn@{pal\_timer\_thread\_fn}!timer.c@{timer.c}}
+\doxysubsubsection{\texorpdfstring{pal\_timer\_thread\_fn()}{pal\_timer\_thread\_fn()}}
+{\footnotesize\ttfamily void \texorpdfstring{$\ast$}{*} pal\+\_\+timer\+\_\+thread\+\_\+fn (\begin{DoxyParamCaption}\item[{void \texorpdfstring{$\ast$}{*}}]{arg }\end{DoxyParamCaption})}
+
+
+
+Timer thread function. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em arg} & Pointer to user-\/defined argument passed to the thread function \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+NULL 
+\end{DoxyReturn}
+\begin{DoxyNote}{Note}
+This function is intended to be used as the entry point for the timer thread. 
+\end{DoxyNote}
+
+
+\doxysubsection{Variable Documentation}
+\Hypertarget{linux_2timer_8c_aa15c36071a749a37d28d8d0ad54a471f}\label{linux_2timer_8c_aa15c36071a749a37d28d8d0ad54a471f} 
+\index{timer.c@{timer.c}!pal\_timer\_environment@{pal\_timer\_environment}}
+\index{pal\_timer\_environment@{pal\_timer\_environment}!timer.c@{timer.c}}
+\doxysubsubsection{\texorpdfstring{pal\_timer\_environment}{pal\_timer\_environment}}
+{\footnotesize\ttfamily \mbox{\hyperlink{timer__priv_8h_a510f14fa44e2895d67be8f4be3bc78e7}{pal\+\_\+timer\+\_\+env\+\_\+t}} pal\+\_\+timer\+\_\+environment}
+
+{\bfseries Initial value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{=\ \{}
+\DoxyCodeLine{\ \ \ \ .thread\_handle\ =\ 0,}
+\DoxyCodeLine{\ \ \ \ .mutex\ \ \ \ \ \ \ \ \ =\ PTHREAD\_MUTEX\_INITIALIZER,}
+\DoxyCodeLine{\ \ \ \ .cond\ \ \ \ \ \ \ \ \ \ =\ PTHREAD\_COND\_INITIALIZER,}
+\DoxyCodeLine{\ \ \ \ .timer\_list\ \ \ \ =\ NULL,}
+\DoxyCodeLine{\ \ \ \ .shutdown\_flag\ =\ 0,}
+\DoxyCodeLine{\}}
+
+\end{DoxyCode}
+
+
+Global timer environment structure. 
+

@@ -1,0 +1,110 @@
+\doxysection{pal\+\_\+thread\+\_\+s Struct Reference}
+\hypertarget{structpal__thread__s}{}\label{structpal__thread__s}\index{pal\_thread\_s@{pal\_thread\_s}}
+
+
+{\ttfamily \#include $<$thread\+\_\+priv.\+h$>$}
+
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+Task\+Handle\+\_\+t \mbox{\hyperlink{structpal__thread__s_a879c9f649f51c9081b1ad4999d7f4c82}{thread\+\_\+handle}}
+\begin{DoxyCompactList}\small\item\em POSIX thread identifier. \end{DoxyCompactList}\item 
+Event\+Group\+Handle\+\_\+t \mbox{\hyperlink{structpal__thread__s_a347f2b30f2b84e7341bbe754278b1d86}{event\+\_\+group\+\_\+handle}}
+\begin{DoxyCompactList}\small\item\em Event group handle for synchronization. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{thread_8h_ae27c2948d079394af7db4cc282e0cb15}{pal\+\_\+thread\+\_\+func\+\_\+t}} \mbox{\hyperlink{structpal__thread__s_a5137a92af4f988531be19ef4070df128}{func}}
+\begin{DoxyCompactList}\small\item\em Function to be executed by the thread. \end{DoxyCompactList}\item 
+void \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{structpal__thread__s_a610cfcaa78c74385f7581de9878c0680}{arg}}
+\begin{DoxyCompactList}\small\item\em Argument to be passed to the thread function. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{thread_8h_ad2e33a8f9e8b0a8e85daaac560d2ad67}{pal\+\_\+thread\+\_\+state\+\_\+t}} \mbox{\hyperlink{structpal__thread__s_a8d7fae4d59b86ddfe576ee79666bfc73}{state}}
+\begin{DoxyCompactList}\small\item\em Thread state. \end{DoxyCompactList}\item 
+pthread\+\_\+t \mbox{\hyperlink{structpal__thread__s_ac01549b72edc0f6c92a339e1eaf53ff3}{thread}}
+\item 
+size\+\_\+t \mbox{\hyperlink{structpal__thread__s_aa10ff3cc58bac18e4301bee3de852a58}{stack\+\_\+size}}
+\item 
+\mbox{\hyperlink{thread_8h_a7458e05bb0041818333963792acd51c6}{pal\+\_\+thread\+\_\+priority\+\_\+t}} \mbox{\hyperlink{structpal__thread__s_abc7b41ab3d5e41240901b61c3411d299}{priority}}
+\item 
+const char \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{structpal__thread__s_a268c6fd11610986476634c5d56933d64}{name}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Member Data Documentation}
+\Hypertarget{structpal__thread__s_a610cfcaa78c74385f7581de9878c0680}\label{structpal__thread__s_a610cfcaa78c74385f7581de9878c0680} 
+\index{pal\_thread\_s@{pal\_thread\_s}!arg@{arg}}
+\index{arg@{arg}!pal\_thread\_s@{pal\_thread\_s}}
+\doxysubsubsection{\texorpdfstring{arg}{arg}}
+{\footnotesize\ttfamily void \texorpdfstring{$\ast$}{*} pal\+\_\+thread\+\_\+s\+::arg}
+
+
+
+Argument to be passed to the thread function. 
+
+\Hypertarget{structpal__thread__s_a347f2b30f2b84e7341bbe754278b1d86}\label{structpal__thread__s_a347f2b30f2b84e7341bbe754278b1d86} 
+\index{pal\_thread\_s@{pal\_thread\_s}!event\_group\_handle@{event\_group\_handle}}
+\index{event\_group\_handle@{event\_group\_handle}!pal\_thread\_s@{pal\_thread\_s}}
+\doxysubsubsection{\texorpdfstring{event\_group\_handle}{event\_group\_handle}}
+{\footnotesize\ttfamily Event\+Group\+Handle\+\_\+t pal\+\_\+thread\+\_\+s\+::event\+\_\+group\+\_\+handle}
+
+
+
+Event group handle for synchronization. 
+
+\Hypertarget{structpal__thread__s_a5137a92af4f988531be19ef4070df128}\label{structpal__thread__s_a5137a92af4f988531be19ef4070df128} 
+\index{pal\_thread\_s@{pal\_thread\_s}!func@{func}}
+\index{func@{func}!pal\_thread\_s@{pal\_thread\_s}}
+\doxysubsubsection{\texorpdfstring{func}{func}}
+{\footnotesize\ttfamily \mbox{\hyperlink{thread_8h_ae27c2948d079394af7db4cc282e0cb15}{pal\+\_\+thread\+\_\+func\+\_\+t}} pal\+\_\+thread\+\_\+s\+::func}
+
+
+
+Function to be executed by the thread. 
+
+\Hypertarget{structpal__thread__s_a268c6fd11610986476634c5d56933d64}\label{structpal__thread__s_a268c6fd11610986476634c5d56933d64} 
+\index{pal\_thread\_s@{pal\_thread\_s}!name@{name}}
+\index{name@{name}!pal\_thread\_s@{pal\_thread\_s}}
+\doxysubsubsection{\texorpdfstring{name}{name}}
+{\footnotesize\ttfamily const char\texorpdfstring{$\ast$}{*} pal\+\_\+thread\+\_\+s\+::name}
+
+\Hypertarget{structpal__thread__s_abc7b41ab3d5e41240901b61c3411d299}\label{structpal__thread__s_abc7b41ab3d5e41240901b61c3411d299} 
+\index{pal\_thread\_s@{pal\_thread\_s}!priority@{priority}}
+\index{priority@{priority}!pal\_thread\_s@{pal\_thread\_s}}
+\doxysubsubsection{\texorpdfstring{priority}{priority}}
+{\footnotesize\ttfamily \mbox{\hyperlink{thread_8h_a7458e05bb0041818333963792acd51c6}{pal\+\_\+thread\+\_\+priority\+\_\+t}} pal\+\_\+thread\+\_\+s\+::priority}
+
+\Hypertarget{structpal__thread__s_aa10ff3cc58bac18e4301bee3de852a58}\label{structpal__thread__s_aa10ff3cc58bac18e4301bee3de852a58} 
+\index{pal\_thread\_s@{pal\_thread\_s}!stack\_size@{stack\_size}}
+\index{stack\_size@{stack\_size}!pal\_thread\_s@{pal\_thread\_s}}
+\doxysubsubsection{\texorpdfstring{stack\_size}{stack\_size}}
+{\footnotesize\ttfamily size\+\_\+t pal\+\_\+thread\+\_\+s\+::stack\+\_\+size}
+
+\Hypertarget{structpal__thread__s_a8d7fae4d59b86ddfe576ee79666bfc73}\label{structpal__thread__s_a8d7fae4d59b86ddfe576ee79666bfc73} 
+\index{pal\_thread\_s@{pal\_thread\_s}!state@{state}}
+\index{state@{state}!pal\_thread\_s@{pal\_thread\_s}}
+\doxysubsubsection{\texorpdfstring{state}{state}}
+{\footnotesize\ttfamily \mbox{\hyperlink{thread_8h_ad2e33a8f9e8b0a8e85daaac560d2ad67}{pal\+\_\+thread\+\_\+state\+\_\+t}} pal\+\_\+thread\+\_\+s\+::state}
+
+
+
+Thread state. 
+
+\Hypertarget{structpal__thread__s_ac01549b72edc0f6c92a339e1eaf53ff3}\label{structpal__thread__s_ac01549b72edc0f6c92a339e1eaf53ff3} 
+\index{pal\_thread\_s@{pal\_thread\_s}!thread@{thread}}
+\index{thread@{thread}!pal\_thread\_s@{pal\_thread\_s}}
+\doxysubsubsection{\texorpdfstring{thread}{thread}}
+{\footnotesize\ttfamily pthread\+\_\+t pal\+\_\+thread\+\_\+s\+::thread}
+
+\Hypertarget{structpal__thread__s_a879c9f649f51c9081b1ad4999d7f4c82}\label{structpal__thread__s_a879c9f649f51c9081b1ad4999d7f4c82} 
+\index{pal\_thread\_s@{pal\_thread\_s}!thread\_handle@{thread\_handle}}
+\index{thread\_handle@{thread\_handle}!pal\_thread\_s@{pal\_thread\_s}}
+\doxysubsubsection{\texorpdfstring{thread\_handle}{thread\_handle}}
+{\footnotesize\ttfamily Task\+Handle\+\_\+t pal\+\_\+thread\+\_\+s\+::thread\+\_\+handle}
+
+
+
+POSIX thread identifier. 
+
+
+
+The documentation for this struct was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+src/free\+RTOS/\mbox{\hyperlink{freeRTOS_2thread__priv_8h}{thread\+\_\+priv.\+h}}\item 
+src/linux/\mbox{\hyperlink{linux_2thread__priv_8h}{thread\+\_\+priv.\+h}}\end{DoxyCompactItemize}

@@ -1,0 +1,177 @@
+\doxysection{src/free\+RTOS/queue.c File Reference}
+\hypertarget{freeRTOS_2queue_8c}{}\label{freeRTOS_2queue_8c}\index{src/freeRTOS/queue.c@{src/freeRTOS/queue.c}}
+{\ttfamily \#include "{}pal\+\_\+os/queue.\+h"{}}\newline
+{\ttfamily \#include "{}freertos/\+Free\+RTOS.\+h"{}}\newline
+{\ttfamily \#include "{}freertos/queue.\+h"{}}\newline
+{\ttfamily \#include "{}pal\+\_\+os/common.\+h"{}}\newline
+Include dependency graph for queue.\+c\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{freeRTOS_2queue_8c__incl}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \mbox{\hyperlink{freeRTOS_2queue_8c_ab6666c4ae9802b520d480441a5570f3c}{pal\+\_\+queue\+\_\+create}} (\mbox{\hyperlink{queue_8h_ab75a94ce21d352bafe1d3355a8091466}{pal\+\_\+queue\+\_\+t}} \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}queue, size\+\_\+t item\+\_\+size, size\+\_\+t max\+\_\+items)
+\begin{DoxyCompactList}\small\item\em Create a queue with specified item size and maximum number of items. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{freeRTOS_2queue_8c_ae0517fa158cdd58115cfa219d1925918}{pal\+\_\+queue\+\_\+enqueue}} (\mbox{\hyperlink{queue_8h_ab75a94ce21d352bafe1d3355a8091466}{pal\+\_\+queue\+\_\+t}} \texorpdfstring{$\ast$}{*}queue, void \texorpdfstring{$\ast$}{*}const item, size\+\_\+t timeout\+\_\+ms, int from\+\_\+isr)
+\begin{DoxyCompactList}\small\item\em Enqueue an item into the queue. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{freeRTOS_2queue_8c_af0bb5c63d46b4dff7d061bd01758cf51}{pal\+\_\+queue\+\_\+dequeue}} (\mbox{\hyperlink{queue_8h_ab75a94ce21d352bafe1d3355a8091466}{pal\+\_\+queue\+\_\+t}} \texorpdfstring{$\ast$}{*}queue, void \texorpdfstring{$\ast$}{*}const item, size\+\_\+t timeout\+\_\+ms, int from\+\_\+isr)
+\begin{DoxyCompactList}\small\item\em Dequeue an item from the queue. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{freeRTOS_2queue_8c_a0ae6f6f4f662a00a8d1cf2adf744fe14}{pal\+\_\+queue\+\_\+reset}} (\mbox{\hyperlink{queue_8h_ab75a94ce21d352bafe1d3355a8091466}{pal\+\_\+queue\+\_\+t}} \texorpdfstring{$\ast$}{*}queue)
+\begin{DoxyCompactList}\small\item\em Reset the queue. \end{DoxyCompactList}\item 
+size\+\_\+t \mbox{\hyperlink{freeRTOS_2queue_8c_aad3525e97f90e006e51d9a5d7844b46e}{pal\+\_\+queue\+\_\+get\+\_\+free\+\_\+slots}} (\mbox{\hyperlink{queue_8h_ab75a94ce21d352bafe1d3355a8091466}{pal\+\_\+queue\+\_\+t}} \texorpdfstring{$\ast$}{*}queue)
+\begin{DoxyCompactList}\small\item\em Get the number of free slots available in the queue. \end{DoxyCompactList}\item 
+size\+\_\+t \mbox{\hyperlink{freeRTOS_2queue_8c_a1ec50122f5577f1ff4acc71ae41ba391}{pal\+\_\+queue\+\_\+get\+\_\+items}} (\mbox{\hyperlink{queue_8h_ab75a94ce21d352bafe1d3355a8091466}{pal\+\_\+queue\+\_\+t}} \texorpdfstring{$\ast$}{*}queue, int from\+\_\+isr)
+\begin{DoxyCompactList}\small\item\em Get the number of items currently in the queue. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{freeRTOS_2queue_8c_aad72907535d90477a8f3bb83f332b8a9}{pal\+\_\+queue\+\_\+destroy}} (\mbox{\hyperlink{queue_8h_ab75a94ce21d352bafe1d3355a8091466}{pal\+\_\+queue\+\_\+t}} \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}queue)
+\begin{DoxyCompactList}\small\item\em Destroy the queue and releases associated resources. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Function Documentation}
+\Hypertarget{freeRTOS_2queue_8c_ab6666c4ae9802b520d480441a5570f3c}\label{freeRTOS_2queue_8c_ab6666c4ae9802b520d480441a5570f3c} 
+\index{queue.c@{queue.c}!pal\_queue\_create@{pal\_queue\_create}}
+\index{pal\_queue\_create@{pal\_queue\_create}!queue.c@{queue.c}}
+\doxysubsubsection{\texorpdfstring{pal\_queue\_create()}{pal\_queue\_create()}}
+{\footnotesize\ttfamily int pal\+\_\+queue\+\_\+create (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{queue_8h_ab75a94ce21d352bafe1d3355a8091466}{pal\+\_\+queue\+\_\+t}} \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}}]{queue,  }\item[{size\+\_\+t}]{item\+\_\+size,  }\item[{size\+\_\+t}]{max\+\_\+items }\end{DoxyParamCaption})}
+
+
+
+Create a queue with specified item size and maximum number of items. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ out}}  & {\em queue} & Pointer to the queue handle to be created. \\
+\hline
+\mbox{\texttt{ in}}  & {\em item\+\_\+size} & Size of each item in the queue. \\
+\hline
+\mbox{\texttt{ in}}  & {\em max\+\_\+items} & Maximum number of items the queue can hold. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+0 on success, or -\/1 on failure. 
+\end{DoxyReturn}
+\Hypertarget{freeRTOS_2queue_8c_af0bb5c63d46b4dff7d061bd01758cf51}\label{freeRTOS_2queue_8c_af0bb5c63d46b4dff7d061bd01758cf51} 
+\index{queue.c@{queue.c}!pal\_queue\_dequeue@{pal\_queue\_dequeue}}
+\index{pal\_queue\_dequeue@{pal\_queue\_dequeue}!queue.c@{queue.c}}
+\doxysubsubsection{\texorpdfstring{pal\_queue\_dequeue()}{pal\_queue\_dequeue()}}
+{\footnotesize\ttfamily int pal\+\_\+queue\+\_\+dequeue (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{queue_8h_ab75a94ce21d352bafe1d3355a8091466}{pal\+\_\+queue\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{queue,  }\item[{void \texorpdfstring{$\ast$}{*}const}]{item,  }\item[{size\+\_\+t}]{timeout\+\_\+ms,  }\item[{int}]{from\+\_\+isr }\end{DoxyParamCaption})}
+
+
+
+Dequeue an item from the queue. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em queue} & Pointer to the queue handle. \\
+\hline
+\mbox{\texttt{ out}}  & {\em item} & Pointer to the memory where the dequeued item will be stored. \\
+\hline
+\mbox{\texttt{ in}}  & {\em timeout\+\_\+ms} & Timeout in milliseconds to wait if the queue is empty. \\
+\hline
+\mbox{\texttt{ in}}  & {\em from\+\_\+isr} & Flag indicating if the function is called from an ISR context. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+0 on success, or -\/1 on failure. 
+\end{DoxyReturn}
+\Hypertarget{freeRTOS_2queue_8c_aad72907535d90477a8f3bb83f332b8a9}\label{freeRTOS_2queue_8c_aad72907535d90477a8f3bb83f332b8a9} 
+\index{queue.c@{queue.c}!pal\_queue\_destroy@{pal\_queue\_destroy}}
+\index{pal\_queue\_destroy@{pal\_queue\_destroy}!queue.c@{queue.c}}
+\doxysubsubsection{\texorpdfstring{pal\_queue\_destroy()}{pal\_queue\_destroy()}}
+{\footnotesize\ttfamily void pal\+\_\+queue\+\_\+destroy (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{queue_8h_ab75a94ce21d352bafe1d3355a8091466}{pal\+\_\+queue\+\_\+t}} \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}}]{queue }\end{DoxyParamCaption})}
+
+
+
+Destroy the queue and releases associated resources. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in,out}}  & {\em queue} & Pointer to the queue handle to be destroyed. Set to NULL after destruction. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{freeRTOS_2queue_8c_ae0517fa158cdd58115cfa219d1925918}\label{freeRTOS_2queue_8c_ae0517fa158cdd58115cfa219d1925918} 
+\index{queue.c@{queue.c}!pal\_queue\_enqueue@{pal\_queue\_enqueue}}
+\index{pal\_queue\_enqueue@{pal\_queue\_enqueue}!queue.c@{queue.c}}
+\doxysubsubsection{\texorpdfstring{pal\_queue\_enqueue()}{pal\_queue\_enqueue()}}
+{\footnotesize\ttfamily int pal\+\_\+queue\+\_\+enqueue (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{queue_8h_ab75a94ce21d352bafe1d3355a8091466}{pal\+\_\+queue\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{queue,  }\item[{void \texorpdfstring{$\ast$}{*}const}]{item,  }\item[{size\+\_\+t}]{timeout\+\_\+ms,  }\item[{int}]{from\+\_\+isr }\end{DoxyParamCaption})}
+
+
+
+Enqueue an item into the queue. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em queue} & Pointer to the queue handle. \\
+\hline
+\mbox{\texttt{ in}}  & {\em item} & Pointer to the item to be enqueued. \\
+\hline
+\mbox{\texttt{ in}}  & {\em timeout\+\_\+ms} & Timeout in milliseconds to wait if the queue is full. \\
+\hline
+\mbox{\texttt{ in}}  & {\em from\+\_\+isr} & Flag indicating if the function is called from an ISR context. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+0 on success, or -\/1 on failure. 
+\end{DoxyReturn}
+\Hypertarget{freeRTOS_2queue_8c_aad3525e97f90e006e51d9a5d7844b46e}\label{freeRTOS_2queue_8c_aad3525e97f90e006e51d9a5d7844b46e} 
+\index{queue.c@{queue.c}!pal\_queue\_get\_free\_slots@{pal\_queue\_get\_free\_slots}}
+\index{pal\_queue\_get\_free\_slots@{pal\_queue\_get\_free\_slots}!queue.c@{queue.c}}
+\doxysubsubsection{\texorpdfstring{pal\_queue\_get\_free\_slots()}{pal\_queue\_get\_free\_slots()}}
+{\footnotesize\ttfamily size\+\_\+t pal\+\_\+queue\+\_\+get\+\_\+free\+\_\+slots (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{queue_8h_ab75a94ce21d352bafe1d3355a8091466}{pal\+\_\+queue\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{queue }\end{DoxyParamCaption})}
+
+
+
+Get the number of free slots available in the queue. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em queue} & Pointer to the queue handle. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Number of free slots in the queue. 
+\end{DoxyReturn}
+\begin{DoxyNote}{Note}
+Will return 0 if the queue is NULL. 
+\end{DoxyNote}
+\Hypertarget{freeRTOS_2queue_8c_a1ec50122f5577f1ff4acc71ae41ba391}\label{freeRTOS_2queue_8c_a1ec50122f5577f1ff4acc71ae41ba391} 
+\index{queue.c@{queue.c}!pal\_queue\_get\_items@{pal\_queue\_get\_items}}
+\index{pal\_queue\_get\_items@{pal\_queue\_get\_items}!queue.c@{queue.c}}
+\doxysubsubsection{\texorpdfstring{pal\_queue\_get\_items()}{pal\_queue\_get\_items()}}
+{\footnotesize\ttfamily size\+\_\+t pal\+\_\+queue\+\_\+get\+\_\+items (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{queue_8h_ab75a94ce21d352bafe1d3355a8091466}{pal\+\_\+queue\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{queue,  }\item[{int}]{from\+\_\+isr }\end{DoxyParamCaption})}
+
+
+
+Get the number of items currently in the queue. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em queue} & Pointer to the queue handle. \\
+\hline
+\mbox{\texttt{ in}}  & {\em from\+\_\+isr} & Flag indicating if the function is called from an ISR context. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Number of items in the queue. 
+\end{DoxyReturn}
+\begin{DoxyNote}{Note}
+Will return 0 if the queue is NULL. 
+\end{DoxyNote}
+\Hypertarget{freeRTOS_2queue_8c_a0ae6f6f4f662a00a8d1cf2adf744fe14}\label{freeRTOS_2queue_8c_a0ae6f6f4f662a00a8d1cf2adf744fe14} 
+\index{queue.c@{queue.c}!pal\_queue\_reset@{pal\_queue\_reset}}
+\index{pal\_queue\_reset@{pal\_queue\_reset}!queue.c@{queue.c}}
+\doxysubsubsection{\texorpdfstring{pal\_queue\_reset()}{pal\_queue\_reset()}}
+{\footnotesize\ttfamily void pal\+\_\+queue\+\_\+reset (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{queue_8h_ab75a94ce21d352bafe1d3355a8091466}{pal\+\_\+queue\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{queue }\end{DoxyParamCaption})}
+
+
+
+Reset the queue. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em queue} & Pointer to the queue handle. \\
+\hline
+\end{DoxyParams}

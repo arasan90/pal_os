@@ -1,0 +1,71 @@
+\doxysection{src/free\+RTOS/thread\+\_\+priv.h File Reference}
+\hypertarget{freeRTOS_2thread__priv_8h}{}\label{freeRTOS_2thread__priv_8h}\index{src/freeRTOS/thread\_priv.h@{src/freeRTOS/thread\_priv.h}}
+{\ttfamily \#include "{}esp\+\_\+heap\+\_\+caps.\+h"{}}\newline
+{\ttfamily \#include "{}freertos/\+Free\+RTOS.\+h"{}}\newline
+{\ttfamily \#include "{}freertos/event\+\_\+groups.\+h"{}}\newline
+{\ttfamily \#include "{}freertos/portable.\+h"{}}\newline
+{\ttfamily \#include "{}freertos/task.\+h"{}}\newline
+{\ttfamily \#include "{}pal\+\_\+os/thread.\+h"{}}\newline
+Include dependency graph for thread\+\_\+priv.\+h\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{freeRTOS_2thread__priv_8h__incl}
+\end{center}
+\end{figure}
+This graph shows which files directly or indirectly include this file\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=202pt]{freeRTOS_2thread__priv_8h__dep__incl}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{structpal__thread__s}{pal\+\_\+thread\+\_\+s}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+UBase\+Type\+\_\+t \mbox{\hyperlink{freeRTOS_2thread__priv_8h_a325b2582ff5c3b7180b1f0736fbe62bb}{pal\+\_\+thread\+\_\+convert\+\_\+priority}} (\mbox{\hyperlink{thread_8h_a7458e05bb0041818333963792acd51c6}{pal\+\_\+thread\+\_\+priority\+\_\+t}} pal\+\_\+priority)
+\begin{DoxyCompactList}\small\item\em Convert a priority from pal value to free\+RTOS value. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{freeRTOS_2thread__priv_8h_a00f19b5b1e1550b1db236bbb501ba39e}{pal\+\_\+thread\+\_\+generic\+\_\+func}} (void \texorpdfstring{$\ast$}{*}const arg)
+\begin{DoxyCompactList}\small\item\em Thread function wrapper. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Function Documentation}
+\Hypertarget{freeRTOS_2thread__priv_8h_a325b2582ff5c3b7180b1f0736fbe62bb}\label{freeRTOS_2thread__priv_8h_a325b2582ff5c3b7180b1f0736fbe62bb} 
+\index{thread\_priv.h@{thread\_priv.h}!pal\_thread\_convert\_priority@{pal\_thread\_convert\_priority}}
+\index{pal\_thread\_convert\_priority@{pal\_thread\_convert\_priority}!thread\_priv.h@{thread\_priv.h}}
+\doxysubsubsection{\texorpdfstring{pal\_thread\_convert\_priority()}{pal\_thread\_convert\_priority()}}
+{\footnotesize\ttfamily UBase\+Type\+\_\+t pal\+\_\+thread\+\_\+convert\+\_\+priority (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{thread_8h_a7458e05bb0041818333963792acd51c6}{pal\+\_\+thread\+\_\+priority\+\_\+t}}}]{pal\+\_\+priority }\end{DoxyParamCaption})}
+
+
+
+Convert a priority from pal value to free\+RTOS value. 
+
+\begin{DoxyNote}{Note}
+Defaults priorities are at 1/3, 1/2 and 2/3 of config\+MAX\+\_\+\+PRIORITIES 
+\end{DoxyNote}
+\begin{DoxyReturn}{Returns}
+free\+RTOS value 
+\end{DoxyReturn}
+\Hypertarget{freeRTOS_2thread__priv_8h_a00f19b5b1e1550b1db236bbb501ba39e}\label{freeRTOS_2thread__priv_8h_a00f19b5b1e1550b1db236bbb501ba39e} 
+\index{thread\_priv.h@{thread\_priv.h}!pal\_thread\_generic\_func@{pal\_thread\_generic\_func}}
+\index{pal\_thread\_generic\_func@{pal\_thread\_generic\_func}!thread\_priv.h@{thread\_priv.h}}
+\doxysubsubsection{\texorpdfstring{pal\_thread\_generic\_func()}{pal\_thread\_generic\_func()}}
+{\footnotesize\ttfamily void pal\+\_\+thread\+\_\+generic\+\_\+func (\begin{DoxyParamCaption}\item[{void \texorpdfstring{$\ast$}{*}const}]{arg }\end{DoxyParamCaption})}
+
+
+
+Thread function wrapper. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em arg} & Pointer to the thread structure. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+NULL. 
+\end{DoxyReturn}

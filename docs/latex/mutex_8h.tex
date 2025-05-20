@@ -1,0 +1,118 @@
+\doxysection{include/pal\+\_\+os/mutex.h File Reference}
+\hypertarget{mutex_8h}{}\label{mutex_8h}\index{include/pal\_os/mutex.h@{include/pal\_os/mutex.h}}
+{\ttfamily \#include $<$stddef.\+h$>$}\newline
+Include dependency graph for mutex.\+h\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=210pt]{mutex_8h__incl}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+typedef struct pal\+\_\+mutex\+\_\+s \mbox{\hyperlink{mutex_8h_a9ddc5724f29ed3d787212d2e364325f7}{pal\+\_\+mutex\+\_\+t}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \mbox{\hyperlink{mutex_8h_a6c1f8e4af3d85d799bd5937dd0df06c3}{pal\+\_\+mutex\+\_\+create}} (\mbox{\hyperlink{mutex_8h_a9ddc5724f29ed3d787212d2e364325f7}{pal\+\_\+mutex\+\_\+t}} \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}mutex, int recursive)
+\begin{DoxyCompactList}\small\item\em Creates a new mutex. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{mutex_8h_adcc6f4ca1715ed19251e086874e72520}{pal\+\_\+mutex\+\_\+lock}} (\mbox{\hyperlink{mutex_8h_a9ddc5724f29ed3d787212d2e364325f7}{pal\+\_\+mutex\+\_\+t}} \texorpdfstring{$\ast$}{*}mutex, size\+\_\+t timeout\+\_\+ms)
+\begin{DoxyCompactList}\small\item\em Locks the specified mutex. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{mutex_8h_a7215d0c3a1da7c7a07e478fce34c75fc}{pal\+\_\+mutex\+\_\+unlock}} (\mbox{\hyperlink{mutex_8h_a9ddc5724f29ed3d787212d2e364325f7}{pal\+\_\+mutex\+\_\+t}} \texorpdfstring{$\ast$}{*}mutex)
+\begin{DoxyCompactList}\small\item\em Unlocks the specified mutex. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{mutex_8h_a2062a4510739b0ab7d9cf11396dd9bca}{pal\+\_\+mutex\+\_\+destroy}} (\mbox{\hyperlink{mutex_8h_a9ddc5724f29ed3d787212d2e364325f7}{pal\+\_\+mutex\+\_\+t}} \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}mutex)
+\begin{DoxyCompactList}\small\item\em Destroys the specified mutex. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Typedef Documentation}
+\Hypertarget{mutex_8h_a9ddc5724f29ed3d787212d2e364325f7}\label{mutex_8h_a9ddc5724f29ed3d787212d2e364325f7} 
+\index{mutex.h@{mutex.h}!pal\_mutex\_t@{pal\_mutex\_t}}
+\index{pal\_mutex\_t@{pal\_mutex\_t}!mutex.h@{mutex.h}}
+\doxysubsubsection{\texorpdfstring{pal\_mutex\_t}{pal\_mutex\_t}}
+{\footnotesize\ttfamily typedef struct pal\+\_\+mutex\+\_\+s \mbox{\hyperlink{mutex_8h_a9ddc5724f29ed3d787212d2e364325f7}{pal\+\_\+mutex\+\_\+t}}}
+
+
+
+Definition at line \mbox{\hyperlink{mutex_8h_source_l00020}{20}} of file \mbox{\hyperlink{mutex_8h_source}{mutex.\+h}}.
+
+
+
+\doxysubsection{Function Documentation}
+\Hypertarget{mutex_8h_a6c1f8e4af3d85d799bd5937dd0df06c3}\label{mutex_8h_a6c1f8e4af3d85d799bd5937dd0df06c3} 
+\index{mutex.h@{mutex.h}!pal\_mutex\_create@{pal\_mutex\_create}}
+\index{pal\_mutex\_create@{pal\_mutex\_create}!mutex.h@{mutex.h}}
+\doxysubsubsection{\texorpdfstring{pal\_mutex\_create()}{pal\_mutex\_create()}}
+{\footnotesize\ttfamily int pal\+\_\+mutex\+\_\+create (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{mutex_8h_a9ddc5724f29ed3d787212d2e364325f7}{pal\+\_\+mutex\+\_\+t}} \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}}]{mutex,  }\item[{int}]{recursive }\end{DoxyParamCaption})}
+
+
+
+Creates a new mutex. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ out}}  & {\em mutex} & Pointer to the mutex handle to be created. \\
+\hline
+\mbox{\texttt{ in}}  & {\em recursive} & Indicates whether the mutex should be recursive (non-\/zero for recursive). \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+0 on success, or -\/1 on failure. 
+\end{DoxyReturn}
+\Hypertarget{mutex_8h_a2062a4510739b0ab7d9cf11396dd9bca}\label{mutex_8h_a2062a4510739b0ab7d9cf11396dd9bca} 
+\index{mutex.h@{mutex.h}!pal\_mutex\_destroy@{pal\_mutex\_destroy}}
+\index{pal\_mutex\_destroy@{pal\_mutex\_destroy}!mutex.h@{mutex.h}}
+\doxysubsubsection{\texorpdfstring{pal\_mutex\_destroy()}{pal\_mutex\_destroy()}}
+{\footnotesize\ttfamily int pal\+\_\+mutex\+\_\+destroy (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{mutex_8h_a9ddc5724f29ed3d787212d2e364325f7}{pal\+\_\+mutex\+\_\+t}} \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}}]{mutex }\end{DoxyParamCaption})}
+
+
+
+Destroys the specified mutex. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in,out}}  & {\em mutex} & Pointer to the mutex handle to be destroyed. The pointer is set to NULL after destruction. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+0 on success, or -\/1 on failure. 
+\end{DoxyReturn}
+\Hypertarget{mutex_8h_adcc6f4ca1715ed19251e086874e72520}\label{mutex_8h_adcc6f4ca1715ed19251e086874e72520} 
+\index{mutex.h@{mutex.h}!pal\_mutex\_lock@{pal\_mutex\_lock}}
+\index{pal\_mutex\_lock@{pal\_mutex\_lock}!mutex.h@{mutex.h}}
+\doxysubsubsection{\texorpdfstring{pal\_mutex\_lock()}{pal\_mutex\_lock()}}
+{\footnotesize\ttfamily int pal\+\_\+mutex\+\_\+lock (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{mutex_8h_a9ddc5724f29ed3d787212d2e364325f7}{pal\+\_\+mutex\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{mutex,  }\item[{size\+\_\+t}]{timeout\+\_\+ms }\end{DoxyParamCaption})}
+
+
+
+Locks the specified mutex. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em mutex} & Pointer to the mutex to lock. \\
+\hline
+\mbox{\texttt{ in}}  & {\em timeout\+\_\+ms} & Timeout in milliseconds to wait for the lock. Use PAL\+\_\+\+OS\+\_\+\+NO\+\_\+\+TIMEOUT for no wait, or PAL\+\_\+\+OS\+\_\+\+INFINITE\+\_\+\+TIMEOUT for infinite wait. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+0 on success, or -\/1 on failure (e.\+g., timeout). 
+\end{DoxyReturn}
+\Hypertarget{mutex_8h_a7215d0c3a1da7c7a07e478fce34c75fc}\label{mutex_8h_a7215d0c3a1da7c7a07e478fce34c75fc} 
+\index{mutex.h@{mutex.h}!pal\_mutex\_unlock@{pal\_mutex\_unlock}}
+\index{pal\_mutex\_unlock@{pal\_mutex\_unlock}!mutex.h@{mutex.h}}
+\doxysubsubsection{\texorpdfstring{pal\_mutex\_unlock()}{pal\_mutex\_unlock()}}
+{\footnotesize\ttfamily int pal\+\_\+mutex\+\_\+unlock (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{mutex_8h_a9ddc5724f29ed3d787212d2e364325f7}{pal\+\_\+mutex\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{mutex }\end{DoxyParamCaption})}
+
+
+
+Unlocks the specified mutex. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em mutex} & Pointer to the mutex to unlock. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+0 on success, or -\/1 on failure. 
+\end{DoxyReturn}

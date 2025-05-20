@@ -1,0 +1,49 @@
+\chapter{Platform Abstraction Layer – OS (pal\+\_\+os)}
+\hypertarget{md_README}{}\label{md_README}\index{Platform Abstraction Layer – OS (pal\_os)@{Platform Abstraction Layer – OS (pal\_os)}}
+\label{md_README_autotoc_md0}%
+\Hypertarget{md_README_autotoc_md0}%
+ {\ttfamily pal\+\_\+os} is a portable C library that provides an abstraction layer for core operating system functionality, simplifying cross-\/platform development and enabling reusable code.\hypertarget{md_README_autotoc_md1}{}\doxysection{\texorpdfstring{✨ Features}{✨ Features}}\label{md_README_autotoc_md1}
+This module includes abstractions for\+:
+
+
+\begin{DoxyItemize}
+\item 🧵 {\bfseries{Threads}} — Platform-\/independent thread creation and management
+\item 🔒 {\bfseries{Mutexes/queues}} — Synchronization and inter-\/task communication (Free\+RTOS-\/style)
+\item 📶 {\bfseries{Signals/events}} — Lightweight mechanisms for asynchronous notification
+\item ⏱️ {\bfseries{Time management}} — Absolute and relative time, delays, time measurement
+\item ⏲️ {\bfseries{Software timers}} — One-\/shot and periodic timers with callbacks
+\end{DoxyItemize}\hypertarget{md_README_autotoc_md2}{}\doxysection{\texorpdfstring{🛠️ Goal}{🛠️ Goal}}\label{md_README_autotoc_md2}
+The main goal is to provide a consistent, minimal API for abstracting OS features, enabling\+:
+
+
+\begin{DoxyItemize}
+\item seamless portability between embedded systems (e.\+g., Free\+RTOS, ESP-\/\+IDF) and host platforms (Linux)
+\item modular and testable code
+\item integration in complex projects without heavyweight dependencieP
+\end{DoxyItemize}\hypertarget{md_README_autotoc_md3}{}\doxysection{\texorpdfstring{📦 Repository structure}{📦 Repository structure}}\label{md_README_autotoc_md3}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{Include/\ \ \ \ \ \ \ \ \ \ -\/-\/>\ Public\ headers\ (e.g.,\ pal\_thread.h,\ pal\_fs.h,\ ...)}
+\DoxyCodeLine{Src/}
+\DoxyCodeLine{├──\ host/\ \ \ \ \ \ \ \ \ -\/-\/>\ Host\ implementation\ (Linux/macOS/Windows)}
+\DoxyCodeLine{└──\ esp32/\ \ \ \ \ \ \ \ -\/-\/>\ ESP32-\/specific\ implementation\ (FreeRTOS,\ ESP-\/IDF)}
+\DoxyCodeLine{Private/\ \ \ \ \ \ \ \ \ \ -\/-\/>\ Internal\ headers\ and\ private\ helpers}
+
+\end{DoxyCode}
+\hypertarget{md_README_autotoc_md4}{}\doxysection{\texorpdfstring{🔧 Build}{🔧 Build}}\label{md_README_autotoc_md4}
+The library can be built both for host systems and embedded targets (e.\+g., ESP32). 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{cmake\ -\/B\ build\ -\/DTARGET\_PLATFORM=linux}
+
+\end{DoxyCode}
+
+
+You can set {\ttfamily TARGET\+\_\+\+PLATFORM} to {\ttfamily linux} or {\ttfamily esp32} (default is {\ttfamily linux}). To enable unit tests and mocks, add the following options\+:
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{cmake\ -\/B\ build\ -\/DTARGET\_PLATFORM=linux\ -\/DPERFORM\_UNIT\_TESTS=ON\ -\/DCOMPILE\_MOCK=ON}
+
+\end{DoxyCode}
+ For ESP32, make sure you have ESP-\/\+IDF installed and configured. \hypertarget{md_README_autotoc_md5}{}\doxysection{\texorpdfstring{📄 License}{📄 License}}\label{md_README_autotoc_md5}
+This project is licensed under the {\bfseries{GNU General Public License v3.\+0}}. 

@@ -1,0 +1,57 @@
+\doxysection{src/free\+RTOS/system.c File Reference}
+\hypertarget{freeRTOS_2system_8c}{}\label{freeRTOS_2system_8c}\index{src/freeRTOS/system.c@{src/freeRTOS/system.c}}
+{\ttfamily \#include "{}pal\+\_\+os/system.\+h"{}}\newline
+{\ttfamily \#include $<$stdarg.\+h$>$}\newline
+{\ttfamily \#include $<$stdio.\+h$>$}\newline
+{\ttfamily \#include "{}freertos/\+Free\+RTOS.\+h"{}}\newline
+{\ttfamily \#include "{}freertos/portable.\+h"{}}\newline
+Include dependency graph for system.\+c\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{freeRTOS_2system_8c__incl}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{freeRTOS_2system_8c_aa0a087da1eb783298f50c27f4106e466}{pal\+\_\+system\+\_\+printf}} (const char \texorpdfstring{$\ast$}{*}format,...)
+\begin{DoxyCompactList}\small\item\em Outputs a formatted string to the system\textquotesingle{}s standard output. This function behaves similarly to the standard printf function, allowing formatted output using a format string and a variable number of arguments. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{system_8h_afa6a046db9949d3f7172621019559d98}{pal\+\_\+system\+\_\+t}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{freeRTOS_2system_8c_a96b7191e0e47bb29a9832c8dbf0d2238}{pal\+\_\+system\+\_\+get\+\_\+stats}} (void)
+\begin{DoxyCompactList}\small\item\em Retrieves system statistics. This function provides access to system-\/heap statistics. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Function Documentation}
+\Hypertarget{freeRTOS_2system_8c_a96b7191e0e47bb29a9832c8dbf0d2238}\label{freeRTOS_2system_8c_a96b7191e0e47bb29a9832c8dbf0d2238} 
+\index{system.c@{system.c}!pal\_system\_get\_stats@{pal\_system\_get\_stats}}
+\index{pal\_system\_get\_stats@{pal\_system\_get\_stats}!system.c@{system.c}}
+\doxysubsubsection{\texorpdfstring{pal\_system\_get\_stats()}{pal\_system\_get\_stats()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{system_8h_afa6a046db9949d3f7172621019559d98}{pal\+\_\+system\+\_\+t}} \texorpdfstring{$\ast$}{*} pal\+\_\+system\+\_\+get\+\_\+stats (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Retrieves system statistics. This function provides access to system-\/heap statistics. 
+
+\begin{DoxyReturn}{Returns}
+A pointer to a {\ttfamily pal\+\_\+system\+\_\+t} structure containing the system statistics. The caller should ensure proper handling of the returned pointer. 
+\end{DoxyReturn}
+\begin{DoxyNote}{Note}
+Not all information are reliable on all platforms (e.\+g. on Linux it is not possible to have a valid heap size) 
+\end{DoxyNote}
+\Hypertarget{freeRTOS_2system_8c_aa0a087da1eb783298f50c27f4106e466}\label{freeRTOS_2system_8c_aa0a087da1eb783298f50c27f4106e466} 
+\index{system.c@{system.c}!pal\_system\_printf@{pal\_system\_printf}}
+\index{pal\_system\_printf@{pal\_system\_printf}!system.c@{system.c}}
+\doxysubsubsection{\texorpdfstring{pal\_system\_printf()}{pal\_system\_printf()}}
+{\footnotesize\ttfamily void pal\+\_\+system\+\_\+printf (\begin{DoxyParamCaption}\item[{const char \texorpdfstring{$\ast$}{*}}]{format,  }\item[{}]{... }\end{DoxyParamCaption})}
+
+
+
+Outputs a formatted string to the system\textquotesingle{}s standard output. This function behaves similarly to the standard printf function, allowing formatted output using a format string and a variable number of arguments. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em format} & A null-\/terminated format string that specifies how subsequent arguments are converted for output. The format string can include format specifiers such as d, s, f, etc. \\
+\hline
+{\em ...} & A variable number of arguments to be formatted and printed according to the format string. \\
+\hline
+\end{DoxyParams}

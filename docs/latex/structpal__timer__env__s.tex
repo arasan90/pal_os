@@ -1,0 +1,86 @@
+\doxysection{pal\+\_\+timer\+\_\+env\+\_\+s Struct Reference}
+\hypertarget{structpal__timer__env__s}{}\label{structpal__timer__env__s}\index{pal\_timer\_env\_s@{pal\_timer\_env\_s}}
+
+
+{\ttfamily \#include $<$timer\+\_\+priv.\+h$>$}
+
+
+
+Collaboration diagram for pal\+\_\+timer\+\_\+env\+\_\+s\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=228pt]{structpal__timer__env__s__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+pthread\+\_\+t \mbox{\hyperlink{structpal__timer__env__s_ad69668cfda75fe9ab9d6a0bb8e84480f}{thread\+\_\+handle}}
+\begin{DoxyCompactList}\small\item\em Thread handle for the timer thread. \end{DoxyCompactList}\item 
+pthread\+\_\+mutex\+\_\+t \mbox{\hyperlink{structpal__timer__env__s_a7d9df30aaab3fca043a9e0c01b280e6e}{mutex}}
+\begin{DoxyCompactList}\small\item\em Mutex for synchronizing access to the timer list. \end{DoxyCompactList}\item 
+pthread\+\_\+cond\+\_\+t \mbox{\hyperlink{structpal__timer__env__s_ad8b5f293936e69f1e3d176180965cd13}{cond}}
+\begin{DoxyCompactList}\small\item\em Condition variable for signaling the timer thread. \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{structpal__timer__s}{pal\+\_\+timer\+\_\+s}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{structpal__timer__env__s_a4044777030d8478e8cfe680b407fc1d4}{timer\+\_\+list}}
+\begin{DoxyCompactList}\small\item\em Pointer to the list of timers. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{structpal__timer__env__s_a90145b57532a46fc7fbd8f2731a399e8}{shutdown\+\_\+flag}}
+\begin{DoxyCompactList}\small\item\em Flag indicating if the timer thread should shut down. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Member Data Documentation}
+\Hypertarget{structpal__timer__env__s_ad8b5f293936e69f1e3d176180965cd13}\label{structpal__timer__env__s_ad8b5f293936e69f1e3d176180965cd13} 
+\index{pal\_timer\_env\_s@{pal\_timer\_env\_s}!cond@{cond}}
+\index{cond@{cond}!pal\_timer\_env\_s@{pal\_timer\_env\_s}}
+\doxysubsubsection{\texorpdfstring{cond}{cond}}
+{\footnotesize\ttfamily pthread\+\_\+cond\+\_\+t pal\+\_\+timer\+\_\+env\+\_\+s\+::cond}
+
+
+
+Condition variable for signaling the timer thread. 
+
+\Hypertarget{structpal__timer__env__s_a7d9df30aaab3fca043a9e0c01b280e6e}\label{structpal__timer__env__s_a7d9df30aaab3fca043a9e0c01b280e6e} 
+\index{pal\_timer\_env\_s@{pal\_timer\_env\_s}!mutex@{mutex}}
+\index{mutex@{mutex}!pal\_timer\_env\_s@{pal\_timer\_env\_s}}
+\doxysubsubsection{\texorpdfstring{mutex}{mutex}}
+{\footnotesize\ttfamily pthread\+\_\+mutex\+\_\+t pal\+\_\+timer\+\_\+env\+\_\+s\+::mutex}
+
+
+
+Mutex for synchronizing access to the timer list. 
+
+\Hypertarget{structpal__timer__env__s_a90145b57532a46fc7fbd8f2731a399e8}\label{structpal__timer__env__s_a90145b57532a46fc7fbd8f2731a399e8} 
+\index{pal\_timer\_env\_s@{pal\_timer\_env\_s}!shutdown\_flag@{shutdown\_flag}}
+\index{shutdown\_flag@{shutdown\_flag}!pal\_timer\_env\_s@{pal\_timer\_env\_s}}
+\doxysubsubsection{\texorpdfstring{shutdown\_flag}{shutdown\_flag}}
+{\footnotesize\ttfamily int pal\+\_\+timer\+\_\+env\+\_\+s\+::shutdown\+\_\+flag}
+
+
+
+Flag indicating if the timer thread should shut down. 
+
+\Hypertarget{structpal__timer__env__s_ad69668cfda75fe9ab9d6a0bb8e84480f}\label{structpal__timer__env__s_ad69668cfda75fe9ab9d6a0bb8e84480f} 
+\index{pal\_timer\_env\_s@{pal\_timer\_env\_s}!thread\_handle@{thread\_handle}}
+\index{thread\_handle@{thread\_handle}!pal\_timer\_env\_s@{pal\_timer\_env\_s}}
+\doxysubsubsection{\texorpdfstring{thread\_handle}{thread\_handle}}
+{\footnotesize\ttfamily pthread\+\_\+t pal\+\_\+timer\+\_\+env\+\_\+s\+::thread\+\_\+handle}
+
+
+
+Thread handle for the timer thread. 
+
+\Hypertarget{structpal__timer__env__s_a4044777030d8478e8cfe680b407fc1d4}\label{structpal__timer__env__s_a4044777030d8478e8cfe680b407fc1d4} 
+\index{pal\_timer\_env\_s@{pal\_timer\_env\_s}!timer\_list@{timer\_list}}
+\index{timer\_list@{timer\_list}!pal\_timer\_env\_s@{pal\_timer\_env\_s}}
+\doxysubsubsection{\texorpdfstring{timer\_list}{timer\_list}}
+{\footnotesize\ttfamily struct \mbox{\hyperlink{structpal__timer__s}{pal\+\_\+timer\+\_\+s}}\texorpdfstring{$\ast$}{*} pal\+\_\+timer\+\_\+env\+\_\+s\+::timer\+\_\+list}
+
+
+
+Pointer to the list of timers. 
+
+
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+src/linux/\mbox{\hyperlink{timer__priv_8h}{timer\+\_\+priv.\+h}}\end{DoxyCompactItemize}

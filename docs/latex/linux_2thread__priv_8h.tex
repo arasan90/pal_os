@@ -1,0 +1,50 @@
+\doxysection{src/linux/thread\+\_\+priv.h File Reference}
+\hypertarget{linux_2thread__priv_8h}{}\label{linux_2thread__priv_8h}\index{src/linux/thread\_priv.h@{src/linux/thread\_priv.h}}
+{\ttfamily \#include $<$pthread.\+h$>$}\newline
+{\ttfamily \#include $<$stddef.\+h$>$}\newline
+{\ttfamily \#include "{}pal\+\_\+os/thread.\+h"{}}\newline
+Include dependency graph for thread\+\_\+priv.\+h\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=292pt]{linux_2thread__priv_8h__incl}
+\end{center}
+\end{figure}
+This graph shows which files directly or indirectly include this file\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=205pt]{linux_2thread__priv_8h__dep__incl}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{structpal__thread__s}{pal\+\_\+thread\+\_\+s}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{linux_2thread__priv_8h_a257a41cc0341649b1677397fc30e4c46}{pal\+\_\+thread\+\_\+generic\+\_\+func}} (void \texorpdfstring{$\ast$}{*}const arg)
+\begin{DoxyCompactList}\small\item\em Thread function wrapper. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Function Documentation}
+\Hypertarget{linux_2thread__priv_8h_a257a41cc0341649b1677397fc30e4c46}\label{linux_2thread__priv_8h_a257a41cc0341649b1677397fc30e4c46} 
+\index{thread\_priv.h@{thread\_priv.h}!pal\_thread\_generic\_func@{pal\_thread\_generic\_func}}
+\index{pal\_thread\_generic\_func@{pal\_thread\_generic\_func}!thread\_priv.h@{thread\_priv.h}}
+\doxysubsubsection{\texorpdfstring{pal\_thread\_generic\_func()}{pal\_thread\_generic\_func()}}
+{\footnotesize\ttfamily void \texorpdfstring{$\ast$}{*} pal\+\_\+thread\+\_\+generic\+\_\+func (\begin{DoxyParamCaption}\item[{void \texorpdfstring{$\ast$}{*}const}]{arg }\end{DoxyParamCaption})}
+
+
+
+Thread function wrapper. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em arg} & Pointer to the thread structure. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+NULL. 
+\end{DoxyReturn}

@@ -1,0 +1,54 @@
+\doxysection{pal\+\_\+mutex\+\_\+s Struct Reference}
+\hypertarget{structpal__mutex__s}{}\label{structpal__mutex__s}\index{pal\_mutex\_s@{pal\_mutex\_s}}
+
+
+{\ttfamily \#include $<$mutex\+\_\+priv.\+h$>$}
+
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+Semaphore\+Handle\+\_\+t \mbox{\hyperlink{structpal__mutex__s_a923b5e4ca491436d61d755bf31879e83}{mutex\+\_\+handle}}
+\begin{DoxyCompactList}\small\item\em Mutex handle. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{structpal__mutex__s_a7a662e7845d63226955cb5b96f9e5a73}{is\+\_\+recursive}}
+\begin{DoxyCompactList}\small\item\em Flag indicating if the mutex is recursive. \end{DoxyCompactList}\item 
+pthread\+\_\+mutex\+\_\+t \mbox{\hyperlink{structpal__mutex__s_ac650705a3e115faa49a3446d373e2df0}{mutex}}
+\begin{DoxyCompactList}\small\item\em Mutex for thread safety. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Member Data Documentation}
+\Hypertarget{structpal__mutex__s_a7a662e7845d63226955cb5b96f9e5a73}\label{structpal__mutex__s_a7a662e7845d63226955cb5b96f9e5a73} 
+\index{pal\_mutex\_s@{pal\_mutex\_s}!is\_recursive@{is\_recursive}}
+\index{is\_recursive@{is\_recursive}!pal\_mutex\_s@{pal\_mutex\_s}}
+\doxysubsubsection{\texorpdfstring{is\_recursive}{is\_recursive}}
+{\footnotesize\ttfamily int pal\+\_\+mutex\+\_\+s\+::is\+\_\+recursive}
+
+
+
+Flag indicating if the mutex is recursive. 
+
+\Hypertarget{structpal__mutex__s_ac650705a3e115faa49a3446d373e2df0}\label{structpal__mutex__s_ac650705a3e115faa49a3446d373e2df0} 
+\index{pal\_mutex\_s@{pal\_mutex\_s}!mutex@{mutex}}
+\index{mutex@{mutex}!pal\_mutex\_s@{pal\_mutex\_s}}
+\doxysubsubsection{\texorpdfstring{mutex}{mutex}}
+{\footnotesize\ttfamily pthread\+\_\+mutex\+\_\+t pal\+\_\+mutex\+\_\+s\+::mutex}
+
+
+
+Mutex for thread safety. 
+
+\Hypertarget{structpal__mutex__s_a923b5e4ca491436d61d755bf31879e83}\label{structpal__mutex__s_a923b5e4ca491436d61d755bf31879e83} 
+\index{pal\_mutex\_s@{pal\_mutex\_s}!mutex\_handle@{mutex\_handle}}
+\index{mutex\_handle@{mutex\_handle}!pal\_mutex\_s@{pal\_mutex\_s}}
+\doxysubsubsection{\texorpdfstring{mutex\_handle}{mutex\_handle}}
+{\footnotesize\ttfamily Semaphore\+Handle\+\_\+t pal\+\_\+mutex\+\_\+s\+::mutex\+\_\+handle}
+
+
+
+Mutex handle. 
+
+
+
+The documentation for this struct was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+src/free\+RTOS/\mbox{\hyperlink{freeRTOS_2mutex__priv_8h}{mutex\+\_\+priv.\+h}}\item 
+src/linux/\mbox{\hyperlink{linux_2mutex__priv_8h}{mutex\+\_\+priv.\+h}}\end{DoxyCompactItemize}

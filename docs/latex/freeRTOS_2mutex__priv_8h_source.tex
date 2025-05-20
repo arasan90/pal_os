@@ -1,0 +1,40 @@
+\doxysection{mutex\+\_\+priv.\+h}
+\hypertarget{freeRTOS_2mutex__priv_8h_source}{}\label{freeRTOS_2mutex__priv_8h_source}\index{src/freeRTOS/mutex\_priv.h@{src/freeRTOS/mutex\_priv.h}}
+\mbox{\hyperlink{freeRTOS_2mutex__priv_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00002\ }
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#ifdef\ \_\_cplusplus}}
+\DoxyCodeLine{00004\ \textcolor{keyword}{extern}\ \textcolor{stringliteral}{"{}C"{}}}
+\DoxyCodeLine{00005\ \{}
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00007\ }
+\DoxyCodeLine{00008\ \textcolor{comment}{//\ ============================}}
+\DoxyCodeLine{00009\ \textcolor{comment}{//\ Includes}}
+\DoxyCodeLine{00010\ \textcolor{comment}{//\ ============================}}
+\DoxyCodeLine{00011\ \textcolor{preprocessor}{\#include\ "{}freertos/FreeRTOS.h"{}}}
+\DoxyCodeLine{00012\ \textcolor{preprocessor}{\#include\ "{}freertos/semphr.h"{}}}
+\DoxyCodeLine{00013\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{mutex_8h}{pal\_os/mutex.h}}"{}}}
+\DoxyCodeLine{00014\ }
+\DoxyCodeLine{00015\ \textcolor{comment}{//\ ============================}}
+\DoxyCodeLine{00016\ \textcolor{comment}{//\ Macros\ and\ Constants}}
+\DoxyCodeLine{00017\ \textcolor{comment}{//\ ============================}}
+\DoxyCodeLine{00018\ }
+\DoxyCodeLine{00019\ \textcolor{comment}{//\ ============================}}
+\DoxyCodeLine{00020\ \textcolor{comment}{//\ Type\ Definitions}}
+\DoxyCodeLine{00021\ \textcolor{comment}{//\ ============================}}
+\DoxyCodeLine{00022\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structpal__mutex__s}{pal\_mutex\_s}}}
+\DoxyCodeLine{00023\ \{}
+\DoxyCodeLine{00024\ \ \ \ \ SemaphoreHandle\_t\ \mbox{\hyperlink{structpal__mutex__s_a923b5e4ca491436d61d755bf31879e83}{mutex\_handle}};\ \ }
+\DoxyCodeLine{00025\ \ \ \ \ \textcolor{keywordtype}{int}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structpal__mutex__s_a7a662e7845d63226955cb5b96f9e5a73}{is\_recursive}};\ \ }
+\DoxyCodeLine{00026\ \};}
+\DoxyCodeLine{00027\ }
+\DoxyCodeLine{00028\ \textcolor{comment}{//\ ============================}}
+\DoxyCodeLine{00029\ \textcolor{comment}{//\ Function\ Declarations}}
+\DoxyCodeLine{00030\ \textcolor{comment}{//\ ============================}}
+\DoxyCodeLine{00031\ }
+\DoxyCodeLine{00032\ \textcolor{preprocessor}{\#ifdef\ \_\_cplusplus}}
+\DoxyCodeLine{00033\ \}}
+\DoxyCodeLine{00034\ \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

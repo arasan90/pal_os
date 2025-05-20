@@ -1,0 +1,49 @@
+\doxysection{thread\+\_\+priv.\+h}
+\hypertarget{freeRTOS_2thread__priv_8h_source}{}\label{freeRTOS_2thread__priv_8h_source}\index{src/freeRTOS/thread\_priv.h@{src/freeRTOS/thread\_priv.h}}
+\mbox{\hyperlink{freeRTOS_2thread__priv_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00002\ }
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#ifdef\ \_\_cplusplus}}
+\DoxyCodeLine{00004\ \textcolor{keyword}{extern}\ \textcolor{stringliteral}{"{}C"{}}}
+\DoxyCodeLine{00005\ \{}
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00007\ }
+\DoxyCodeLine{00008\ \textcolor{comment}{//\ ============================}}
+\DoxyCodeLine{00009\ \textcolor{comment}{//\ Includes}}
+\DoxyCodeLine{00010\ \textcolor{comment}{//\ ============================}}
+\DoxyCodeLine{00011\ \textcolor{preprocessor}{\#include\ "{}esp\_heap\_caps.h"{}}}
+\DoxyCodeLine{00012\ \textcolor{preprocessor}{\#include\ "{}freertos/FreeRTOS.h"{}}}
+\DoxyCodeLine{00013\ \textcolor{preprocessor}{\#include\ "{}freertos/event\_groups.h"{}}}
+\DoxyCodeLine{00014\ \textcolor{preprocessor}{\#include\ "{}freertos/portable.h"{}}}
+\DoxyCodeLine{00015\ \textcolor{preprocessor}{\#include\ "{}freertos/task.h"{}}}
+\DoxyCodeLine{00016\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{thread_8h}{pal\_os/thread.h}}"{}}}
+\DoxyCodeLine{00017\ }
+\DoxyCodeLine{00018\ \textcolor{comment}{//\ ============================}}
+\DoxyCodeLine{00019\ \textcolor{comment}{//\ Macros\ and\ Constants}}
+\DoxyCodeLine{00020\ \textcolor{comment}{//\ ============================}}
+\DoxyCodeLine{00021\ }
+\DoxyCodeLine{00022\ \textcolor{comment}{//\ ============================}}
+\DoxyCodeLine{00023\ \textcolor{comment}{//\ Type\ Definitions}}
+\DoxyCodeLine{00024\ \textcolor{comment}{//\ ============================}}
+\DoxyCodeLine{00025\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structpal__thread__s}{pal\_thread\_s}}}
+\DoxyCodeLine{00026\ \{}
+\DoxyCodeLine{00027\ \ \ \ \ TaskHandle\_t\ \ \ \ \ \ \ \mbox{\hyperlink{structpal__thread__s_a879c9f649f51c9081b1ad4999d7f4c82}{thread\_handle}};\ \ \ \ \ \ }
+\DoxyCodeLine{00028\ \ \ \ \ EventGroupHandle\_t\ \mbox{\hyperlink{structpal__thread__s_a347f2b30f2b84e7341bbe754278b1d86}{event\_group\_handle}};\ \ \ \ }
+\DoxyCodeLine{00029\ \ \ \ \ \mbox{\hyperlink{thread_8h_ae27c2948d079394af7db4cc282e0cb15}{pal\_thread\_func\_t}}\ \ \mbox{\hyperlink{structpal__thread__s_a5137a92af4f988531be19ef4070df128}{func}};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00030\ \ \ \ \ \textcolor{keywordtype}{void}\ \ \ \ \ \ \ \ \ \ \ \ \ \ *\mbox{\hyperlink{structpal__thread__s_a610cfcaa78c74385f7581de9878c0680}{arg}};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00031\ \ \ \ \ \mbox{\hyperlink{thread_8h_ad2e33a8f9e8b0a8e85daaac560d2ad67}{pal\_thread\_state\_t}}\ \mbox{\hyperlink{structpal__thread__s_a8d7fae4d59b86ddfe576ee79666bfc73}{state}};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00032\ \};}
+\DoxyCodeLine{00033\ }
+\DoxyCodeLine{00034\ \textcolor{comment}{//\ ============================}}
+\DoxyCodeLine{00035\ \textcolor{comment}{//\ Function\ Declarations}}
+\DoxyCodeLine{00036\ \textcolor{comment}{//\ ============================}}
+\DoxyCodeLine{00042\ UBaseType\_t\ \mbox{\hyperlink{freeRTOS_2thread__priv_8h_a325b2582ff5c3b7180b1f0736fbe62bb}{pal\_thread\_convert\_priority}}(\mbox{\hyperlink{thread_8h_a7458e05bb0041818333963792acd51c6}{pal\_thread\_priority\_t}}\ pal\_priority);}
+\DoxyCodeLine{00043\ }
+\DoxyCodeLine{00049\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{freeRTOS_2thread__priv_8h_a00f19b5b1e1550b1db236bbb501ba39e}{pal\_thread\_generic\_func}}(\textcolor{keywordtype}{void}\ *\textcolor{keyword}{const}\ arg);}
+\DoxyCodeLine{00050\ }
+\DoxyCodeLine{00051\ \textcolor{preprocessor}{\#ifdef\ \_\_cplusplus}}
+\DoxyCodeLine{00052\ \}}
+\DoxyCodeLine{00053\ \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

@@ -1,0 +1,177 @@
+\doxysection{signal.\+c}
+\hypertarget{linux_2signal_8c_source}{}\label{linux_2signal_8c_source}\index{src/linux/signal.c@{src/linux/signal.c}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{linux_2signal_8c_source_l00001}00001\ \textcolor{comment}{/*}}
+\DoxyCodeLine{\Hypertarget{linux_2signal_8c_source_l00002}00002\ \textcolor{comment}{\ *\ File:\ signals.c}}
+\DoxyCodeLine{\Hypertarget{linux_2signal_8c_source_l00003}00003\ \textcolor{comment}{\ *\ Description:\ Implementation\ of\ signals-\/related\ functionality\ for\ the\ Linux\ platform.}}
+\DoxyCodeLine{\Hypertarget{linux_2signal_8c_source_l00004}00004\ \textcolor{comment}{\ *\ Author:\ Massimiliano\ Ianniello}}
+\DoxyCodeLine{\Hypertarget{linux_2signal_8c_source_l00005}00005\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{linux_2signal_8c_source_l00006}00006\ }
+\DoxyCodeLine{\Hypertarget{linux_2signal_8c_source_l00007}00007\ \textcolor{preprocessor}{\#include\ <errno.h>}}
+\DoxyCodeLine{\Hypertarget{linux_2signal_8c_source_l00008}00008\ \textcolor{preprocessor}{\#include\ <stdlib.h>}}
+\DoxyCodeLine{\Hypertarget{linux_2signal_8c_source_l00009}00009\ \textcolor{preprocessor}{\#include\ <string.h>}}
+\DoxyCodeLine{\Hypertarget{linux_2signal_8c_source_l00010}00010\ \textcolor{preprocessor}{\#include\ <sys/time.h>}}
+\DoxyCodeLine{\Hypertarget{linux_2signal_8c_source_l00011}00011\ }
+\DoxyCodeLine{\Hypertarget{linux_2signal_8c_source_l00012}00012\ \textcolor{preprocessor}{\#include\ "{}pal\_os/common.h"{}}}
+\DoxyCodeLine{\Hypertarget{linux_2signal_8c_source_l00013}00013\ \textcolor{preprocessor}{\#include\ "{}signal\_priv.h"{}}}
+\DoxyCodeLine{\Hypertarget{linux_2signal_8c_source_l00014}00014\ }
+\DoxyCodeLine{\Hypertarget{linux_2signal_8c_source_l00015}00015\ \textcolor{comment}{/*\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{\Hypertarget{linux_2signal_8c_source_l00016}00016\ \textcolor{comment}{\ *\ Type\ Definitions}}
+\DoxyCodeLine{\Hypertarget{linux_2signal_8c_source_l00017}00017\ \textcolor{comment}{\ *\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{\Hypertarget{linux_2signal_8c_source_l00018}00018\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{linux_2signal_8c_source_l00019}00019\ }
+\DoxyCodeLine{\Hypertarget{linux_2signal_8c_source_l00020}00020\ \textcolor{comment}{/*\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{\Hypertarget{linux_2signal_8c_source_l00021}00021\ \textcolor{comment}{\ *\ Static\ Definitions}}
+\DoxyCodeLine{\Hypertarget{linux_2signal_8c_source_l00022}00022\ \textcolor{comment}{\ *\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{\Hypertarget{linux_2signal_8c_source_l00023}00023\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{linux_2signal_8c_source_l00024}00024\ }
+\DoxyCodeLine{\Hypertarget{linux_2signal_8c_source_l00025}00025\ \textcolor{comment}{/*\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{\Hypertarget{linux_2signal_8c_source_l00026}00026\ \textcolor{comment}{\ *\ Macros}}
+\DoxyCodeLine{\Hypertarget{linux_2signal_8c_source_l00027}00027\ \textcolor{comment}{\ *\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{\Hypertarget{linux_2signal_8c_source_l00028}00028\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{linux_2signal_8c_source_l00029}00029\ }
+\DoxyCodeLine{\Hypertarget{linux_2signal_8c_source_l00030}00030\ \textcolor{comment}{/*\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{\Hypertarget{linux_2signal_8c_source_l00031}00031\ \textcolor{comment}{\ *\ Constants}}
+\DoxyCodeLine{\Hypertarget{linux_2signal_8c_source_l00032}00032\ \textcolor{comment}{\ *\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{\Hypertarget{linux_2signal_8c_source_l00033}00033\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{linux_2signal_8c_source_l00034}00034\ }
+\DoxyCodeLine{\Hypertarget{linux_2signal_8c_source_l00035}00035\ \textcolor{comment}{/*\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{\Hypertarget{linux_2signal_8c_source_l00036}00036\ \textcolor{comment}{\ *\ Static\ Functions}}
+\DoxyCodeLine{\Hypertarget{linux_2signal_8c_source_l00037}00037\ \textcolor{comment}{\ *\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{\Hypertarget{linux_2signal_8c_source_l00038}00038\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{linux_2signal_8c_source_l00039}00039\ }
+\DoxyCodeLine{\Hypertarget{linux_2signal_8c_source_l00040}00040\ \textcolor{comment}{/*\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{\Hypertarget{linux_2signal_8c_source_l00041}00041\ \textcolor{comment}{\ *\ Function\ Implementations}}
+\DoxyCodeLine{\Hypertarget{linux_2signal_8c_source_l00042}00042\ \textcolor{comment}{\ *\ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{\Hypertarget{linux_2signal_8c_source_l00043}00043\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{linux_2signal_8c_source_l00044}00044\ \textcolor{keywordtype}{int}\ pal\_signal\_create(\mbox{\hyperlink{structpal__signal__s}{pal\_signal\_t}}\ **signal)}
+\DoxyCodeLine{\Hypertarget{linux_2signal_8c_source_l00045}00045\ \{}
+\DoxyCodeLine{\Hypertarget{linux_2signal_8c_source_l00046}00046\ \ \ \ \ \textcolor{keywordtype}{int}\ ret\_code\ =\ -\/1;}
+\DoxyCodeLine{\Hypertarget{linux_2signal_8c_source_l00047}00047\ \ \ \ \ \textcolor{keywordflow}{if}\ (NULL\ !=\ signal)}
+\DoxyCodeLine{\Hypertarget{linux_2signal_8c_source_l00048}00048\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{linux_2signal_8c_source_l00049}00049\ \ \ \ \ \ \ \ \ *signal\ =\ (\mbox{\hyperlink{structpal__signal__s}{pal\_signal\_t}}\ *)calloc(1,\ \textcolor{keyword}{sizeof}(\mbox{\hyperlink{structpal__signal__s}{pal\_signal\_t}}));}
+\DoxyCodeLine{\Hypertarget{linux_2signal_8c_source_l00050}00050\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (NULL\ !=\ *signal)}
+\DoxyCodeLine{\Hypertarget{linux_2signal_8c_source_l00051}00051\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{linux_2signal_8c_source_l00052}00052\ \ \ \ \ \ \ \ \ \ \ \ \ pthread\_mutex\_init(\&(*signal)-\/>mutex,\ NULL);}
+\DoxyCodeLine{\Hypertarget{linux_2signal_8c_source_l00053}00053\ \ \ \ \ \ \ \ \ \ \ \ \ pthread\_cond\_init(\&(*signal)-\/>cond,\ NULL);}
+\DoxyCodeLine{\Hypertarget{linux_2signal_8c_source_l00054}00054\ \ \ \ \ \ \ \ \ \ \ \ \ (*signal)-\/>signals\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{linux_2signal_8c_source_l00055}00055\ \ \ \ \ \ \ \ \ \ \ \ \ ret\_code\ \ \ \ \ \ \ \ \ \ \ =\ 0;}
+\DoxyCodeLine{\Hypertarget{linux_2signal_8c_source_l00056}00056\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{linux_2signal_8c_source_l00057}00057\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{linux_2signal_8c_source_l00058}00058\ \ \ \ \ \textcolor{keywordflow}{return}\ ret\_code;}
+\DoxyCodeLine{\Hypertarget{linux_2signal_8c_source_l00059}00059\ \}}
+\DoxyCodeLine{\Hypertarget{linux_2signal_8c_source_l00060}00060\ }
+\DoxyCodeLine{\Hypertarget{linux_2signal_8c_source_l00061}00061\ pal\_signal\_ret\_code\_t\ pal\_signal\_wait(\mbox{\hyperlink{structpal__signal__s}{pal\_signal\_t}}\ *signal,\ \textcolor{keywordtype}{size\_t}\ mask,\ \textcolor{keywordtype}{size\_t}\ *received\_signals,\ \textcolor{keywordtype}{int}\ clear\_mask,\ \textcolor{keywordtype}{int}\ wait\_all,\ \textcolor{keywordtype}{size\_t}\ timeout\_ms)}
+\DoxyCodeLine{\Hypertarget{linux_2signal_8c_source_l00062}00062\ \{}
+\DoxyCodeLine{\Hypertarget{linux_2signal_8c_source_l00063}00063\ \ \ \ \ pal\_signal\_ret\_code\_t\ ret\_code\ =\ PAL\_SIGNAL\_FAILURE;}
+\DoxyCodeLine{\Hypertarget{linux_2signal_8c_source_l00064}00064\ \ \ \ \ \textcolor{keywordflow}{if}\ (NULL\ !=\ signal\ \&\&\ NULL\ !=\ received\_signals)}
+\DoxyCodeLine{\Hypertarget{linux_2signal_8c_source_l00065}00065\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{linux_2signal_8c_source_l00066}00066\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ \ \ \ \ \ \ \ \ \ \ \ \ wait\_condition\ =\ wait\_all\ ?\ (mask\ ==\ (signal-\/>\mbox{\hyperlink{structpal__signal__s_aa5ed3a759226dd4999f049e7695da53a}{signals}}\ \&\ mask))\ :\ (signal-\/>signals\ \&\ mask);}
+\DoxyCodeLine{\Hypertarget{linux_2signal_8c_source_l00067}00067\ \ \ \ \ \ \ \ \ \textcolor{keyword}{struct\ }timespec\ ts;}
+\DoxyCodeLine{\Hypertarget{linux_2signal_8c_source_l00068}00068\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (PAL\_OS\_INFINITE\_TIMEOUT\ !=\ timeout\_ms)}
+\DoxyCodeLine{\Hypertarget{linux_2signal_8c_source_l00069}00069\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{linux_2signal_8c_source_l00070}00070\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{struct\ }timeval\ now;}
+\DoxyCodeLine{\Hypertarget{linux_2signal_8c_source_l00071}00071\ \ \ \ \ \ \ \ \ \ \ \ \ gettimeofday(\&now,\ NULL);}
+\DoxyCodeLine{\Hypertarget{linux_2signal_8c_source_l00072}00072\ \ \ \ \ \ \ \ \ \ \ \ \ ts.tv\_sec\ \ =\ now.tv\_sec\ +\ timeout\_ms\ /\ 1000;}
+\DoxyCodeLine{\Hypertarget{linux_2signal_8c_source_l00073}00073\ \ \ \ \ \ \ \ \ \ \ \ \ ts.tv\_nsec\ =\ (now.tv\_usec\ *\ 1000)\ +\ ((timeout\_ms\ \%\ 1000)\ *\ 1000000);}
+\DoxyCodeLine{\Hypertarget{linux_2signal_8c_source_l00074}00074\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (ts.tv\_nsec\ >=\ 1000000000)}
+\DoxyCodeLine{\Hypertarget{linux_2signal_8c_source_l00075}00075\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{linux_2signal_8c_source_l00076}00076\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ts.tv\_sec\ +=\ ts.tv\_nsec\ /\ 1000000000;}
+\DoxyCodeLine{\Hypertarget{linux_2signal_8c_source_l00077}00077\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ts.tv\_nsec\ \%=\ 1000000000;}
+\DoxyCodeLine{\Hypertarget{linux_2signal_8c_source_l00078}00078\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{linux_2signal_8c_source_l00079}00079\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{linux_2signal_8c_source_l00080}00080\ \ \ \ \ \ \ \ \ pthread\_mutex\_lock(\&signal-\/>\mbox{\hyperlink{structpal__signal__s_a45198861037651738b4dd3d526ab927c}{mutex}});}
+\DoxyCodeLine{\Hypertarget{linux_2signal_8c_source_l00081}00081\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{switch}\ (timeout\_ms)}
+\DoxyCodeLine{\Hypertarget{linux_2signal_8c_source_l00082}00082\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{linux_2signal_8c_source_l00083}00083\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ PAL\_OS\_NO\_TIMEOUT:}
+\DoxyCodeLine{\Hypertarget{linux_2signal_8c_source_l00084}00084\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (wait\_all)}
+\DoxyCodeLine{\Hypertarget{linux_2signal_8c_source_l00085}00085\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{linux_2signal_8c_source_l00086}00086\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ret\_code\ =\ (mask\ ==\ (signal-\/>\mbox{\hyperlink{structpal__signal__s_aa5ed3a759226dd4999f049e7695da53a}{signals}}\ \&\ mask))\ ?\ PAL\_SIGNAL\_SUCCESS\ :\ PAL\_SIGNAL\_TIMEOUT;}
+\DoxyCodeLine{\Hypertarget{linux_2signal_8c_source_l00087}00087\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{linux_2signal_8c_source_l00088}00088\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{linux_2signal_8c_source_l00089}00089\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{linux_2signal_8c_source_l00090}00090\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ret\_code\ =\ (signal-\/>\mbox{\hyperlink{structpal__signal__s_aa5ed3a759226dd4999f049e7695da53a}{signals}}\ \&\ mask)\ ?\ PAL\_SIGNAL\_SUCCESS\ :\ PAL\_SIGNAL\_TIMEOUT;}
+\DoxyCodeLine{\Hypertarget{linux_2signal_8c_source_l00091}00091\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{linux_2signal_8c_source_l00092}00092\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{linux_2signal_8c_source_l00093}00093\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ PAL\_OS\_INFINITE\_TIMEOUT:}
+\DoxyCodeLine{\Hypertarget{linux_2signal_8c_source_l00094}00094\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{while}\ (!wait\_condition)}
+\DoxyCodeLine{\Hypertarget{linux_2signal_8c_source_l00095}00095\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{linux_2signal_8c_source_l00096}00096\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ pthread\_cond\_wait(\&signal-\/>\mbox{\hyperlink{structpal__signal__s_ae47b6dbdc3853d77f7bb4235fd858dc1}{cond}},\ \&signal-\/>\mbox{\hyperlink{structpal__signal__s_a45198861037651738b4dd3d526ab927c}{mutex}});}
+\DoxyCodeLine{\Hypertarget{linux_2signal_8c_source_l00097}00097\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ wait\_condition\ =\ wait\_all\ ?\ (mask\ ==\ (signal-\/>\mbox{\hyperlink{structpal__signal__s_aa5ed3a759226dd4999f049e7695da53a}{signals}}\ \&\ mask))\ :\ (signal-\/>signals\ \&\ mask);}
+\DoxyCodeLine{\Hypertarget{linux_2signal_8c_source_l00098}00098\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{linux_2signal_8c_source_l00099}00099\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ret\_code\ =\ PAL\_SIGNAL\_SUCCESS;}
+\DoxyCodeLine{\Hypertarget{linux_2signal_8c_source_l00100}00100\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{linux_2signal_8c_source_l00101}00101\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{default}:}
+\DoxyCodeLine{\Hypertarget{linux_2signal_8c_source_l00102}00102\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ret\_code\ =\ PAL\_SIGNAL\_SUCCESS;}
+\DoxyCodeLine{\Hypertarget{linux_2signal_8c_source_l00103}00103\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{while}\ (!wait\_condition)}
+\DoxyCodeLine{\Hypertarget{linux_2signal_8c_source_l00104}00104\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{linux_2signal_8c_source_l00105}00105\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ err\ =\ pthread\_cond\_timedwait(\&signal-\/>\mbox{\hyperlink{structpal__signal__s_ae47b6dbdc3853d77f7bb4235fd858dc1}{cond}},\ \&signal-\/>\mbox{\hyperlink{structpal__signal__s_a45198861037651738b4dd3d526ab927c}{mutex}},\ \&ts);}
+\DoxyCodeLine{\Hypertarget{linux_2signal_8c_source_l00106}00106\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (0\ !=\ err)}
+\DoxyCodeLine{\Hypertarget{linux_2signal_8c_source_l00107}00107\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{linux_2signal_8c_source_l00108}00108\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ret\_code\ =\ PAL\_SIGNAL\_FAILURE;}
+\DoxyCodeLine{\Hypertarget{linux_2signal_8c_source_l00109}00109\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (ETIMEDOUT\ ==\ err)}
+\DoxyCodeLine{\Hypertarget{linux_2signal_8c_source_l00110}00110\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{linux_2signal_8c_source_l00111}00111\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ret\_code\ =\ PAL\_SIGNAL\_TIMEOUT;}
+\DoxyCodeLine{\Hypertarget{linux_2signal_8c_source_l00112}00112\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{linux_2signal_8c_source_l00113}00113\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{linux_2signal_8c_source_l00114}00114\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{linux_2signal_8c_source_l00115}00115\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ wait\_condition\ =\ wait\_all\ ?\ (mask\ ==\ (signal-\/>\mbox{\hyperlink{structpal__signal__s_aa5ed3a759226dd4999f049e7695da53a}{signals}}\ \&\ mask))\ :\ (signal-\/>signals\ \&\ mask);}
+\DoxyCodeLine{\Hypertarget{linux_2signal_8c_source_l00116}00116\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{linux_2signal_8c_source_l00117}00117\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{linux_2signal_8c_source_l00118}00118\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{linux_2signal_8c_source_l00119}00119\ \ \ \ \ \ \ \ \ pthread\_mutex\_unlock(\&signal-\/>\mbox{\hyperlink{structpal__signal__s_a45198861037651738b4dd3d526ab927c}{mutex}});}
+\DoxyCodeLine{\Hypertarget{linux_2signal_8c_source_l00120}00120\ \ \ \ \ \ \ \ \ *received\_signals\ =\ signal-\/>\mbox{\hyperlink{structpal__signal__s_aa5ed3a759226dd4999f049e7695da53a}{signals}}\ \&\ mask;}
+\DoxyCodeLine{\Hypertarget{linux_2signal_8c_source_l00121}00121\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (clear\_mask\ \&\&\ PAL\_SIGNAL\_SUCCESS\ ==\ ret\_code)}
+\DoxyCodeLine{\Hypertarget{linux_2signal_8c_source_l00122}00122\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{linux_2signal_8c_source_l00123}00123\ \ \ \ \ \ \ \ \ \ \ \ \ signal-\/>\mbox{\hyperlink{structpal__signal__s_aa5ed3a759226dd4999f049e7695da53a}{signals}}\ \&=\ \string~(*received\_signals);}
+\DoxyCodeLine{\Hypertarget{linux_2signal_8c_source_l00124}00124\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{linux_2signal_8c_source_l00125}00125\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{linux_2signal_8c_source_l00126}00126\ \ \ \ \ \textcolor{keywordflow}{return}\ ret\_code;}
+\DoxyCodeLine{\Hypertarget{linux_2signal_8c_source_l00127}00127\ \}}
+\DoxyCodeLine{\Hypertarget{linux_2signal_8c_source_l00128}00128\ }
+\DoxyCodeLine{\Hypertarget{linux_2signal_8c_source_l00129}00129\ \textcolor{keywordtype}{int}\ pal\_signal\_set(\mbox{\hyperlink{structpal__signal__s}{pal\_signal\_t}}\ *signal,\ \textcolor{keywordtype}{size\_t}\ mask,\ \textcolor{keywordtype}{int}\ from\_isr)}
+\DoxyCodeLine{\Hypertarget{linux_2signal_8c_source_l00130}00130\ \{}
+\DoxyCodeLine{\Hypertarget{linux_2signal_8c_source_l00131}00131\ \ \ \ \ \textcolor{keywordtype}{int}\ ret\_code\ =\ -\/1;}
+\DoxyCodeLine{\Hypertarget{linux_2signal_8c_source_l00132}00132\ \ \ \ \ (void)from\_isr;}
+\DoxyCodeLine{\Hypertarget{linux_2signal_8c_source_l00133}00133\ \ \ \ \ \textcolor{keywordflow}{if}\ (NULL\ !=\ signal)}
+\DoxyCodeLine{\Hypertarget{linux_2signal_8c_source_l00134}00134\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{linux_2signal_8c_source_l00135}00135\ \ \ \ \ \ \ \ \ pthread\_mutex\_lock(\&signal-\/>\mbox{\hyperlink{structpal__signal__s_a45198861037651738b4dd3d526ab927c}{mutex}});}
+\DoxyCodeLine{\Hypertarget{linux_2signal_8c_source_l00136}00136\ \ \ \ \ \ \ \ \ signal-\/>\mbox{\hyperlink{structpal__signal__s_aa5ed3a759226dd4999f049e7695da53a}{signals}}\ |=\ mask;}
+\DoxyCodeLine{\Hypertarget{linux_2signal_8c_source_l00137}00137\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (0\ ==\ pthread\_cond\_signal(\&signal-\/>\mbox{\hyperlink{structpal__signal__s_ae47b6dbdc3853d77f7bb4235fd858dc1}{cond}}))}
+\DoxyCodeLine{\Hypertarget{linux_2signal_8c_source_l00138}00138\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{linux_2signal_8c_source_l00139}00139\ \ \ \ \ \ \ \ \ \ \ \ \ ret\_code\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{linux_2signal_8c_source_l00140}00140\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{linux_2signal_8c_source_l00141}00141\ \ \ \ \ \ \ \ \ pthread\_mutex\_unlock(\&signal-\/>\mbox{\hyperlink{structpal__signal__s_a45198861037651738b4dd3d526ab927c}{mutex}});}
+\DoxyCodeLine{\Hypertarget{linux_2signal_8c_source_l00142}00142\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{linux_2signal_8c_source_l00143}00143\ \ \ \ \ \textcolor{keywordflow}{return}\ ret\_code;}
+\DoxyCodeLine{\Hypertarget{linux_2signal_8c_source_l00144}00144\ \}}
+\DoxyCodeLine{\Hypertarget{linux_2signal_8c_source_l00145}00145\ }
+\DoxyCodeLine{\Hypertarget{linux_2signal_8c_source_l00146}00146\ \textcolor{keywordtype}{int}\ pal\_signal\_clear(\mbox{\hyperlink{structpal__signal__s}{pal\_signal\_t}}\ *signal,\ \textcolor{keywordtype}{size\_t}\ mask)}
+\DoxyCodeLine{\Hypertarget{linux_2signal_8c_source_l00147}00147\ \{}
+\DoxyCodeLine{\Hypertarget{linux_2signal_8c_source_l00148}00148\ \ \ \ \ \textcolor{keywordtype}{int}\ ret\_code\ =\ -\/1;}
+\DoxyCodeLine{\Hypertarget{linux_2signal_8c_source_l00149}00149\ \ \ \ \ \textcolor{keywordflow}{if}\ (NULL\ !=\ signal)}
+\DoxyCodeLine{\Hypertarget{linux_2signal_8c_source_l00150}00150\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{linux_2signal_8c_source_l00151}00151\ \ \ \ \ \ \ \ \ pthread\_mutex\_lock(\&signal-\/>\mbox{\hyperlink{structpal__signal__s_a45198861037651738b4dd3d526ab927c}{mutex}});}
+\DoxyCodeLine{\Hypertarget{linux_2signal_8c_source_l00152}00152\ \ \ \ \ \ \ \ \ signal-\/>\mbox{\hyperlink{structpal__signal__s_aa5ed3a759226dd4999f049e7695da53a}{signals}}\ \&=\ \string~mask;}
+\DoxyCodeLine{\Hypertarget{linux_2signal_8c_source_l00153}00153\ \ \ \ \ \ \ \ \ pthread\_mutex\_unlock(\&signal-\/>\mbox{\hyperlink{structpal__signal__s_a45198861037651738b4dd3d526ab927c}{mutex}});}
+\DoxyCodeLine{\Hypertarget{linux_2signal_8c_source_l00154}00154\ \ \ \ \ \ \ \ \ ret\_code\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{linux_2signal_8c_source_l00155}00155\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{linux_2signal_8c_source_l00156}00156\ \ \ \ \ \textcolor{keywordflow}{return}\ ret\_code;}
+\DoxyCodeLine{\Hypertarget{linux_2signal_8c_source_l00157}00157\ \}}
+\DoxyCodeLine{\Hypertarget{linux_2signal_8c_source_l00158}00158\ }
+\DoxyCodeLine{\Hypertarget{linux_2signal_8c_source_l00159}00159\ \textcolor{keywordtype}{int}\ pal\_signal\_destroy(\mbox{\hyperlink{structpal__signal__s}{pal\_signal\_t}}\ **signal)}
+\DoxyCodeLine{\Hypertarget{linux_2signal_8c_source_l00160}00160\ \{}
+\DoxyCodeLine{\Hypertarget{linux_2signal_8c_source_l00161}00161\ \ \ \ \ \textcolor{keywordtype}{int}\ ret\_code\ =\ -\/1;}
+\DoxyCodeLine{\Hypertarget{linux_2signal_8c_source_l00162}00162\ \ \ \ \ \textcolor{keywordflow}{if}\ (NULL\ !=\ signal\ \&\&\ NULL\ !=\ *signal)}
+\DoxyCodeLine{\Hypertarget{linux_2signal_8c_source_l00163}00163\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{linux_2signal_8c_source_l00164}00164\ \ \ \ \ \ \ \ \ pthread\_mutex\_destroy(\&(*signal)-\/>mutex);}
+\DoxyCodeLine{\Hypertarget{linux_2signal_8c_source_l00165}00165\ \ \ \ \ \ \ \ \ pthread\_cond\_destroy(\&(*signal)-\/>cond);}
+\DoxyCodeLine{\Hypertarget{linux_2signal_8c_source_l00166}00166\ \ \ \ \ \ \ \ \ free(*signal);}
+\DoxyCodeLine{\Hypertarget{linux_2signal_8c_source_l00167}00167\ \ \ \ \ \ \ \ \ *signal\ \ =\ NULL;}
+\DoxyCodeLine{\Hypertarget{linux_2signal_8c_source_l00168}00168\ \ \ \ \ \ \ \ \ ret\_code\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{linux_2signal_8c_source_l00169}00169\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{linux_2signal_8c_source_l00170}00170\ \ \ \ \ \textcolor{keywordflow}{return}\ ret\_code;}
+\DoxyCodeLine{\Hypertarget{linux_2signal_8c_source_l00171}00171\ \}}
+
+\end{DoxyCode}

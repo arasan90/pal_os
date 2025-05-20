@@ -1,0 +1,63 @@
+\doxysection{src/linux/time.c File Reference}
+\hypertarget{linux_2time_8c}{}\label{linux_2time_8c}\index{src/linux/time.c@{src/linux/time.c}}
+{\ttfamily \#include "{}pal\+\_\+os/time.\+h"{}}\newline
+Include dependency graph for time.\+c\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=172pt]{linux_2time_8c__incl}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+size\+\_\+t \mbox{\hyperlink{linux_2time_8c_af488ef57c0c5482c51db54eca4d72c72}{pal\+\_\+get\+\_\+unix\+\_\+time}} (void)
+\begin{DoxyCompactList}\small\item\em Get the current time in seconds since the epoch (1970-\/01-\/01 00\+:00\+:00 UTC). \end{DoxyCompactList}\item 
+size\+\_\+t \mbox{\hyperlink{linux_2time_8c_aad1b8a65fe777c53a3ed0e894c0a251f}{pal\+\_\+get\+\_\+system\+\_\+time}} (void)
+\begin{DoxyCompactList}\small\item\em Get the current time in milliseconds since the system started. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{linux_2time_8c_a530e61de8b098f35d77cc81f04e6261b}{pal\+\_\+set\+\_\+unix\+\_\+time}} (size\+\_\+t unix\+\_\+time)
+\begin{DoxyCompactList}\small\item\em Set the current time in seconds since the epoch (1970-\/01-\/01 00\+:00\+:00 UTC). \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Function Documentation}
+\Hypertarget{linux_2time_8c_aad1b8a65fe777c53a3ed0e894c0a251f}\label{linux_2time_8c_aad1b8a65fe777c53a3ed0e894c0a251f} 
+\index{time.c@{time.c}!pal\_get\_system\_time@{pal\_get\_system\_time}}
+\index{pal\_get\_system\_time@{pal\_get\_system\_time}!time.c@{time.c}}
+\doxysubsubsection{\texorpdfstring{pal\_get\_system\_time()}{pal\_get\_system\_time()}}
+{\footnotesize\ttfamily size\+\_\+t pal\+\_\+get\+\_\+system\+\_\+time (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Get the current time in milliseconds since the system started. 
+
+\begin{DoxyReturn}{Returns}
+The current time in milliseconds since the system started. 
+\end{DoxyReturn}
+\Hypertarget{linux_2time_8c_af488ef57c0c5482c51db54eca4d72c72}\label{linux_2time_8c_af488ef57c0c5482c51db54eca4d72c72} 
+\index{time.c@{time.c}!pal\_get\_unix\_time@{pal\_get\_unix\_time}}
+\index{pal\_get\_unix\_time@{pal\_get\_unix\_time}!time.c@{time.c}}
+\doxysubsubsection{\texorpdfstring{pal\_get\_unix\_time()}{pal\_get\_unix\_time()}}
+{\footnotesize\ttfamily size\+\_\+t pal\+\_\+get\+\_\+unix\+\_\+time (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Get the current time in seconds since the epoch (1970-\/01-\/01 00\+:00\+:00 UTC). 
+
+\begin{DoxyReturn}{Returns}
+The current time in seconds since the epoch. 
+\end{DoxyReturn}
+\Hypertarget{linux_2time_8c_a530e61de8b098f35d77cc81f04e6261b}\label{linux_2time_8c_a530e61de8b098f35d77cc81f04e6261b} 
+\index{time.c@{time.c}!pal\_set\_unix\_time@{pal\_set\_unix\_time}}
+\index{pal\_set\_unix\_time@{pal\_set\_unix\_time}!time.c@{time.c}}
+\doxysubsubsection{\texorpdfstring{pal\_set\_unix\_time()}{pal\_set\_unix\_time()}}
+{\footnotesize\ttfamily void pal\+\_\+set\+\_\+unix\+\_\+time (\begin{DoxyParamCaption}\item[{size\+\_\+t}]{unix\+\_\+time }\end{DoxyParamCaption})}
+
+
+
+Set the current time in seconds since the epoch (1970-\/01-\/01 00\+:00\+:00 UTC). 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em unix\+\_\+time} & The time to set in seconds since the epoch. \\
+\hline
+\end{DoxyParams}

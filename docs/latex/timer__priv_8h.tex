@@ -1,0 +1,171 @@
+\doxysection{src/linux/timer\+\_\+priv.h File Reference}
+\hypertarget{timer__priv_8h}{}\label{timer__priv_8h}\index{src/linux/timer\_priv.h@{src/linux/timer\_priv.h}}
+{\ttfamily \#include $<$pthread.\+h$>$}\newline
+{\ttfamily \#include $<$stddef.\+h$>$}\newline
+{\ttfamily \#include $<$time.\+h$>$}\newline
+{\ttfamily \#include "{}pal\+\_\+os/timer.\+h"{}}\newline
+Include dependency graph for timer\+\_\+priv.\+h\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{timer__priv_8h__incl}
+\end{center}
+\end{figure}
+This graph shows which files directly or indirectly include this file\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=294pt]{timer__priv_8h__dep__incl}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{structpal__timer__s}{pal\+\_\+timer\+\_\+s}}
+\item 
+struct \mbox{\hyperlink{structpal__timer__env__s}{pal\+\_\+timer\+\_\+env\+\_\+s}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+typedef struct \mbox{\hyperlink{structpal__timer__env__s}{pal\+\_\+timer\+\_\+env\+\_\+s}} \mbox{\hyperlink{timer__priv_8h_a510f14fa44e2895d67be8f4be3bc78e7}{pal\+\_\+timer\+\_\+env\+\_\+t}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \mbox{\hyperlink{timer__priv_8h_af99e4f72be010ebd08693778e191d84b}{pal\+\_\+timer\+\_\+init}} (void)
+\begin{DoxyCompactList}\small\item\em Initialize the timer module. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{timer__priv_8h_af5b8298e9a6a4974ff9bf33d408fe55b}{pal\+\_\+timer\+\_\+deinit}} (void)
+\begin{DoxyCompactList}\small\item\em Deinitialize the timer module. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{timer__priv_8h_ab810bc56d6ebb96de55756d4208f99d1}{pal\+\_\+os\+\_\+timer\+\_\+time\+\_\+cmp}} (const struct timespec \texorpdfstring{$\ast$}{*}a, const struct timespec \texorpdfstring{$\ast$}{*}b)
+\begin{DoxyCompactList}\small\item\em Compare two timespec structures. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{timer__priv_8h_a20bdd8caea18bbccc670a08e78d03a8b}{pal\+\_\+os\+\_\+timer\+\_\+insert\+\_\+sorted}} (\mbox{\hyperlink{timer_8h_a0be6e0051af71fa5bdbbce3ff91c45c3}{pal\+\_\+timer\+\_\+t}} \texorpdfstring{$\ast$}{*}timer)
+\begin{DoxyCompactList}\small\item\em Insert a timer into the sorted timer list. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{timer__priv_8h_aec524543047b8634546d02015a03a326}{pal\+\_\+os\+\_\+timer\+\_\+remove}} (\mbox{\hyperlink{timer_8h_a0be6e0051af71fa5bdbbce3ff91c45c3}{pal\+\_\+timer\+\_\+t}} \texorpdfstring{$\ast$}{*}timer)
+\begin{DoxyCompactList}\small\item\em Remove a timer from the sorted timer list. \end{DoxyCompactList}\item 
+void \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{timer__priv_8h_a32f7b13d3d2448554b71f4acb6b5b5a4}{pal\+\_\+timer\+\_\+thread\+\_\+fn}} (void \texorpdfstring{$\ast$}{*}arg)
+\begin{DoxyCompactList}\small\item\em Timer thread function. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{timer__priv_8h_a510f14fa44e2895d67be8f4be3bc78e7}{pal\+\_\+timer\+\_\+env\+\_\+t}} \mbox{\hyperlink{timer__priv_8h_aa15c36071a749a37d28d8d0ad54a471f}{pal\+\_\+timer\+\_\+environment}}
+\begin{DoxyCompactList}\small\item\em Global timer environment structure. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Typedef Documentation}
+\Hypertarget{timer__priv_8h_a510f14fa44e2895d67be8f4be3bc78e7}\label{timer__priv_8h_a510f14fa44e2895d67be8f4be3bc78e7} 
+\index{timer\_priv.h@{timer\_priv.h}!pal\_timer\_env\_t@{pal\_timer\_env\_t}}
+\index{pal\_timer\_env\_t@{pal\_timer\_env\_t}!timer\_priv.h@{timer\_priv.h}}
+\doxysubsubsection{\texorpdfstring{pal\_timer\_env\_t}{pal\_timer\_env\_t}}
+{\footnotesize\ttfamily typedef struct \mbox{\hyperlink{structpal__timer__env__s}{pal\+\_\+timer\+\_\+env\+\_\+s}} \mbox{\hyperlink{timer__priv_8h_a510f14fa44e2895d67be8f4be3bc78e7}{pal\+\_\+timer\+\_\+env\+\_\+t}}}
+
+
+
+\doxysubsection{Function Documentation}
+\Hypertarget{timer__priv_8h_a20bdd8caea18bbccc670a08e78d03a8b}\label{timer__priv_8h_a20bdd8caea18bbccc670a08e78d03a8b} 
+\index{timer\_priv.h@{timer\_priv.h}!pal\_os\_timer\_insert\_sorted@{pal\_os\_timer\_insert\_sorted}}
+\index{pal\_os\_timer\_insert\_sorted@{pal\_os\_timer\_insert\_sorted}!timer\_priv.h@{timer\_priv.h}}
+\doxysubsubsection{\texorpdfstring{pal\_os\_timer\_insert\_sorted()}{pal\_os\_timer\_insert\_sorted()}}
+{\footnotesize\ttfamily void pal\+\_\+os\+\_\+timer\+\_\+insert\+\_\+sorted (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{timer_8h_a0be6e0051af71fa5bdbbce3ff91c45c3}{pal\+\_\+timer\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{timer }\end{DoxyParamCaption})}
+
+
+
+Insert a timer into the sorted timer list. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em timer} & Pointer to the timer to be inserted \\
+\hline
+\end{DoxyParams}
+\Hypertarget{timer__priv_8h_aec524543047b8634546d02015a03a326}\label{timer__priv_8h_aec524543047b8634546d02015a03a326} 
+\index{timer\_priv.h@{timer\_priv.h}!pal\_os\_timer\_remove@{pal\_os\_timer\_remove}}
+\index{pal\_os\_timer\_remove@{pal\_os\_timer\_remove}!timer\_priv.h@{timer\_priv.h}}
+\doxysubsubsection{\texorpdfstring{pal\_os\_timer\_remove()}{pal\_os\_timer\_remove()}}
+{\footnotesize\ttfamily void pal\+\_\+os\+\_\+timer\+\_\+remove (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{timer_8h_a0be6e0051af71fa5bdbbce3ff91c45c3}{pal\+\_\+timer\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{timer }\end{DoxyParamCaption})}
+
+
+
+Remove a timer from the sorted timer list. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em timer} & Pointer to the timer to be inserted \\
+\hline
+\end{DoxyParams}
+\Hypertarget{timer__priv_8h_ab810bc56d6ebb96de55756d4208f99d1}\label{timer__priv_8h_ab810bc56d6ebb96de55756d4208f99d1} 
+\index{timer\_priv.h@{timer\_priv.h}!pal\_os\_timer\_time\_cmp@{pal\_os\_timer\_time\_cmp}}
+\index{pal\_os\_timer\_time\_cmp@{pal\_os\_timer\_time\_cmp}!timer\_priv.h@{timer\_priv.h}}
+\doxysubsubsection{\texorpdfstring{pal\_os\_timer\_time\_cmp()}{pal\_os\_timer\_time\_cmp()}}
+{\footnotesize\ttfamily int pal\+\_\+os\+\_\+timer\+\_\+time\+\_\+cmp (\begin{DoxyParamCaption}\item[{const struct timespec \texorpdfstring{$\ast$}{*}}]{a,  }\item[{const struct timespec \texorpdfstring{$\ast$}{*}}]{b }\end{DoxyParamCaption})}
+
+
+
+Compare two timespec structures. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em a} & Pointer to the first timespec structure \\
+\hline
+{\em b} & Pointer to the second timespec structure \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+0 if equal, negative value if a \texorpdfstring{$<$}{<} b, positive value if a \texorpdfstring{$>$}{>} b 
+\end{DoxyReturn}
+\Hypertarget{timer__priv_8h_af5b8298e9a6a4974ff9bf33d408fe55b}\label{timer__priv_8h_af5b8298e9a6a4974ff9bf33d408fe55b} 
+\index{timer\_priv.h@{timer\_priv.h}!pal\_timer\_deinit@{pal\_timer\_deinit}}
+\index{pal\_timer\_deinit@{pal\_timer\_deinit}!timer\_priv.h@{timer\_priv.h}}
+\doxysubsubsection{\texorpdfstring{pal\_timer\_deinit()}{pal\_timer\_deinit()}}
+{\footnotesize\ttfamily void pal\+\_\+timer\+\_\+deinit (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Deinitialize the timer module. 
+
+\Hypertarget{timer__priv_8h_af99e4f72be010ebd08693778e191d84b}\label{timer__priv_8h_af99e4f72be010ebd08693778e191d84b} 
+\index{timer\_priv.h@{timer\_priv.h}!pal\_timer\_init@{pal\_timer\_init}}
+\index{pal\_timer\_init@{pal\_timer\_init}!timer\_priv.h@{timer\_priv.h}}
+\doxysubsubsection{\texorpdfstring{pal\_timer\_init()}{pal\_timer\_init()}}
+{\footnotesize\ttfamily int pal\+\_\+timer\+\_\+init (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Initialize the timer module. 
+
+\begin{DoxyReturn}{Returns}
+0 on success, -\/1 on failure 
+\end{DoxyReturn}
+\Hypertarget{timer__priv_8h_a32f7b13d3d2448554b71f4acb6b5b5a4}\label{timer__priv_8h_a32f7b13d3d2448554b71f4acb6b5b5a4} 
+\index{timer\_priv.h@{timer\_priv.h}!pal\_timer\_thread\_fn@{pal\_timer\_thread\_fn}}
+\index{pal\_timer\_thread\_fn@{pal\_timer\_thread\_fn}!timer\_priv.h@{timer\_priv.h}}
+\doxysubsubsection{\texorpdfstring{pal\_timer\_thread\_fn()}{pal\_timer\_thread\_fn()}}
+{\footnotesize\ttfamily void \texorpdfstring{$\ast$}{*} pal\+\_\+timer\+\_\+thread\+\_\+fn (\begin{DoxyParamCaption}\item[{void \texorpdfstring{$\ast$}{*}}]{arg }\end{DoxyParamCaption})}
+
+
+
+Timer thread function. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em arg} & Pointer to user-\/defined argument passed to the thread function \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+NULL 
+\end{DoxyReturn}
+\begin{DoxyNote}{Note}
+This function is intended to be used as the entry point for the timer thread. 
+\end{DoxyNote}
+
+
+\doxysubsection{Variable Documentation}
+\Hypertarget{timer__priv_8h_aa15c36071a749a37d28d8d0ad54a471f}\label{timer__priv_8h_aa15c36071a749a37d28d8d0ad54a471f} 
+\index{timer\_priv.h@{timer\_priv.h}!pal\_timer\_environment@{pal\_timer\_environment}}
+\index{pal\_timer\_environment@{pal\_timer\_environment}!timer\_priv.h@{timer\_priv.h}}
+\doxysubsubsection{\texorpdfstring{pal\_timer\_environment}{pal\_timer\_environment}}
+{\footnotesize\ttfamily \mbox{\hyperlink{timer__priv_8h_a510f14fa44e2895d67be8f4be3bc78e7}{pal\+\_\+timer\+\_\+env\+\_\+t}} pal\+\_\+timer\+\_\+environment\hspace{0.3cm}{\ttfamily [extern]}}
+
+
+
+Global timer environment structure. 
+

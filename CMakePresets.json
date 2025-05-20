@@ -9,7 +9,8 @@
             "binaryDir": "${sourceDir}/buildEsp32/",
             "cacheVariables": {
                 "CMAKE_BUILD_TYPE": "Debug",
-                "TARGET_PLATFORM": "esp32"
+                "TARGET_PLATFORM": "esp32",
+                "COMPILE_TEST_APP": true
             }
         },
         {
@@ -22,7 +23,8 @@
                 "CMAKE_BUILD_TYPE": "Debug",
                 "TARGET_PLATFORM": "linux",
                 "PERFORM_UNIT_TESTS": true,
-                "COMPILE_TEST_APP": true
+                "COMPILE_TEST_APP": true,
+                "COMPILE_MOCK": true
             }
         }
     ],
