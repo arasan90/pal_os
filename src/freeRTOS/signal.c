@@ -113,7 +113,7 @@ int pal_signal_clear(pal_signal_t *signal, size_t mask)
 	return ret_code;
 }
 
-int pal_signal_destroy(pal_signal_t **signal)
+int pal_signal_destroy(pal_signal_t *signal)
 {
 	int ret_code = -1;
 	if (signal)

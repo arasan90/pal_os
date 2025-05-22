@@ -6,6 +6,8 @@
 
 #include "pal_os/queue.h"
 
+#include "freertos/FreeRTOS.h"
+#include "freertos/queue.h"
 #include "pal_os/common.h"
 
 /* ---------------------------------------------------------------------------

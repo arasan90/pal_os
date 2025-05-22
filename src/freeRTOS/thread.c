@@ -132,7 +132,7 @@ void pal_thread_free(pal_thread_t *thread)
 {
 	if (thread && PAL_THREAD_STATE_TERMINATED == thread->state)
 	{
-		vEventGroupDelete((*thread)->event_group_handle);
+		vEventGroupDelete(thread->event_group_handle);
 		thread->event_group_handle = NULL;
 	}
 }

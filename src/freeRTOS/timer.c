@@ -44,7 +44,7 @@
  * ---------------------------------------------------------------------------
  */
 
-int pal_timer_create(pal_timer_t **timer, const char *name, pal_timer_type_t type, size_t period, pal_timer_callback_t callback, int auto_start, void *arg)
+int pal_timer_create(pal_timer_t *timer, const char *name, pal_timer_type_t type, size_t period, pal_timer_callback_t callback, int auto_start, void *arg)
 {
 	int ret_code = -1;
 	if (timer && callback && period)
@@ -177,13 +177,12 @@ int pal_is_timer_active(pal_timer_t *timer)
 	return ret_code;
 }
 
-int pal_timer_delete(pal_timer_t **timer)
+int pal_timer_delete(pal_timer_t *timer)
 {
 	int ret_code = -1;
-	if (timer && *timer)
+	if (timer)
 	{
 		xTimerDelete((TimerHandle_t)*timer, portMAX_DELAY);
-		*timer	 = NULL;
 		ret_code = 0;
 	}
 	return ret_code;
