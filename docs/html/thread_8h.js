@@ -14,8 +14,8 @@ var thread_8h =
       [ "PAL_THREAD_STATE_STOPPED", "thread_8h.html#a66f5d5ff94a59f7a7792ceca9e3165ada1dd2282bdfc013a762f986455aa3812c", null ],
       [ "PAL_THREAD_STATE_TERMINATED", "thread_8h.html#a66f5d5ff94a59f7a7792ceca9e3165ada35b51147e50dfc6d582f35c1e6a3a82d", null ]
     ] ],
-    [ "pal_thread_create", "thread_8h.html#a97ee040d0732a66df73c92572b5bc4cb", null ],
-    [ "pal_thread_free", "thread_8h.html#af452d0ce3708ee5a142a42f6bacea818", null ],
+    [ "pal_thread_create", "thread_8h.html#a039a7dcbe7b5c6f2b1cad9c08eed4505", null ],
+    [ "pal_thread_free", "thread_8h.html#acabe9f5b0caa72e663461ee581649fa6", null ],
     [ "pal_thread_get_name", "thread_8h.html#af153d1d438c624b83ee9c085d7ebd352", null ],
     [ "pal_thread_get_stack_watermark", "thread_8h.html#a8fbdc05be469f02cf75ce3bf639a11c3", null ],
     [ "pal_thread_join", "thread_8h.html#a77e2c028aab9cfb43d75539f26b44275", null ],

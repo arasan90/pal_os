@@ -4,13 +4,14 @@
  * Author: Massimiliano Ianniello
  */
 
+#include "pal_os/queue.h"
+
 #include <errno.h>
 #include <malloc.h>
 #include <string.h>
 #include <time.h>
 
 #include "pal_os/common.h"
-#include "queue_priv.h"
 
 /* ---------------------------------------------------------------------------
  * Type Definitions
@@ -41,34 +42,25 @@
  * Function Implementations
  * ---------------------------------------------------------------------------
  */
-int pal_queue_create(pal_queue_t **queue, size_t item_size, size_t max_items)
+int pal_queue_create(pal_queue_t *queue, size_t item_size, size_t max_items)
 {
 	int ret_code = -1;
 	if (NULL != queue && 0 != item_size && 0 != max_items)
 	{
-		*queue = malloc(sizeof(struct pal_queue_s));
-		if (NULL != *queue)
+		queue->data = malloc(item_size * max_items);
+		if (NULL != queue->data)
 		{
-			(*queue)->data = malloc(item_size * max_items);
-			if (NULL != (*queue)->data)
-			{
-				(*queue)->item_size = item_size;
-				(*queue)->max_items = max_items;
-				(*queue)->head		= 0;
-				(*queue)->tail		= 0;
-				pthread_mutexattr_t attr;
-				pthread_mutexattr_init(&attr);
-				pthread_mutexattr_settype(&attr, PTHREAD_MUTEX_RECURSIVE);
-				pthread_mutex_init(&(*queue)->mutex, &attr);
-				pthread_cond_init(&(*queue)->full, NULL);
-				pthread_cond_init(&(*queue)->empty, NULL);
-				ret_code = 0;
-			}
-			else
-			{
-				free(*queue);
-				*queue = NULL;
-			}
+			queue->item_size = item_size;
+			queue->max_items = max_items;
+			queue->head		 = 0;
+			queue->tail		 = 0;
+			pthread_mutexattr_t attr;
+			pthread_mutexattr_init(&attr);
+			pthread_mutexattr_settype(&attr, PTHREAD_MUTEX_RECURSIVE);
+			pthread_mutex_init(&queue->mutex, &attr);
+			pthread_cond_init(&queue->full, NULL);
+			pthread_cond_init(&queue->empty, NULL);
+			ret_code = 0;
 		}
 	}
 	return ret_code;
@@ -198,15 +190,13 @@ size_t pal_queue_get_items(pal_queue_t *queue, int from_isr)
 	return items;
 }
 
-void pal_queue_destroy(pal_queue_t **queue)
+void pal_queue_destroy(pal_queue_t *queue)
 {
-	if (NULL != queue && NULL != *queue)
+	if (NULL != queue)
 	{
-		pthread_mutex_destroy(&(*queue)->mutex);
-		pthread_cond_destroy(&(*queue)->full);
-		pthread_cond_destroy(&(*queue)->empty);
-		free((*queue)->data);
-		free(*queue);
-		*queue = NULL;
+		pthread_mutex_destroy(&queue->mutex);
+		pthread_cond_destroy(&queue->full);
+		pthread_cond_destroy(&queue->empty);
+		free(queue->data);
 	}
 }

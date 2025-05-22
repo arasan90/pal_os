@@ -11,7 +11,6 @@
 #include <string.h>
 #include <time.h>
 
-#include "mutex_priv.h"
 #include "pal_os/common.h"
 /* ---------------------------------------------------------------------------
  * Type Definitions
@@ -42,24 +41,20 @@
  * Function Implementations
  * ---------------------------------------------------------------------------
  */
-int pal_mutex_create(pal_mutex_t **mutex, int recursive)
+int pal_mutex_create(pal_mutex_t *mutex, int recursive)
 {
 	int ret_code = -1;
-	if (NULL != mutex)
+	if (mutex)
 	{
-		*mutex = malloc(sizeof(struct pal_mutex_s));
-		if (NULL != *mutex)
+		pthread_mutexattr_t attr;
+		pthread_mutexattr_init(&attr);
+		if (recursive)
 		{
-			pthread_mutexattr_t attr;
-			pthread_mutexattr_init(&attr);
-			if (recursive)
-			{
-				pthread_mutexattr_settype(&attr, PTHREAD_MUTEX_RECURSIVE);
-			}
-			pthread_mutex_init(&(*mutex)->mutex, &attr);
-			pthread_mutexattr_destroy(&attr);
-			ret_code = 0;
+			pthread_mutexattr_settype(&attr, PTHREAD_MUTEX_RECURSIVE);
 		}
+		pthread_mutex_init(&mutex->mutex, &attr);
+		pthread_mutexattr_destroy(&attr);
+		ret_code = 0;
 	}
 	return ret_code;
 }
@@ -67,7 +62,7 @@ int pal_mutex_create(pal_mutex_t **mutex, int recursive)
 int pal_mutex_lock(pal_mutex_t *mutex, size_t timeout_ms)
 {
 	int ret_code = -1;
-	if (NULL != mutex)
+	if (mutex)
 	{
 		switch (timeout_ms)
 		{
@@ -96,21 +91,19 @@ int pal_mutex_lock(pal_mutex_t *mutex, size_t timeout_ms)
 int pal_mutex_unlock(pal_mutex_t *mutex)
 {
 	int ret_code = -1;
-	if (NULL != mutex)
+	if (mutex)
 	{
 		ret_code = 0 == pthread_mutex_unlock(&mutex->mutex) ? 0 : -1;
 	}
 	return ret_code;
 }
 
-int pal_mutex_destroy(pal_mutex_t **mutex)
+int pal_mutex_destroy(pal_mutex_t *mutex)
 {
 	int ret_code = -1;
-	if (NULL != mutex && NULL != *mutex)
+	if (mutex)
 	{
-		pthread_mutex_destroy(&(*mutex)->mutex);
-		free(*mutex);
-		*mutex	 = NULL;
+		pthread_mutex_destroy(&mutex->mutex);
 		ret_code = 0;
 	}
 	return ret_code;

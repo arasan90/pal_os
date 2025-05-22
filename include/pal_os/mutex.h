@@ -9,6 +9,12 @@ extern "C"
 // Includes
 // ============================
 #include <stddef.h>
+#if PAL_OS_LINUX
+#include <pthread.h>
+#elif PAL_OS_FREERTOS
+#include "freertos/FreeRTOS.h"
+#include "freertos/semphr.h"
+#endif
 
 // ============================
 // Macros and Constants
@@ -17,6 +23,18 @@ extern "C"
 // ============================
 // Type Definitions
 // ============================
+#if PAL_OS_LINUX
+struct pal_mutex_s
+{
+	pthread_mutex_t mutex;	//!< Mutex for thread safety
+};
+#elif PAL_OS_FREERTOS
+struct pal_mutex_s
+{
+	SemaphoreHandle_t mutex_handle;	 //!< Mutex handle
+	int				  is_recursive;	 //!< Flag indicating if the mutex is recursive
+};
+#endif
 typedef struct pal_mutex_s pal_mutex_t;
 
 // ============================
@@ -30,7 +48,7 @@ typedef struct pal_mutex_s pal_mutex_t;
  * @param[in] recursive Indicates whether the mutex should be recursive (non-zero for recursive).
  * @return 0 on success, or -1 on failure.
  */
-int pal_mutex_create(pal_mutex_t **mutex, int recursive);
+int pal_mutex_create(pal_mutex_t *mutex, int recursive);
 
 /**
  * @brief Locks the specified mutex.
@@ -52,10 +70,10 @@ int pal_mutex_unlock(pal_mutex_t *mutex);
 /**
  * @brief Destroys the specified mutex.
  *
- * @param[in,out] mutex Pointer to the mutex handle to be destroyed. The pointer is set to NULL after destruction.
+ * @param[in,out] mutex Pointer to the mutex handle to be destroyed.
  * @return 0 on success, or -1 on failure.
  */
-int pal_mutex_destroy(pal_mutex_t **mutex);
+int pal_mutex_destroy(pal_mutex_t *mutex);
 
 #ifdef __cplusplus
 }

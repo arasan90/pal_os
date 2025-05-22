@@ -13,30 +13,48 @@
 \DoxyCodeLine{\Hypertarget{mutex_8h_source_l00009}00009\ \textcolor{comment}{//\ Includes}}
 \DoxyCodeLine{\Hypertarget{mutex_8h_source_l00010}00010\ \textcolor{comment}{//\ ============================}}
 \DoxyCodeLine{\Hypertarget{mutex_8h_source_l00011}00011\ \textcolor{preprocessor}{\#include\ <stddef.h>}}
-\DoxyCodeLine{\Hypertarget{mutex_8h_source_l00012}00012\ }
-\DoxyCodeLine{\Hypertarget{mutex_8h_source_l00013}00013\ \textcolor{comment}{//\ ============================}}
-\DoxyCodeLine{\Hypertarget{mutex_8h_source_l00014}00014\ \textcolor{comment}{//\ Macros\ and\ Constants}}
-\DoxyCodeLine{\Hypertarget{mutex_8h_source_l00015}00015\ \textcolor{comment}{//\ ============================}}
-\DoxyCodeLine{\Hypertarget{mutex_8h_source_l00016}00016\ }
-\DoxyCodeLine{\Hypertarget{mutex_8h_source_l00017}00017\ \textcolor{comment}{//\ ============================}}
-\DoxyCodeLine{\Hypertarget{mutex_8h_source_l00018}00018\ \textcolor{comment}{//\ Type\ Definitions}}
+\DoxyCodeLine{\Hypertarget{mutex_8h_source_l00012}00012\ \textcolor{preprocessor}{\#if\ PAL\_OS\_LINUX}}
+\DoxyCodeLine{\Hypertarget{mutex_8h_source_l00013}00013\ \textcolor{preprocessor}{\#include\ <pthread.h>}}
+\DoxyCodeLine{\Hypertarget{mutex_8h_source_l00014}00014\ \textcolor{preprocessor}{\#elif\ PAL\_OS\_FREERTOS}}
+\DoxyCodeLine{\Hypertarget{mutex_8h_source_l00015}00015\ \textcolor{preprocessor}{\#include\ "{}freertos/FreeRTOS.h"{}}}
+\DoxyCodeLine{\Hypertarget{mutex_8h_source_l00016}00016\ \textcolor{preprocessor}{\#include\ "{}freertos/semphr.h"{}}}
+\DoxyCodeLine{\Hypertarget{mutex_8h_source_l00017}00017\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{\Hypertarget{mutex_8h_source_l00018}00018\ }
 \DoxyCodeLine{\Hypertarget{mutex_8h_source_l00019}00019\ \textcolor{comment}{//\ ============================}}
-\DoxyCodeLine{\Hypertarget{mutex_8h_source_l00020}\mbox{\hyperlink{mutex_8h_a9ddc5724f29ed3d787212d2e364325f7}{00020}}\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }pal\_mutex\_s\ \mbox{\hyperlink{mutex_8h_a9ddc5724f29ed3d787212d2e364325f7}{pal\_mutex\_t}};}
-\DoxyCodeLine{\Hypertarget{mutex_8h_source_l00021}00021\ }
-\DoxyCodeLine{\Hypertarget{mutex_8h_source_l00022}00022\ \textcolor{comment}{//\ ============================}}
-\DoxyCodeLine{\Hypertarget{mutex_8h_source_l00023}00023\ \textcolor{comment}{//\ Function\ Declarations}}
-\DoxyCodeLine{\Hypertarget{mutex_8h_source_l00024}00024\ \textcolor{comment}{//\ ============================}}
-\DoxyCodeLine{\Hypertarget{mutex_8h_source_l00025}00025\ }
-\DoxyCodeLine{\Hypertarget{mutex_8h_source_l00033}\mbox{\hyperlink{mutex_8h_a6c1f8e4af3d85d799bd5937dd0df06c3}{00033}}\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{mutex_8h_a6c1f8e4af3d85d799bd5937dd0df06c3}{pal\_mutex\_create}}(\mbox{\hyperlink{mutex_8h_a9ddc5724f29ed3d787212d2e364325f7}{pal\_mutex\_t}}\ **mutex,\ \textcolor{keywordtype}{int}\ recursive);}
-\DoxyCodeLine{\Hypertarget{mutex_8h_source_l00034}00034\ }
-\DoxyCodeLine{\Hypertarget{mutex_8h_source_l00042}\mbox{\hyperlink{mutex_8h_adcc6f4ca1715ed19251e086874e72520}{00042}}\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{mutex_8h_adcc6f4ca1715ed19251e086874e72520}{pal\_mutex\_lock}}(\mbox{\hyperlink{mutex_8h_a9ddc5724f29ed3d787212d2e364325f7}{pal\_mutex\_t}}\ *mutex,\ \textcolor{keywordtype}{size\_t}\ timeout\_ms);}
+\DoxyCodeLine{\Hypertarget{mutex_8h_source_l00020}00020\ \textcolor{comment}{//\ Macros\ and\ Constants}}
+\DoxyCodeLine{\Hypertarget{mutex_8h_source_l00021}00021\ \textcolor{comment}{//\ ============================}}
+\DoxyCodeLine{\Hypertarget{mutex_8h_source_l00022}00022\ }
+\DoxyCodeLine{\Hypertarget{mutex_8h_source_l00023}00023\ \textcolor{comment}{//\ ============================}}
+\DoxyCodeLine{\Hypertarget{mutex_8h_source_l00024}00024\ \textcolor{comment}{//\ Type\ Definitions}}
+\DoxyCodeLine{\Hypertarget{mutex_8h_source_l00025}00025\ \textcolor{comment}{//\ ============================}}
+\DoxyCodeLine{\Hypertarget{mutex_8h_source_l00026}00026\ \textcolor{preprocessor}{\#if\ PAL\_OS\_LINUX}}
+\DoxyCodeLine{\Hypertarget{mutex_8h_source_l00027}00027\ \textcolor{keyword}{struct\ }pal\_mutex\_s}
+\DoxyCodeLine{\Hypertarget{mutex_8h_source_l00028}00028\ \{}
+\DoxyCodeLine{\Hypertarget{mutex_8h_source_l00029}00029\ \ \ \ \ pthread\_mutex\_t\ mutex;\ \ }
+\DoxyCodeLine{\Hypertarget{mutex_8h_source_l00030}00030\ \};}
+\DoxyCodeLine{\Hypertarget{mutex_8h_source_l00031}00031\ \textcolor{preprocessor}{\#elif\ PAL\_OS\_FREERTOS}}
+\DoxyCodeLine{\Hypertarget{mutex_8h_source_l00032}00032\ \textcolor{keyword}{struct\ }pal\_mutex\_s}
+\DoxyCodeLine{\Hypertarget{mutex_8h_source_l00033}00033\ \{}
+\DoxyCodeLine{\Hypertarget{mutex_8h_source_l00034}00034\ \ \ \ \ SemaphoreHandle\_t\ mutex\_handle;\ \ }
+\DoxyCodeLine{\Hypertarget{mutex_8h_source_l00035}00035\ \ \ \ \ \textcolor{keywordtype}{int}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ is\_recursive;\ \ }
+\DoxyCodeLine{\Hypertarget{mutex_8h_source_l00036}00036\ \};}
+\DoxyCodeLine{\Hypertarget{mutex_8h_source_l00037}00037\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{\Hypertarget{mutex_8h_source_l00038}\mbox{\hyperlink{mutex_8h_a9ddc5724f29ed3d787212d2e364325f7}{00038}}\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }pal\_mutex\_s\ \mbox{\hyperlink{mutex_8h_a9ddc5724f29ed3d787212d2e364325f7}{pal\_mutex\_t}};}
+\DoxyCodeLine{\Hypertarget{mutex_8h_source_l00039}00039\ }
+\DoxyCodeLine{\Hypertarget{mutex_8h_source_l00040}00040\ \textcolor{comment}{//\ ============================}}
+\DoxyCodeLine{\Hypertarget{mutex_8h_source_l00041}00041\ \textcolor{comment}{//\ Function\ Declarations}}
+\DoxyCodeLine{\Hypertarget{mutex_8h_source_l00042}00042\ \textcolor{comment}{//\ ============================}}
 \DoxyCodeLine{\Hypertarget{mutex_8h_source_l00043}00043\ }
-\DoxyCodeLine{\Hypertarget{mutex_8h_source_l00050}\mbox{\hyperlink{mutex_8h_a7215d0c3a1da7c7a07e478fce34c75fc}{00050}}\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{mutex_8h_a7215d0c3a1da7c7a07e478fce34c75fc}{pal\_mutex\_unlock}}(\mbox{\hyperlink{mutex_8h_a9ddc5724f29ed3d787212d2e364325f7}{pal\_mutex\_t}}\ *mutex);}
-\DoxyCodeLine{\Hypertarget{mutex_8h_source_l00051}00051\ }
-\DoxyCodeLine{\Hypertarget{mutex_8h_source_l00058}\mbox{\hyperlink{mutex_8h_a2062a4510739b0ab7d9cf11396dd9bca}{00058}}\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{mutex_8h_a2062a4510739b0ab7d9cf11396dd9bca}{pal\_mutex\_destroy}}(\mbox{\hyperlink{mutex_8h_a9ddc5724f29ed3d787212d2e364325f7}{pal\_mutex\_t}}\ **mutex);}
-\DoxyCodeLine{\Hypertarget{mutex_8h_source_l00059}00059\ }
-\DoxyCodeLine{\Hypertarget{mutex_8h_source_l00060}00060\ \textcolor{preprocessor}{\#ifdef\ \_\_cplusplus}}
-\DoxyCodeLine{\Hypertarget{mutex_8h_source_l00061}00061\ \}}
-\DoxyCodeLine{\Hypertarget{mutex_8h_source_l00062}00062\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{\Hypertarget{mutex_8h_source_l00051}\mbox{\hyperlink{mutex_8h_a5030fbb3ede4a7e3153fc4057adbf0cc}{00051}}\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{mutex_8h_a5030fbb3ede4a7e3153fc4057adbf0cc}{pal\_mutex\_create}}(\mbox{\hyperlink{mutex_8h_a9ddc5724f29ed3d787212d2e364325f7}{pal\_mutex\_t}}\ *mutex,\ \textcolor{keywordtype}{int}\ recursive);}
+\DoxyCodeLine{\Hypertarget{mutex_8h_source_l00052}00052\ }
+\DoxyCodeLine{\Hypertarget{mutex_8h_source_l00060}\mbox{\hyperlink{mutex_8h_adcc6f4ca1715ed19251e086874e72520}{00060}}\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{mutex_8h_adcc6f4ca1715ed19251e086874e72520}{pal\_mutex\_lock}}(\mbox{\hyperlink{mutex_8h_a9ddc5724f29ed3d787212d2e364325f7}{pal\_mutex\_t}}\ *mutex,\ \textcolor{keywordtype}{size\_t}\ timeout\_ms);}
+\DoxyCodeLine{\Hypertarget{mutex_8h_source_l00061}00061\ }
+\DoxyCodeLine{\Hypertarget{mutex_8h_source_l00068}\mbox{\hyperlink{mutex_8h_a7215d0c3a1da7c7a07e478fce34c75fc}{00068}}\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{mutex_8h_a7215d0c3a1da7c7a07e478fce34c75fc}{pal\_mutex\_unlock}}(\mbox{\hyperlink{mutex_8h_a9ddc5724f29ed3d787212d2e364325f7}{pal\_mutex\_t}}\ *mutex);}
+\DoxyCodeLine{\Hypertarget{mutex_8h_source_l00069}00069\ }
+\DoxyCodeLine{\Hypertarget{mutex_8h_source_l00076}\mbox{\hyperlink{mutex_8h_a2e6278c53cae9eeae69404520c0e93e5}{00076}}\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{mutex_8h_a2e6278c53cae9eeae69404520c0e93e5}{pal\_mutex\_destroy}}(\mbox{\hyperlink{mutex_8h_a9ddc5724f29ed3d787212d2e364325f7}{pal\_mutex\_t}}\ *mutex);}
+\DoxyCodeLine{\Hypertarget{mutex_8h_source_l00077}00077\ }
+\DoxyCodeLine{\Hypertarget{mutex_8h_source_l00078}00078\ \textcolor{preprocessor}{\#ifdef\ \_\_cplusplus}}
+\DoxyCodeLine{\Hypertarget{mutex_8h_source_l00079}00079\ \}}
+\DoxyCodeLine{\Hypertarget{mutex_8h_source_l00080}00080\ \textcolor{preprocessor}{\#endif}}
 
 \end{DoxyCode}

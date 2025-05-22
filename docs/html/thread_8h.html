@@ -115,15 +115,15 @@ Typedefs</h2></td></tr>
 <tr class="memitem:ae27c2948d079394af7db4cc282e0cb15" id="r_ae27c2948d079394af7db4cc282e0cb15"><td class="memItemLeft" align="right" valign="top">typedef void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="thread_8h.html#ae27c2948d079394af7db4cc282e0cb15">pal_thread_func_t</a>) (void *arg)</td></tr>
 <tr class="memdesc:ae27c2948d079394af7db4cc282e0cb15"><td class="mdescLeft">&#160;</td><td class="mdescRight">Thread function.  <br /></td></tr>
 <tr class="separator:ae27c2948d079394af7db4cc282e0cb15"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af3448323c3f8733862e088e3ba2ed8cf" id="r_af3448323c3f8733862e088e3ba2ed8cf"><td class="memItemLeft" align="right" valign="top">typedef struct pal_thread_s&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="thread_8h.html#af3448323c3f8733862e088e3ba2ed8cf">pal_thread_t</a></td></tr>
-<tr class="memdesc:af3448323c3f8733862e088e3ba2ed8cf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Thread structure. This structure is opaque and should not be accessed directly.  <br /></td></tr>
-<tr class="separator:af3448323c3f8733862e088e3ba2ed8cf"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7458e05bb0041818333963792acd51c6" id="r_a7458e05bb0041818333963792acd51c6"><td class="memItemLeft" align="right" valign="top">typedef enum <a class="el" href="thread_8h.html#ab61df3d0981995795e636175246dd7d1">pal_thread_priority_e</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="thread_8h.html#a7458e05bb0041818333963792acd51c6">pal_thread_priority_t</a></td></tr>
 <tr class="memdesc:a7458e05bb0041818333963792acd51c6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Thread priority levels.  <br /></td></tr>
 <tr class="separator:a7458e05bb0041818333963792acd51c6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad2e33a8f9e8b0a8e85daaac560d2ad67" id="r_ad2e33a8f9e8b0a8e85daaac560d2ad67"><td class="memItemLeft" align="right" valign="top">typedef enum <a class="el" href="thread_8h.html#a66f5d5ff94a59f7a7792ceca9e3165ad">pal_thread_state_e</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="thread_8h.html#ad2e33a8f9e8b0a8e85daaac560d2ad67">pal_thread_state_t</a></td></tr>
 <tr class="memdesc:ad2e33a8f9e8b0a8e85daaac560d2ad67"><td class="mdescLeft">&#160;</td><td class="mdescRight">Thread state.  <br /></td></tr>
 <tr class="separator:ad2e33a8f9e8b0a8e85daaac560d2ad67"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af3448323c3f8733862e088e3ba2ed8cf" id="r_af3448323c3f8733862e088e3ba2ed8cf"><td class="memItemLeft" align="right" valign="top">typedef struct pal_thread_s&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="thread_8h.html#af3448323c3f8733862e088e3ba2ed8cf">pal_thread_t</a></td></tr>
+<tr class="memdesc:af3448323c3f8733862e088e3ba2ed8cf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Thread structure. This structure is opaque and should not be accessed directly.  <br /></td></tr>
+<tr class="separator:af3448323c3f8733862e088e3ba2ed8cf"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="enum-members" name="enum-members"></a>
 Enumerations</h2></td></tr>
@@ -142,9 +142,9 @@ Enumerations</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:a97ee040d0732a66df73c92572b5bc4cb" id="r_a97ee040d0732a66df73c92572b5bc4cb"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="thread_8h.html#a97ee040d0732a66df73c92572b5bc4cb">pal_thread_create</a> (<a class="el" href="thread_8h.html#af3448323c3f8733862e088e3ba2ed8cf">pal_thread_t</a> **thread, <a class="el" href="thread_8h.html#a7458e05bb0041818333963792acd51c6">pal_thread_priority_t</a> priority, size_t stack_size, <a class="el" href="thread_8h.html#ae27c2948d079394af7db4cc282e0cb15">pal_thread_func_t</a> func, const char *name, void *arg)</td></tr>
-<tr class="memdesc:a97ee040d0732a66df73c92572b5bc4cb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a thread.  <br /></td></tr>
-<tr class="separator:a97ee040d0732a66df73c92572b5bc4cb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a039a7dcbe7b5c6f2b1cad9c08eed4505" id="r_a039a7dcbe7b5c6f2b1cad9c08eed4505"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="thread_8h.html#a039a7dcbe7b5c6f2b1cad9c08eed4505">pal_thread_create</a> (<a class="el" href="thread_8h.html#af3448323c3f8733862e088e3ba2ed8cf">pal_thread_t</a> *thread, <a class="el" href="thread_8h.html#a7458e05bb0041818333963792acd51c6">pal_thread_priority_t</a> priority, size_t stack_size, <a class="el" href="thread_8h.html#ae27c2948d079394af7db4cc282e0cb15">pal_thread_func_t</a> func, const char *name, void *arg)</td></tr>
+<tr class="memdesc:a039a7dcbe7b5c6f2b1cad9c08eed4505"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a thread.  <br /></td></tr>
+<tr class="separator:a039a7dcbe7b5c6f2b1cad9c08eed4505"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a05acd9a228508d2a158decc4a5ec8518" id="r_a05acd9a228508d2a158decc4a5ec8518"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="thread_8h.html#a05acd9a228508d2a158decc4a5ec8518">pal_thread_sleep</a> (size_t time_ms)</td></tr>
 <tr class="memdesc:a05acd9a228508d2a158decc4a5ec8518"><td class="mdescLeft">&#160;</td><td class="mdescRight">Suspend the current thread for a specified time.  <br /></td></tr>
 <tr class="separator:a05acd9a228508d2a158decc4a5ec8518"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -160,9 +160,9 @@ Functions</h2></td></tr>
 <tr class="memitem:a8fbdc05be469f02cf75ce3bf639a11c3" id="r_a8fbdc05be469f02cf75ce3bf639a11c3"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="thread_8h.html#a8fbdc05be469f02cf75ce3bf639a11c3">pal_thread_get_stack_watermark</a> (<a class="el" href="thread_8h.html#af3448323c3f8733862e088e3ba2ed8cf">pal_thread_t</a> *const thread)</td></tr>
 <tr class="memdesc:a8fbdc05be469f02cf75ce3bf639a11c3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the maximum used stack size of the thread.  <br /></td></tr>
 <tr class="separator:a8fbdc05be469f02cf75ce3bf639a11c3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af452d0ce3708ee5a142a42f6bacea818" id="r_af452d0ce3708ee5a142a42f6bacea818"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="thread_8h.html#af452d0ce3708ee5a142a42f6bacea818">pal_thread_free</a> (<a class="el" href="thread_8h.html#af3448323c3f8733862e088e3ba2ed8cf">pal_thread_t</a> **thread)</td></tr>
-<tr class="memdesc:af452d0ce3708ee5a142a42f6bacea818"><td class="mdescLeft">&#160;</td><td class="mdescRight">Free the thread structure.  <br /></td></tr>
-<tr class="separator:af452d0ce3708ee5a142a42f6bacea818"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acabe9f5b0caa72e663461ee581649fa6" id="r_acabe9f5b0caa72e663461ee581649fa6"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="thread_8h.html#acabe9f5b0caa72e663461ee581649fa6">pal_thread_free</a> (<a class="el" href="thread_8h.html#af3448323c3f8733862e088e3ba2ed8cf">pal_thread_t</a> *thread)</td></tr>
+<tr class="memdesc:acabe9f5b0caa72e663461ee581649fa6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Free the thread structure.  <br /></td></tr>
+<tr class="separator:acabe9f5b0caa72e663461ee581649fa6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Typedef Documentation</h2>
 <a id="ae27c2948d079394af7db4cc282e0cb15" name="ae27c2948d079394af7db4cc282e0cb15"></a>
@@ -179,7 +179,7 @@ Functions</h2></td></tr>
 
 <p>Thread function. </p>
 
-<p class="definition">Definition at line <a class="el" href="thread_8h_source.html#l00023">23</a> of file <a class="el" href="thread_8h_source.html">thread.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="thread_8h_source.html#l00029">29</a> of file <a class="el" href="thread_8h_source.html">thread.h</a>.</p>
 
 </div>
 </div>
@@ -229,7 +229,7 @@ Functions</h2></td></tr>
 
 <p>Thread structure. This structure is opaque and should not be accessed directly. </p>
 
-<p class="definition">Definition at line <a class="el" href="thread_8h_source.html#l00029">29</a> of file <a class="el" href="thread_8h_source.html">thread.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="thread_8h_source.html#l00077">77</a> of file <a class="el" href="thread_8h_source.html">thread.h</a>.</p>
 
 </div>
 </div>
@@ -287,8 +287,8 @@ Functions</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Function Documentation</h2>
-<a id="a97ee040d0732a66df73c92572b5bc4cb" name="a97ee040d0732a66df73c92572b5bc4cb"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a97ee040d0732a66df73c92572b5bc4cb">&#9670;&#160;</a></span>pal_thread_create()</h2>
+<a id="a039a7dcbe7b5c6f2b1cad9c08eed4505" name="a039a7dcbe7b5c6f2b1cad9c08eed4505"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a039a7dcbe7b5c6f2b1cad9c08eed4505">&#9670;&#160;</a></span>pal_thread_create()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -296,7 +296,7 @@ Functions</h2></td></tr>
         <tr>
           <td class="memname">int pal_thread_create </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="thread_8h.html#af3448323c3f8733862e088e3ba2ed8cf">pal_thread_t</a> **&#160;</td>
+          <td class="paramtype"><a class="el" href="thread_8h.html#af3448323c3f8733862e088e3ba2ed8cf">pal_thread_t</a> *&#160;</td>
           <td class="paramname"><em>thread</em>, </td>
         </tr>
         <tr>
@@ -361,8 +361,8 @@ If used, the name should be a null-terminated string and should be a costant str
 
 </div>
 </div>
-<a id="af452d0ce3708ee5a142a42f6bacea818" name="af452d0ce3708ee5a142a42f6bacea818"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af452d0ce3708ee5a142a42f6bacea818">&#9670;&#160;</a></span>pal_thread_free()</h2>
+<a id="acabe9f5b0caa72e663461ee581649fa6" name="acabe9f5b0caa72e663461ee581649fa6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acabe9f5b0caa72e663461ee581649fa6">&#9670;&#160;</a></span>pal_thread_free()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -370,7 +370,7 @@ If used, the name should be a null-terminated string and should be a costant str
         <tr>
           <td class="memname">void pal_thread_free </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="thread_8h.html#af3448323c3f8733862e088e3ba2ed8cf">pal_thread_t</a> **&#160;</td>
+          <td class="paramtype"><a class="el" href="thread_8h.html#af3448323c3f8733862e088e3ba2ed8cf">pal_thread_t</a> *&#160;</td>
           <td class="paramname"><em>thread</em></td><td>)</td>
           <td></td>
         </tr>
@@ -378,9 +378,7 @@ If used, the name should be a null-terminated string and should be a costant str
 </div><div class="memdoc">
 
 <p>Free the thread structure. </p>
-<dl class="section note"><dt>Note</dt><dd>The thread should be joined before calling this function. </dd>
-<dd>
-This function takes care of setting the thread pointer to NULL. </dd></dl>
+<dl class="section note"><dt>Note</dt><dd>The thread should be joined before calling this function. </dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">thread</td><td>Pointer to the thread to free. </td></tr>

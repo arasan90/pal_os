@@ -1,15 +1,13 @@
 /*
- * File: mutex.c
+ * File: mutex->c
  * Description: Implementation of mutex-related functionality for the Linux platform.
  * Author: Massimiliano Ianniello
  */
 
+#include "pal_os/mutex.h"
+
 #include <string.h>
 
-#include "freertos/FreeRTOS.h"
-#include "freertos/portable.h"
-#include "freertos/semphr.h"
-#include "mutex_priv.h"
 #include "pal_os/common.h"
 
 /* ---------------------------------------------------------------------------
@@ -41,28 +39,23 @@
  * Function Implementations
  * ---------------------------------------------------------------------------
  */
-int pal_mutex_create(pal_mutex_t **mutex, int recursive)
+int pal_mutex_create(pal_mutex_t *mutex, int recursive)
 {
 	int ret_code = -1;
 	if (mutex)
 	{
-		*mutex = pvPortMalloc(sizeof(pal_mutex_t));
-		if (*mutex)
+		if (recursive)
 		{
-			memset(*mutex, 0, sizeof(pal_mutex_t));
-			if (recursive)
-			{
-				(*mutex)->is_recursive = 1;
-				(*mutex)->mutex_handle = xSemaphoreCreateRecursiveMutex();
-			}
-			else
-			{
-				(*mutex)->mutex_handle = xSemaphoreCreateMutex();
-			}
-			if (*mutex)
-			{
-				ret_code = 0;
-			}
+			mutex->is_recursive = 1;
+			mutex->mutex_handle = xSemaphoreCreateRecursiveMutex();
+		}
+		else
+		{
+			mutex->mutex_handle = xSemaphoreCreateMutex();
+		}
+		if (mutex->mutex_handle)
+		{
+			ret_code = 0;
 		}
 	}
 	return ret_code;
@@ -107,14 +100,12 @@ int pal_mutex_unlock(pal_mutex_t *mutex)
 	return ret_code;
 }
 
-int pal_mutex_destroy(pal_mutex_t **mutex)
+int pal_mutex_destroy(pal_mutex_t *mutex)
 {
 	int ret_code = -1;
-	if (mutex && *mutex)
+	if (mutex && mutex->mutex_handle)
 	{
-		vSemaphoreDelete((*mutex)->mutex_handle);
-		vPortFree(*mutex);
-		*mutex	 = NULL;
+		vSemaphoreDelete(mutex->mutex_handle);
 		ret_code = 0;
 	}
 	return ret_code;

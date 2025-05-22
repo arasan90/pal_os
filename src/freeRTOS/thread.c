@@ -8,7 +8,6 @@
 
 #include <string.h>
 
-#include "thread_priv.h"
 /* ---------------------------------------------------------------------------
  * Type Definitions
  * ---------------------------------------------------------------------------
@@ -71,43 +70,27 @@ void pal_thread_generic_func(void *const arg)
 	vTaskDelete(NULL);
 }
 
-int pal_thread_create(pal_thread_t **thread, pal_thread_priority_t priority, size_t stack_size, pal_thread_func_t func, const char *name, void *arg)
+int pal_thread_create(pal_thread_t *thread, pal_thread_priority_t priority, size_t stack_size, pal_thread_func_t func, const char *name, void *arg)
 {
 	int ret_code = -1;
-	if (thread)
+	if (thread && NULL != func && 0 != stack_size)
 	{
-		*thread = pvPortMalloc(sizeof(pal_thread_t));
-		if (*thread)
+		thread->event_group_handle = xEventGroupCreate();
+		if (thread->event_group_handle)
 		{
-			memset(*thread, 0, sizeof(pal_thread_t));
-			(*thread)->event_group_handle = xEventGroupCreate();
-			if ((*thread)->event_group_handle)
+			UBaseType_t freertos_priority = pal_thread_convert_priority(priority);
+			thread->func				  = func;
+			thread->arg					  = arg;
+			thread->state				  = PAL_THREAD_STATE_STOPPED;
+			if (pdPASS ==
+				xTaskCreate(pal_thread_generic_func, name, stack_size / sizeof(StackType_t), arg, freertos_priority, (TaskHandle_t *)thread->thread_handle))
 			{
-				UBaseType_t freertos_priority = pal_thread_convert_priority(priority);
-				(*thread)->func				  = func;
-				(*thread)->arg				  = arg;
-				(*thread)->state			  = PAL_THREAD_STATE_STOPPED;
-				if (pdPASS == xTaskCreate(pal_thread_generic_func, name, stack_size / sizeof(StackType_t), arg, freertos_priority,
-										  (TaskHandle_t *)(*thread)->thread_handle))
-				{
-					ret_code = 0;
-				}
-				else
-				{
-					vEventGroupDelete((*thread)->event_group_handle);
-					vPortFree(*thread);
-					*thread = NULL;
-				}
+				ret_code = 0;
 			}
 			else
 			{
-				vPortFree(*thread);
-				*thread = NULL;
+				vEventGroupDelete(thread->event_group_handle);
 			}
-		}
-		else
-		{
-			return -1;
 		}
 	}
 	return ret_code;
@@ -145,13 +128,11 @@ size_t pal_thread_get_stack_watermark(pal_thread_t *const thread)
 	return stack_watermark;
 }
 
-void pal_thread_free(pal_thread_t **thread)
+void pal_thread_free(pal_thread_t *thread)
 {
-	if (thread && *thread && PAL_THREAD_STATE_TERMINATED == (*thread)->state)
+	if (thread && PAL_THREAD_STATE_TERMINATED == thread->state)
 	{
 		vEventGroupDelete((*thread)->event_group_handle);
-		(*thread)->event_group_handle = NULL;
-		vPortFree(*thread);
-		*thread = NULL;
+		thread->event_group_handle = NULL;
 	}
 }

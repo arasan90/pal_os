@@ -20,16 +20,6 @@ extern "C"
 // ============================
 // Type Definitions
 // ============================
-struct pal_thread_s
-{
-	pthread_t			  thread;	   // POSIX thread identifier
-	pal_thread_func_t	  func;		   // Function to be executed by the thread
-	void				 *arg;		   // Argument to be passed to the thread function
-	pal_thread_state_t	  state;	   // State of the thread
-	size_t				  stack_size;  // Size of the thread stack
-	pal_thread_priority_t priority;	   // Thread priority
-	const char			 *name;		   // Thread name
-};
 
 // ============================
 // Function Declarations

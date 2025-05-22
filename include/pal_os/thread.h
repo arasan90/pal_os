@@ -9,7 +9,13 @@ extern "C"
 // Includes
 // ============================
 #include <stddef.h>
-
+#if PAL_OS_LINUX
+#include <pthread.h>
+#elif PAL_OS_FREERTOS
+#include "freertos/FreeRTOS.h"
+#include "freertos/event_groups.h"
+#include "freertos/task.h"
+#endif
 // ============================
 // Macros and Constants
 // ============================
@@ -21,12 +27,6 @@ extern "C"
  * @brief Thread function.
  */
 typedef void (*pal_thread_func_t)(void *arg);
-
-/**
- * @brief Thread structure.
- * This structure is opaque and should not be accessed directly.
- */
-typedef struct pal_thread_s pal_thread_t;
 
 /**
  * @brief Thread priority levels.
@@ -48,6 +48,33 @@ typedef enum pal_thread_state_e
 	PAL_THREAD_STATE_TERMINATED,  //!< Thread is terminated
 } pal_thread_state_t;
 
+#if PAL_OS_LINUX
+struct pal_thread_s
+{
+	pthread_t			  thread;	   // POSIX thread identifier
+	pal_thread_func_t	  func;		   // Function to be executed by the thread
+	void				 *arg;		   // Argument to be passed to the thread function
+	pal_thread_state_t	  state;	   // State of the thread
+	size_t				  stack_size;  // Size of the thread stack
+	pal_thread_priority_t priority;	   // Thread priority
+	const char			 *name;		   // Thread name
+};
+#elif PAL_OS_FREERTOS
+struct pal_thread_s
+{
+	TaskHandle_t	   thread_handle;		//!< POSIX thread identifier
+	EventGroupHandle_t event_group_handle;	//!< Event group handle for synchronization
+	pal_thread_func_t  func;				//!< Function to be executed by the thread
+	void			  *arg;					//!< Argument to be passed to the thread function
+	pal_thread_state_t state;				//!< Thread state
+};
+#endif
+
+/**
+ * @brief Thread structure.
+ * This structure is opaque and should not be accessed directly.
+ */
+typedef struct pal_thread_s pal_thread_t;
 // ============================
 // Function Declarations
 // ============================
@@ -65,7 +92,7 @@ typedef enum pal_thread_state_e
  *
  * @return 0 on success, negative error code on failure.
  */
-int pal_thread_create(pal_thread_t **thread, pal_thread_priority_t priority, size_t stack_size, pal_thread_func_t func, const char *name, void *arg);
+int pal_thread_create(pal_thread_t *thread, pal_thread_priority_t priority, size_t stack_size, pal_thread_func_t func, const char *name, void *arg);
 
 /**
  * @brief Suspend the current thread for a specified time.
@@ -102,10 +129,9 @@ size_t pal_thread_get_stack_watermark(pal_thread_t *const thread);
 /**
  * @brief Free the thread structure.
  * @note The thread should be joined before calling this function.
- * @note This function takes care of setting the thread pointer to NULL.
  * @param thread Pointer to the thread to free.
  */
-void pal_thread_free(pal_thread_t **thread);
+void pal_thread_free(pal_thread_t *thread);
 
 #ifdef __cplusplus
 }

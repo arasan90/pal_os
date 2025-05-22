@@ -20,16 +20,6 @@ extern "C"
 // ============================
 // Type Definitions
 // ============================
-struct pal_timer_s
-{
-	struct timespec		 expiry_time;  //!< Expiry time of the timer
-	pal_timer_callback_t callback;	   //!< Callback function to be called when the timer expires
-	void				*arg;		   //!< User-defined argument passed to the callback function
-	int					 is_periodic;  //!< Flag indicating if the timer is periodic
-	int					 is_started;   //!< Flag indicating if the timer is started
-	size_t				 period_ms;	   //!< Timer period in milliseconds
-	struct pal_timer_s	*next;		   //!< Pointer to the next timer in the list
-};
 
 typedef struct pal_timer_env_s
 {
@@ -79,7 +69,6 @@ void pal_os_timer_remove(pal_timer_t *timer);
 /**
  * @brief Timer thread function
  * @param arg Pointer to user-defined argument passed to the thread function
- * @return NULL
  * @note This function is intended to be used as the entry point for the timer thread.
  */
 void *pal_timer_thread_fn(void *arg);

@@ -68,8 +68,7 @@ void pal_timer_deinit(void)
 		while (timer)
 		{
 			pal_timer_t *next = timer->next;
-			free(timer);
-			timer = next;
+			timer			  = next;
 		}
 		pal_timer_environment.timer_list	= NULL;
 		pal_timer_environment.shutdown_flag = 0;
@@ -212,26 +211,22 @@ void *pal_timer_thread_fn(void *arg)
 	return NULL;
 }
 
-int pal_timer_create(pal_timer_t **timer, const char *name, pal_timer_type_t type, size_t period, pal_timer_callback_t callback, int auto_start, void *arg)
+int pal_timer_create(pal_timer_t *timer, const char *name, pal_timer_type_t type, size_t period, pal_timer_callback_t callback, int auto_start, void *arg)
 {
 	int ret_code = -1;
 	(void)name;
 	if (timer && callback && period)
 	{
-		*timer = (pal_timer_t *)calloc(1, sizeof(pal_timer_t));
-		if (*timer)
+		timer->callback	   = callback;
+		timer->arg		   = arg;
+		timer->is_periodic = (type == PAL_TIMER_TYPE_PERIODIC);
+		timer->period_ms   = period;
+		if (auto_start)
 		{
-			(*timer)->callback	  = callback;
-			(*timer)->arg		  = arg;
-			(*timer)->is_periodic = (type == PAL_TIMER_TYPE_PERIODIC);
-			(*timer)->period_ms	  = period;
-			if (auto_start)
-			{
-				pal_timer_start(*timer, 0);
-			}
-			pthread_cond_signal(&pal_timer_environment.cond);
-			ret_code = 0;
+			pal_timer_start(timer, 0);
 		}
+		pthread_cond_signal(&pal_timer_environment.cond);
+		ret_code = 0;
 	}
 	return ret_code;
 }
@@ -309,14 +304,12 @@ int pal_is_timer_active(pal_timer_t *timer)
 	return ret_code;
 }
 
-int pal_timer_delete(pal_timer_t **timer)
+int pal_timer_delete(pal_timer_t *timer)
 {
 	int ret_code = -1;
-	if (timer && *timer)
+	if (timer)
 	{
-		pal_timer_stop(*timer, 0);
-		free(*timer);
-		*timer = NULL;
+		pal_timer_stop(timer, 0);
 		return 0;
 	}
 	return ret_code;

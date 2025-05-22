@@ -2,8 +2,7 @@
 \hypertarget{signal_8h}{}\label{signal_8h}\index{include/pal\_os/signal.h@{include/pal\_os/signal.h}}
 {\ttfamily \#include $<$stddef.\+h$>$}\newline
 {\ttfamily \#include "{}pal\+\_\+os/common.\+h"{}}\newline
-Include dependency graph for signal.\+h\+:
-\nopagebreak
+Include dependency graph for signal.\+h\+:\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -13,8 +12,6 @@ Include dependency graph for signal.\+h\+:
 \doxysubsubsection*{Typedefs}
 \begin{DoxyCompactItemize}
 \item 
-typedef struct pal\+\_\+signal\+\_\+s \mbox{\hyperlink{signal_8h_a0d3a7b5f3da77c0a96bc0839ba6e1499}{pal\+\_\+signal\+\_\+t}}
-\begin{DoxyCompactList}\small\item\em Opaque structure representing a signal object. \end{DoxyCompactList}\item 
 typedef enum \mbox{\hyperlink{signal_8h_a93cc8bdcab1b2d097cc899f7f2102baa}{pal\+\_\+signal\+\_\+ret\+\_\+code\+\_\+e}} \mbox{\hyperlink{signal_8h_a380daaae600b5ca44b2b3d8db3e33738}{pal\+\_\+signal\+\_\+ret\+\_\+code\+\_\+t}}
 \begin{DoxyCompactList}\small\item\em Return codes for signal wait operation. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \doxysubsubsection*{Enumerations}
@@ -28,15 +25,15 @@ enum \mbox{\hyperlink{signal_8h_a93cc8bdcab1b2d097cc899f7f2102baa}{pal\+\_\+sign
 \doxysubsubsection*{Functions}
 \begin{DoxyCompactItemize}
 \item 
-int \mbox{\hyperlink{signal_8h_aaa3e1cf6c5044fccbb2a464d889b2b23}{pal\+\_\+signal\+\_\+create}} (\mbox{\hyperlink{signal_8h_a0d3a7b5f3da77c0a96bc0839ba6e1499}{pal\+\_\+signal\+\_\+t}} \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}signal)
+int \mbox{\hyperlink{signal_8h_a7bafd7fbddfdcfd89c579e012a9b9035}{pal\+\_\+signal\+\_\+create}} (pal\+\_\+signal\+\_\+t \texorpdfstring{$\ast$}{*}signal)
 \begin{DoxyCompactList}\small\item\em Create a signal object. \end{DoxyCompactList}\item 
-\mbox{\hyperlink{signal_8h_a380daaae600b5ca44b2b3d8db3e33738}{pal\+\_\+signal\+\_\+ret\+\_\+code\+\_\+t}} \mbox{\hyperlink{signal_8h_ad307adafacd6a18137931084e2ed51a5}{pal\+\_\+signal\+\_\+wait}} (\mbox{\hyperlink{signal_8h_a0d3a7b5f3da77c0a96bc0839ba6e1499}{pal\+\_\+signal\+\_\+t}} \texorpdfstring{$\ast$}{*}signal, size\+\_\+t mask, size\+\_\+t \texorpdfstring{$\ast$}{*}received\+\_\+signals, int clear\+\_\+mask, int wait\+\_\+all, size\+\_\+t timeout\+\_\+ms)
+\mbox{\hyperlink{signal_8h_a380daaae600b5ca44b2b3d8db3e33738}{pal\+\_\+signal\+\_\+ret\+\_\+code\+\_\+t}} \mbox{\hyperlink{signal_8h_ad307adafacd6a18137931084e2ed51a5}{pal\+\_\+signal\+\_\+wait}} (pal\+\_\+signal\+\_\+t \texorpdfstring{$\ast$}{*}signal, size\+\_\+t mask, size\+\_\+t \texorpdfstring{$\ast$}{*}received\+\_\+signals, int clear\+\_\+mask, int wait\+\_\+all, size\+\_\+t timeout\+\_\+ms)
 \begin{DoxyCompactList}\small\item\em Waits for one or more signals to be set. \end{DoxyCompactList}\item 
-int \mbox{\hyperlink{signal_8h_a41a01399094f474935070a4c786d483d}{pal\+\_\+signal\+\_\+set}} (\mbox{\hyperlink{signal_8h_a0d3a7b5f3da77c0a96bc0839ba6e1499}{pal\+\_\+signal\+\_\+t}} \texorpdfstring{$\ast$}{*}signal, size\+\_\+t mask, int from\+\_\+isr)
+int \mbox{\hyperlink{signal_8h_a41a01399094f474935070a4c786d483d}{pal\+\_\+signal\+\_\+set}} (pal\+\_\+signal\+\_\+t \texorpdfstring{$\ast$}{*}signal, size\+\_\+t mask, int from\+\_\+isr)
 \begin{DoxyCompactList}\small\item\em Sets one or more signals. \end{DoxyCompactList}\item 
-int \mbox{\hyperlink{signal_8h_a2137998001b569e2252691ff40cba1e6}{pal\+\_\+signal\+\_\+clear}} (\mbox{\hyperlink{signal_8h_a0d3a7b5f3da77c0a96bc0839ba6e1499}{pal\+\_\+signal\+\_\+t}} \texorpdfstring{$\ast$}{*}signal, size\+\_\+t mask)
+int \mbox{\hyperlink{signal_8h_a2137998001b569e2252691ff40cba1e6}{pal\+\_\+signal\+\_\+clear}} (pal\+\_\+signal\+\_\+t \texorpdfstring{$\ast$}{*}signal, size\+\_\+t mask)
 \begin{DoxyCompactList}\small\item\em Clears one or more signals. \end{DoxyCompactList}\item 
-int \mbox{\hyperlink{signal_8h_af955c00146ad8da0f806c1a491847d5b}{pal\+\_\+signal\+\_\+destroy}} (\mbox{\hyperlink{signal_8h_a0d3a7b5f3da77c0a96bc0839ba6e1499}{pal\+\_\+signal\+\_\+t}} \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}signal)
+int \mbox{\hyperlink{signal_8h_a5c00e2f20beacde773941c542befd309}{pal\+\_\+signal\+\_\+destroy}} (pal\+\_\+signal\+\_\+t \texorpdfstring{$\ast$}{*}signal)
 \begin{DoxyCompactList}\small\item\em Destroys a signal object and releases associated resources. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
@@ -50,20 +47,6 @@ int \mbox{\hyperlink{signal_8h_af955c00146ad8da0f806c1a491847d5b}{pal\+\_\+signa
 
 
 Return codes for signal wait operation. 
-
-\Hypertarget{signal_8h_a0d3a7b5f3da77c0a96bc0839ba6e1499}\label{signal_8h_a0d3a7b5f3da77c0a96bc0839ba6e1499} 
-\index{signal.h@{signal.h}!pal\_signal\_t@{pal\_signal\_t}}
-\index{pal\_signal\_t@{pal\_signal\_t}!signal.h@{signal.h}}
-\doxysubsubsection{\texorpdfstring{pal\_signal\_t}{pal\_signal\_t}}
-{\footnotesize\ttfamily typedef struct pal\+\_\+signal\+\_\+s \mbox{\hyperlink{signal_8h_a0d3a7b5f3da77c0a96bc0839ba6e1499}{pal\+\_\+signal\+\_\+t}}}
-
-
-
-Opaque structure representing a signal object. 
-
-
-
-Definition at line \mbox{\hyperlink{signal_8h_source_l00026}{26}} of file \mbox{\hyperlink{signal_8h_source}{signal.\+h}}.
 
 
 
@@ -94,7 +77,7 @@ PAL\+\_\+\+SIGNAL\+\_\+\+SUCCESS&Operation succeeded. \\
 \end{DoxyEnumFields}
 
 
-Definition at line \mbox{\hyperlink{signal_8h_source_l00031}{31}} of file \mbox{\hyperlink{signal_8h_source}{signal.\+h}}.
+Definition at line \mbox{\hyperlink{signal_8h_source_l00043}{43}} of file \mbox{\hyperlink{signal_8h_source}{signal.\+h}}.
 
 
 
@@ -103,7 +86,7 @@ Definition at line \mbox{\hyperlink{signal_8h_source_l00031}{31}} of file \mbox{
 \index{signal.h@{signal.h}!pal\_signal\_clear@{pal\_signal\_clear}}
 \index{pal\_signal\_clear@{pal\_signal\_clear}!signal.h@{signal.h}}
 \doxysubsubsection{\texorpdfstring{pal\_signal\_clear()}{pal\_signal\_clear()}}
-{\footnotesize\ttfamily int pal\+\_\+signal\+\_\+clear (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{signal_8h_a0d3a7b5f3da77c0a96bc0839ba6e1499}{pal\+\_\+signal\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{signal,  }\item[{size\+\_\+t}]{mask }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily int pal\+\_\+signal\+\_\+clear (\begin{DoxyParamCaption}\item[{pal\+\_\+signal\+\_\+t \texorpdfstring{$\ast$}{*}}]{signal,  }\item[{size\+\_\+t}]{mask }\end{DoxyParamCaption})}
 
 
 
@@ -119,11 +102,11 @@ Clears one or more signals.
 \begin{DoxyReturn}{Returns}
 0 on success, or -\/1 on failure. 
 \end{DoxyReturn}
-\Hypertarget{signal_8h_aaa3e1cf6c5044fccbb2a464d889b2b23}\label{signal_8h_aaa3e1cf6c5044fccbb2a464d889b2b23} 
+\Hypertarget{signal_8h_a7bafd7fbddfdcfd89c579e012a9b9035}\label{signal_8h_a7bafd7fbddfdcfd89c579e012a9b9035} 
 \index{signal.h@{signal.h}!pal\_signal\_create@{pal\_signal\_create}}
 \index{pal\_signal\_create@{pal\_signal\_create}!signal.h@{signal.h}}
 \doxysubsubsection{\texorpdfstring{pal\_signal\_create()}{pal\_signal\_create()}}
-{\footnotesize\ttfamily int pal\+\_\+signal\+\_\+create (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{signal_8h_a0d3a7b5f3da77c0a96bc0839ba6e1499}{pal\+\_\+signal\+\_\+t}} \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}}]{signal }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily int pal\+\_\+signal\+\_\+create (\begin{DoxyParamCaption}\item[{pal\+\_\+signal\+\_\+t \texorpdfstring{$\ast$}{*}}]{signal }\end{DoxyParamCaption})}
 
 
 
@@ -137,11 +120,11 @@ Create a signal object.
 \begin{DoxyReturn}{Returns}
 0 on success, or -\/1 on failure. 
 \end{DoxyReturn}
-\Hypertarget{signal_8h_af955c00146ad8da0f806c1a491847d5b}\label{signal_8h_af955c00146ad8da0f806c1a491847d5b} 
+\Hypertarget{signal_8h_a5c00e2f20beacde773941c542befd309}\label{signal_8h_a5c00e2f20beacde773941c542befd309} 
 \index{signal.h@{signal.h}!pal\_signal\_destroy@{pal\_signal\_destroy}}
 \index{pal\_signal\_destroy@{pal\_signal\_destroy}!signal.h@{signal.h}}
 \doxysubsubsection{\texorpdfstring{pal\_signal\_destroy()}{pal\_signal\_destroy()}}
-{\footnotesize\ttfamily int pal\+\_\+signal\+\_\+destroy (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{signal_8h_a0d3a7b5f3da77c0a96bc0839ba6e1499}{pal\+\_\+signal\+\_\+t}} \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}}]{signal }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily int pal\+\_\+signal\+\_\+destroy (\begin{DoxyParamCaption}\item[{pal\+\_\+signal\+\_\+t \texorpdfstring{$\ast$}{*}}]{signal }\end{DoxyParamCaption})}
 
 
 
@@ -149,7 +132,7 @@ Destroys a signal object and releases associated resources.
 
 
 \begin{DoxyParams}[1]{Parameters}
-\mbox{\texttt{ in,out}}  & {\em signal} & Pointer to the signal object to destroy. The pointer is set to NULL after destruction. \\
+\mbox{\texttt{ in,out}}  & {\em signal} & Pointer to the signal object to destroy. \\
 \hline
 \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
@@ -159,7 +142,7 @@ Destroys a signal object and releases associated resources.
 \index{signal.h@{signal.h}!pal\_signal\_set@{pal\_signal\_set}}
 \index{pal\_signal\_set@{pal\_signal\_set}!signal.h@{signal.h}}
 \doxysubsubsection{\texorpdfstring{pal\_signal\_set()}{pal\_signal\_set()}}
-{\footnotesize\ttfamily int pal\+\_\+signal\+\_\+set (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{signal_8h_a0d3a7b5f3da77c0a96bc0839ba6e1499}{pal\+\_\+signal\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{signal,  }\item[{size\+\_\+t}]{mask,  }\item[{int}]{from\+\_\+isr }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily int pal\+\_\+signal\+\_\+set (\begin{DoxyParamCaption}\item[{pal\+\_\+signal\+\_\+t \texorpdfstring{$\ast$}{*}}]{signal,  }\item[{size\+\_\+t}]{mask,  }\item[{int}]{from\+\_\+isr }\end{DoxyParamCaption})}
 
 
 
@@ -181,7 +164,7 @@ Sets one or more signals.
 \index{signal.h@{signal.h}!pal\_signal\_wait@{pal\_signal\_wait}}
 \index{pal\_signal\_wait@{pal\_signal\_wait}!signal.h@{signal.h}}
 \doxysubsubsection{\texorpdfstring{pal\_signal\_wait()}{pal\_signal\_wait()}}
-{\footnotesize\ttfamily \mbox{\hyperlink{signal_8h_a380daaae600b5ca44b2b3d8db3e33738}{pal\+\_\+signal\+\_\+ret\+\_\+code\+\_\+t}} pal\+\_\+signal\+\_\+wait (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{signal_8h_a0d3a7b5f3da77c0a96bc0839ba6e1499}{pal\+\_\+signal\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{signal,  }\item[{size\+\_\+t}]{mask,  }\item[{size\+\_\+t \texorpdfstring{$\ast$}{*}}]{received\+\_\+signals,  }\item[{int}]{clear\+\_\+mask,  }\item[{int}]{wait\+\_\+all,  }\item[{size\+\_\+t}]{timeout\+\_\+ms }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily \mbox{\hyperlink{signal_8h_a380daaae600b5ca44b2b3d8db3e33738}{pal\+\_\+signal\+\_\+ret\+\_\+code\+\_\+t}} pal\+\_\+signal\+\_\+wait (\begin{DoxyParamCaption}\item[{pal\+\_\+signal\+\_\+t \texorpdfstring{$\ast$}{*}}]{signal,  }\item[{size\+\_\+t}]{mask,  }\item[{size\+\_\+t \texorpdfstring{$\ast$}{*}}]{received\+\_\+signals,  }\item[{int}]{clear\+\_\+mask,  }\item[{int}]{wait\+\_\+all,  }\item[{size\+\_\+t}]{timeout\+\_\+ms }\end{DoxyParamCaption})}
 
 
 

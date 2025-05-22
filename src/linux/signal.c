@@ -4,13 +4,14 @@
  * Author: Massimiliano Ianniello
  */
 
+#include "pal_os/signal.h"
+
 #include <errno.h>
 #include <stdlib.h>
 #include <string.h>
 #include <sys/time.h>
 
 #include "pal_os/common.h"
-#include "signal_priv.h"
 
 /* ---------------------------------------------------------------------------
  * Type Definitions
@@ -41,19 +42,15 @@
  * Function Implementations
  * ---------------------------------------------------------------------------
  */
-int pal_signal_create(pal_signal_t **signal)
+int pal_signal_create(pal_signal_t *signal)
 {
 	int ret_code = -1;
 	if (NULL != signal)
 	{
-		*signal = (pal_signal_t *)calloc(1, sizeof(pal_signal_t));
-		if (NULL != *signal)
-		{
-			pthread_mutex_init(&(*signal)->mutex, NULL);
-			pthread_cond_init(&(*signal)->cond, NULL);
-			(*signal)->signals = 0;
-			ret_code		   = 0;
-		}
+		pthread_mutex_init(&signal->mutex, NULL);
+		pthread_cond_init(&signal->cond, NULL);
+		signal->signals = 0;
+		ret_code		= 0;
 	}
 	return ret_code;
 }
@@ -156,15 +153,13 @@ int pal_signal_clear(pal_signal_t *signal, size_t mask)
 	return ret_code;
 }
 
-int pal_signal_destroy(pal_signal_t **signal)
+int pal_signal_destroy(pal_signal_t *signal)
 {
 	int ret_code = -1;
-	if (NULL != signal && NULL != *signal)
+	if (NULL != signal)
 	{
-		pthread_mutex_destroy(&(*signal)->mutex);
-		pthread_cond_destroy(&(*signal)->cond);
-		free(*signal);
-		*signal	 = NULL;
+		pthread_mutex_destroy(&signal->mutex);
+		pthread_cond_destroy(&signal->cond);
 		ret_code = 0;
 	}
 	return ret_code;

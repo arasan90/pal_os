@@ -9,8 +9,7 @@
             "binaryDir": "${sourceDir}/buildFreeRTOS/",
             "cacheVariables": {
                 "CMAKE_BUILD_TYPE": "Debug",
-                "TARGET_PLATFORM": "freeRTOS",
-                "COMPILE_TEST_APP": true
+                "TARGET_PLATFORM": "freeRTOS"
             }
         },
         {
@@ -22,8 +21,7 @@
             "cacheVariables": {
                 "CMAKE_BUILD_TYPE": "Debug",
                 "TARGET_PLATFORM": "linux",
-                "PERFORM_UNIT_TESTS": true,
-                "COMPILE_TEST_APP": true
+                "PERFORM_UNIT_TESTS": true
             }
         }
     ],
