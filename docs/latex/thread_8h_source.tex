@@ -1,0 +1,63 @@
+\doxysection{thread.\+h}
+\hypertarget{thread_8h_source}{}\label{thread_8h_source}\index{include/pal\_os/thread.h@{include/pal\_os/thread.h}}
+\mbox{\hyperlink{thread_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{thread_8h_source_l00001}00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{\Hypertarget{thread_8h_source_l00002}00002\ }
+\DoxyCodeLine{\Hypertarget{thread_8h_source_l00003}00003\ \textcolor{preprocessor}{\#ifdef\ \_\_cplusplus}}
+\DoxyCodeLine{\Hypertarget{thread_8h_source_l00004}00004\ \textcolor{keyword}{extern}\ \textcolor{stringliteral}{"{}C"{}}}
+\DoxyCodeLine{\Hypertarget{thread_8h_source_l00005}00005\ \{}
+\DoxyCodeLine{\Hypertarget{thread_8h_source_l00006}00006\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{\Hypertarget{thread_8h_source_l00007}00007\ }
+\DoxyCodeLine{\Hypertarget{thread_8h_source_l00008}00008\ \textcolor{comment}{//\ ============================}}
+\DoxyCodeLine{\Hypertarget{thread_8h_source_l00009}00009\ \textcolor{comment}{//\ Includes}}
+\DoxyCodeLine{\Hypertarget{thread_8h_source_l00010}00010\ \textcolor{comment}{//\ ============================}}
+\DoxyCodeLine{\Hypertarget{thread_8h_source_l00011}00011\ \textcolor{preprocessor}{\#include\ <stddef.h>}}
+\DoxyCodeLine{\Hypertarget{thread_8h_source_l00012}00012\ }
+\DoxyCodeLine{\Hypertarget{thread_8h_source_l00013}00013\ \textcolor{comment}{//\ ============================}}
+\DoxyCodeLine{\Hypertarget{thread_8h_source_l00014}00014\ \textcolor{comment}{//\ Macros\ and\ Constants}}
+\DoxyCodeLine{\Hypertarget{thread_8h_source_l00015}00015\ \textcolor{comment}{//\ ============================}}
+\DoxyCodeLine{\Hypertarget{thread_8h_source_l00016}00016\ }
+\DoxyCodeLine{\Hypertarget{thread_8h_source_l00017}00017\ \textcolor{comment}{//\ ============================}}
+\DoxyCodeLine{\Hypertarget{thread_8h_source_l00018}00018\ \textcolor{comment}{//\ Type\ Definitions}}
+\DoxyCodeLine{\Hypertarget{thread_8h_source_l00019}00019\ \textcolor{comment}{//\ ============================}}
+\DoxyCodeLine{\Hypertarget{thread_8h_source_l00023}\mbox{\hyperlink{thread_8h_ae27c2948d079394af7db4cc282e0cb15}{00023}}\ \textcolor{keyword}{typedef}\ void\ (*\mbox{\hyperlink{thread_8h_ae27c2948d079394af7db4cc282e0cb15}{pal\_thread\_func\_t}})(\textcolor{keywordtype}{void}\ *arg);}
+\DoxyCodeLine{\Hypertarget{thread_8h_source_l00024}00024\ }
+\DoxyCodeLine{\Hypertarget{thread_8h_source_l00029}\mbox{\hyperlink{thread_8h_af3448323c3f8733862e088e3ba2ed8cf}{00029}}\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }pal\_thread\_s\ \mbox{\hyperlink{thread_8h_af3448323c3f8733862e088e3ba2ed8cf}{pal\_thread\_t}};}
+\DoxyCodeLine{\Hypertarget{thread_8h_source_l00030}00030\ }
+\DoxyCodeLine{\Hypertarget{thread_8h_source_l00034}\mbox{\hyperlink{thread_8h_ab61df3d0981995795e636175246dd7d1}{00034}}\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{enum}\ \mbox{\hyperlink{thread_8h_ab61df3d0981995795e636175246dd7d1}{pal\_thread\_priority\_e}}}
+\DoxyCodeLine{\Hypertarget{thread_8h_source_l00035}00035\ \{}
+\DoxyCodeLine{\Hypertarget{thread_8h_source_l00036}\mbox{\hyperlink{thread_8h_ab61df3d0981995795e636175246dd7d1a1502e464c680179db0b63b3d6276bd29}{00036}}\ \ \ \ \ \mbox{\hyperlink{thread_8h_ab61df3d0981995795e636175246dd7d1a1502e464c680179db0b63b3d6276bd29}{PAL\_THREAD\_PRIORITY\_LOW}},\ \ }
+\DoxyCodeLine{\Hypertarget{thread_8h_source_l00037}\mbox{\hyperlink{thread_8h_ab61df3d0981995795e636175246dd7d1a07de5a688ad7763622097f85cbe8211e}{00037}}\ \ \ \ \ \mbox{\hyperlink{thread_8h_ab61df3d0981995795e636175246dd7d1a07de5a688ad7763622097f85cbe8211e}{PAL\_THREAD\_PRIORITY\_NORMAL}},\ \ \ \ }
+\DoxyCodeLine{\Hypertarget{thread_8h_source_l00038}\mbox{\hyperlink{thread_8h_ab61df3d0981995795e636175246dd7d1ad233cf6aa937b604e78e07fdc9eff485}{00038}}\ \ \ \ \ \mbox{\hyperlink{thread_8h_ab61df3d0981995795e636175246dd7d1ad233cf6aa937b604e78e07fdc9eff485}{PAL\_THREAD\_PRIORITY\_HIGH}},\ \ \ \ }
+\DoxyCodeLine{\Hypertarget{thread_8h_source_l00039}\mbox{\hyperlink{thread_8h_a7458e05bb0041818333963792acd51c6}{00039}}\ \}\ \mbox{\hyperlink{thread_8h_a7458e05bb0041818333963792acd51c6}{pal\_thread\_priority\_t}};}
+\DoxyCodeLine{\Hypertarget{thread_8h_source_l00040}00040\ }
+\DoxyCodeLine{\Hypertarget{thread_8h_source_l00044}\mbox{\hyperlink{thread_8h_a66f5d5ff94a59f7a7792ceca9e3165ad}{00044}}\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{enum}\ \mbox{\hyperlink{thread_8h_a66f5d5ff94a59f7a7792ceca9e3165ad}{pal\_thread\_state\_e}}}
+\DoxyCodeLine{\Hypertarget{thread_8h_source_l00045}00045\ \{}
+\DoxyCodeLine{\Hypertarget{thread_8h_source_l00046}\mbox{\hyperlink{thread_8h_a66f5d5ff94a59f7a7792ceca9e3165ada92a0f13fc4993cb65fef6e6b97dc736c}{00046}}\ \ \ \ \ \mbox{\hyperlink{thread_8h_a66f5d5ff94a59f7a7792ceca9e3165ada92a0f13fc4993cb65fef6e6b97dc736c}{PAL\_THREAD\_STATE\_RUNNING}},\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{thread_8h_source_l00047}\mbox{\hyperlink{thread_8h_a66f5d5ff94a59f7a7792ceca9e3165ada1dd2282bdfc013a762f986455aa3812c}{00047}}\ \ \ \ \ \mbox{\hyperlink{thread_8h_a66f5d5ff94a59f7a7792ceca9e3165ada1dd2282bdfc013a762f986455aa3812c}{PAL\_THREAD\_STATE\_STOPPED}},\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{thread_8h_source_l00048}\mbox{\hyperlink{thread_8h_a66f5d5ff94a59f7a7792ceca9e3165ada35b51147e50dfc6d582f35c1e6a3a82d}{00048}}\ \ \ \ \ \mbox{\hyperlink{thread_8h_a66f5d5ff94a59f7a7792ceca9e3165ada35b51147e50dfc6d582f35c1e6a3a82d}{PAL\_THREAD\_STATE\_TERMINATED}},\ \ }
+\DoxyCodeLine{\Hypertarget{thread_8h_source_l00049}\mbox{\hyperlink{thread_8h_ad2e33a8f9e8b0a8e85daaac560d2ad67}{00049}}\ \}\ \mbox{\hyperlink{thread_8h_ad2e33a8f9e8b0a8e85daaac560d2ad67}{pal\_thread\_state\_t}};}
+\DoxyCodeLine{\Hypertarget{thread_8h_source_l00050}00050\ }
+\DoxyCodeLine{\Hypertarget{thread_8h_source_l00051}00051\ \textcolor{comment}{//\ ============================}}
+\DoxyCodeLine{\Hypertarget{thread_8h_source_l00052}00052\ \textcolor{comment}{//\ Function\ Declarations}}
+\DoxyCodeLine{\Hypertarget{thread_8h_source_l00053}00053\ \textcolor{comment}{//\ ============================}}
+\DoxyCodeLine{\Hypertarget{thread_8h_source_l00068}\mbox{\hyperlink{thread_8h_a97ee040d0732a66df73c92572b5bc4cb}{00068}}\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{thread_8h_a97ee040d0732a66df73c92572b5bc4cb}{pal\_thread\_create}}(\mbox{\hyperlink{thread_8h_af3448323c3f8733862e088e3ba2ed8cf}{pal\_thread\_t}}\ **thread,\ \mbox{\hyperlink{thread_8h_a7458e05bb0041818333963792acd51c6}{pal\_thread\_priority\_t}}\ priority,\ \textcolor{keywordtype}{size\_t}\ stack\_size,\ \mbox{\hyperlink{thread_8h_ae27c2948d079394af7db4cc282e0cb15}{pal\_thread\_func\_t}}\ func,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *name,\ \textcolor{keywordtype}{void}\ *arg);}
+\DoxyCodeLine{\Hypertarget{thread_8h_source_l00069}00069\ }
+\DoxyCodeLine{\Hypertarget{thread_8h_source_l00074}\mbox{\hyperlink{thread_8h_a05acd9a228508d2a158decc4a5ec8518}{00074}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{thread_8h_a05acd9a228508d2a158decc4a5ec8518}{pal\_thread\_sleep}}(\textcolor{keywordtype}{size\_t}\ time\_ms);}
+\DoxyCodeLine{\Hypertarget{thread_8h_source_l00075}00075\ }
+\DoxyCodeLine{\Hypertarget{thread_8h_source_l00080}\mbox{\hyperlink{thread_8h_a9ea73f1d0b348b39b9e5d7261ed9e75a}{00080}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{thread_8h_a9ea73f1d0b348b39b9e5d7261ed9e75a}{pal\_thread\_scheduler\_start}}(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{\Hypertarget{thread_8h_source_l00081}00081\ }
+\DoxyCodeLine{\Hypertarget{thread_8h_source_l00086}\mbox{\hyperlink{thread_8h_a77e2c028aab9cfb43d75539f26b44275}{00086}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{thread_8h_a77e2c028aab9cfb43d75539f26b44275}{pal\_thread\_join}}(\mbox{\hyperlink{thread_8h_af3448323c3f8733862e088e3ba2ed8cf}{pal\_thread\_t}}\ *\textcolor{keyword}{const}\ thread);}
+\DoxyCodeLine{\Hypertarget{thread_8h_source_l00087}00087\ }
+\DoxyCodeLine{\Hypertarget{thread_8h_source_l00093}\mbox{\hyperlink{thread_8h_af153d1d438c624b83ee9c085d7ebd352}{00093}}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *\mbox{\hyperlink{thread_8h_af153d1d438c624b83ee9c085d7ebd352}{pal\_thread\_get\_name}}(\mbox{\hyperlink{thread_8h_af3448323c3f8733862e088e3ba2ed8cf}{pal\_thread\_t}}\ *\textcolor{keyword}{const}\ thread);}
+\DoxyCodeLine{\Hypertarget{thread_8h_source_l00094}00094\ }
+\DoxyCodeLine{\Hypertarget{thread_8h_source_l00100}\mbox{\hyperlink{thread_8h_a8fbdc05be469f02cf75ce3bf639a11c3}{00100}}\ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{thread_8h_a8fbdc05be469f02cf75ce3bf639a11c3}{pal\_thread\_get\_stack\_watermark}}(\mbox{\hyperlink{thread_8h_af3448323c3f8733862e088e3ba2ed8cf}{pal\_thread\_t}}\ *\textcolor{keyword}{const}\ thread);}
+\DoxyCodeLine{\Hypertarget{thread_8h_source_l00101}00101\ }
+\DoxyCodeLine{\Hypertarget{thread_8h_source_l00108}\mbox{\hyperlink{thread_8h_af452d0ce3708ee5a142a42f6bacea818}{00108}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{thread_8h_af452d0ce3708ee5a142a42f6bacea818}{pal\_thread\_free}}(\mbox{\hyperlink{thread_8h_af3448323c3f8733862e088e3ba2ed8cf}{pal\_thread\_t}}\ **thread);}
+\DoxyCodeLine{\Hypertarget{thread_8h_source_l00109}00109\ }
+\DoxyCodeLine{\Hypertarget{thread_8h_source_l00110}00110\ \textcolor{preprocessor}{\#ifdef\ \_\_cplusplus}}
+\DoxyCodeLine{\Hypertarget{thread_8h_source_l00111}00111\ \}}
+\DoxyCodeLine{\Hypertarget{thread_8h_source_l00112}00112\ \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}
