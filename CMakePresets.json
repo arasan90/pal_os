@@ -6,10 +6,11 @@
             "displayName": "ESP32",
             "description": "esp32 compilation",
             "generator": "Ninja",
-            "binaryDir": "${sourceDir}/buildEsp32/",
+            "binaryDir": "${sourceDir}/buildFreeRTOS/",
             "cacheVariables": {
                 "CMAKE_BUILD_TYPE": "Debug",
-                "TARGET_PLATFORM": "esp32"
+                "TARGET_PLATFORM": "freeRTOS",
+                "COMPILE_TEST_APP": true
             }
         },
         {
