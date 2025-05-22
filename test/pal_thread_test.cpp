@@ -14,75 +14,68 @@ void thread_function(void *arg)
 
 TEST(pal_os_thread, createThreadOkNullArg)
 {
-	pal_thread_t *thread = NULL;
+	pal_thread_t thread = {0};
 	EXPECT_EQ(0, pal_thread_create(&thread, PAL_THREAD_PRIORITY_NORMAL, 1024, thread_function, "TestThread", NULL));
-	struct pal_thread_s *thread_struct = thread;
-	EXPECT_EQ(PAL_THREAD_PRIORITY_NORMAL, thread_struct->priority);
-	EXPECT_EQ(1024, thread_struct->stack_size);
-	EXPECT_EQ(PAL_THREAD_STATE_RUNNING, thread_struct->state);
-	EXPECT_EQ(thread_function, thread_struct->func);
-	EXPECT_STREQ("TestThread", thread_struct->name);
-	EXPECT_EQ(NULL, thread_struct->arg);
-	EXPECT_NE(NULL, thread_struct->thread);
-	pal_thread_join(thread);
-	EXPECT_EQ(PAL_THREAD_STATE_TERMINATED, thread_struct->state);
+	EXPECT_EQ(PAL_THREAD_PRIORITY_NORMAL, thread.priority);
+	EXPECT_EQ(1024, thread.stack_size);
+	EXPECT_EQ(PAL_THREAD_STATE_RUNNING, thread.state);
+	EXPECT_EQ(thread_function, thread.func);
+	EXPECT_STREQ("TestThread", thread.name);
+	EXPECT_EQ(NULL, thread.arg);
+	EXPECT_NE(NULL, thread.thread);
+	pal_thread_join(&thread);
+	EXPECT_EQ(PAL_THREAD_STATE_TERMINATED, thread.state);
 	pal_thread_free(&thread);
-	EXPECT_EQ(NULL, thread);
 }
 
 TEST(pal_os_thread, createThreadOkWithArg)
 {
-	int			  exit	 = 0;
-	pal_thread_t *thread = NULL;
+	int			 exit	= 0;
+	pal_thread_t thread = {0};
 	EXPECT_EQ(0, pal_thread_create(&thread, PAL_THREAD_PRIORITY_NORMAL, 1024, thread_function, "TestThread", &exit));
-	struct pal_thread_s *thread_struct = thread;
-	EXPECT_EQ(PAL_THREAD_PRIORITY_NORMAL, thread_struct->priority);
-	EXPECT_EQ(1024, thread_struct->stack_size);
-	EXPECT_EQ(PAL_THREAD_STATE_RUNNING, thread_struct->state);
-	EXPECT_EQ(thread_function, thread_struct->func);
-	EXPECT_STREQ("TestThread", thread_struct->name);
-	EXPECT_EQ(&exit, thread_struct->arg);
-	EXPECT_NE(NULL, thread_struct->thread);
+	EXPECT_EQ(PAL_THREAD_PRIORITY_NORMAL, thread.priority);
+	EXPECT_EQ(1024, thread.stack_size);
+	EXPECT_EQ(PAL_THREAD_STATE_RUNNING, thread.state);
+	EXPECT_EQ(thread_function, thread.func);
+	EXPECT_STREQ("TestThread", thread.name);
+	EXPECT_EQ(&exit, thread.arg);
+	EXPECT_NE(NULL, thread.thread);
 	exit = 1;
-	pal_thread_join(thread);
-	EXPECT_EQ(PAL_THREAD_STATE_TERMINATED, thread_struct->state);
+	pal_thread_join(&thread);
+	EXPECT_EQ(PAL_THREAD_STATE_TERMINATED, thread.state);
 	pal_thread_free(&thread);
 }
 
 TEST(pal_os_thread, createThreadOkNoName)
 {
-	pal_thread_t *thread = NULL;
+	pal_thread_t thread = {0};
 	EXPECT_EQ(0, pal_thread_create(&thread, PAL_THREAD_PRIORITY_NORMAL, 1024, thread_function, NULL, NULL));
-	struct pal_thread_s *thread_struct = thread;
-	EXPECT_EQ(PAL_THREAD_PRIORITY_NORMAL, thread_struct->priority);
-	EXPECT_EQ(1024, thread_struct->stack_size);
-	EXPECT_EQ(PAL_THREAD_STATE_RUNNING, thread_struct->state);
-	EXPECT_EQ(thread_function, thread_struct->func);
-	EXPECT_EQ(NULL, thread_struct->name);
-	EXPECT_EQ(NULL, thread_struct->arg);
-	EXPECT_NE(NULL, thread_struct->thread);
-	pal_thread_join(thread);
-	EXPECT_EQ(PAL_THREAD_STATE_TERMINATED, thread_struct->state);
+	EXPECT_EQ(PAL_THREAD_PRIORITY_NORMAL, thread.priority);
+	EXPECT_EQ(1024, thread.stack_size);
+	EXPECT_EQ(PAL_THREAD_STATE_RUNNING, thread.state);
+	EXPECT_EQ(thread_function, thread.func);
+	EXPECT_EQ(NULL, thread.name);
+	EXPECT_EQ(NULL, thread.arg);
+	EXPECT_NE(NULL, thread.thread);
+	pal_thread_join(&thread);
+	EXPECT_EQ(PAL_THREAD_STATE_TERMINATED, thread.state);
 	pal_thread_free(&thread);
-	EXPECT_EQ(NULL, thread);
 }
 
 TEST(pal_os_thread, createThreadOkEmptyName)
 {
-	pal_thread_t *thread = NULL;
+	pal_thread_t thread = {0};
 	EXPECT_EQ(0, pal_thread_create(&thread, PAL_THREAD_PRIORITY_NORMAL, 1024, thread_function, "", NULL));
-	struct pal_thread_s *thread_struct = thread;
-	EXPECT_EQ(PAL_THREAD_PRIORITY_NORMAL, thread_struct->priority);
-	EXPECT_EQ(1024, thread_struct->stack_size);
-	EXPECT_EQ(PAL_THREAD_STATE_RUNNING, thread_struct->state);
-	EXPECT_EQ(thread_function, thread_struct->func);
-	EXPECT_STREQ("", thread_struct->name);
-	EXPECT_EQ(NULL, thread_struct->arg);
-	EXPECT_NE(NULL, thread_struct->thread);
-	pal_thread_join(thread);
-	EXPECT_EQ(PAL_THREAD_STATE_TERMINATED, thread_struct->state);
+	EXPECT_EQ(PAL_THREAD_PRIORITY_NORMAL, thread.priority);
+	EXPECT_EQ(1024, thread.stack_size);
+	EXPECT_EQ(PAL_THREAD_STATE_RUNNING, thread.state);
+	EXPECT_EQ(thread_function, thread.func);
+	EXPECT_STREQ("", thread.name);
+	EXPECT_EQ(NULL, thread.arg);
+	EXPECT_NE(NULL, thread.thread);
+	pal_thread_join(&thread);
+	EXPECT_EQ(PAL_THREAD_STATE_TERMINATED, thread.state);
 	pal_thread_free(&thread);
-	EXPECT_EQ(NULL, thread);
 }
 
 TEST(pal_os_thread, createThreadNullThreadhandle)
@@ -92,16 +85,14 @@ TEST(pal_os_thread, createThreadNullThreadhandle)
 
 TEST(pal_os_thread, createThread0BytesStack)
 {
-	pal_thread_t *thread = NULL;
+	pal_thread_t thread = {0};
 	EXPECT_EQ(-1, pal_thread_create(&thread, PAL_THREAD_PRIORITY_NORMAL, 0, thread_function, "TestThread", NULL));
 }
 
 TEST(pal_os_thread, createThreadNullFunction)
 {
-	pal_thread_t *thread = NULL;
-	EXPECT_EQ(-1, pal_thread_create(&thread, PAL_THREAD_PRIORITY_NORMAL, 0, NULL, "TestThread", NULL));
-	struct pal_thread_s *thread_struct = thread;
-	EXPECT_EQ(NULL, thread_struct);
+	pal_thread_t thread = {0};
+	EXPECT_EQ(-1, pal_thread_create(&thread, PAL_THREAD_PRIORITY_NORMAL, 1024, nullptr, "TestThread", NULL));
 }
 
 TEST(pal_os_thread, threadSleep)

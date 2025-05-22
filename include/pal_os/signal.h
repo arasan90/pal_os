@@ -9,7 +9,10 @@ extern "C"
 // Includes
 // ============================
 #include <stddef.h>
-
+#if PAL_OS_LINUX
+#include <pthread.h>
+#include <semaphore.h>
+#endif
 #include "pal_os/common.h"
 
 // ============================
@@ -20,10 +23,19 @@ extern "C"
 // Type Definitions
 // ============================
 
-/**
- * @brief Opaque structure representing a signal object.
- */
+#if PAL_OS_LINUX
+struct pal_signal_s
+{
+	pthread_mutex_t mutex;	  //!< Mutex for thread safety.
+	pthread_cond_t	cond;	  //!< Condition variable for signaling.
+	size_t			signals;  //!< Bitmask of active signals.
+};
 typedef struct pal_signal_s pal_signal_t;
+
+#elif PAL_OS_FREERTOS
+typedef void *pal_signal_t;
+
+#endif
 
 /**
  * @brief Return codes for signal wait operation.
@@ -45,7 +57,7 @@ typedef enum pal_signal_ret_code_e
  * @param[out] signal Pointer to the signal object to initialize.
  * @return 0 on success, or -1 on failure.
  */
-int pal_signal_create(pal_signal_t **signal);
+int pal_signal_create(pal_signal_t *signal);
 
 /**
  * @brief Waits for one or more signals to be set.
@@ -83,10 +95,10 @@ int pal_signal_clear(pal_signal_t *signal, size_t mask);
 /**
  * @brief Destroys a signal object and releases associated resources.
  *
- * @param[in,out] signal Pointer to the signal object to destroy. The pointer is set to NULL after destruction.
+ * @param[in,out] signal Pointer to the signal object to destroy.
  * @return 0 on success, or -1 on failure.
  */
-int pal_signal_destroy(pal_signal_t **signal);
+int pal_signal_destroy(pal_signal_t *signal);
 
 #ifdef __cplusplus
 }

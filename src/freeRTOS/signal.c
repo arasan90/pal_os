@@ -39,12 +39,12 @@
  * Function Implementations
  * ---------------------------------------------------------------------------
  */
-int pal_signal_create(pal_signal_t **signal)
+int pal_signal_create(pal_signal_t *signal)
 {
 	int ret_code = -1;
 	if (signal)
 	{
-		*signal	 = (pal_signal_t *)xEventGroupCreate();
+		*signal	 = (pal_signal_t)xEventGroupCreate();
 		ret_code = (*signal) ? 0 : -1;
 	}
 	return ret_code;
@@ -61,7 +61,7 @@ pal_signal_ret_code_t pal_signal_wait(pal_signal_t *signal, size_t mask, size_t 
 		{
 			timeout_ticks = pdMS_TO_TICKS(timeout_ms);
 		}
-		bits = xEventGroupWaitBits((EventGroupHandle_t)signal, mask, clear_mask, wait_all, timeout_ticks);
+		bits = xEventGroupWaitBits((EventGroupHandle_t)*signal, mask, clear_mask, wait_all, timeout_ticks);
 		if ((wait_all && (bits == mask)) || !wait_all && (bits & mask))
 		{
 			ret_code = PAL_SIGNAL_SUCCESS;
@@ -83,7 +83,7 @@ int pal_signal_set(pal_signal_t *signal, size_t mask, int from_isr)
 		if (from_isr)
 		{
 			BaseType_t xHigherPriorityTaskWoken = pdFALSE;
-			if (pdPASS == xEventGroupSetBitsFromISR((EventGroupHandle_t)signal, mask, &xHigherPriorityTaskWoken))
+			if (pdPASS == xEventGroupSetBitsFromISR((EventGroupHandle_t)*signal, mask, &xHigherPriorityTaskWoken))
 			{
 				if (xHigherPriorityTaskWoken)
 				{
@@ -94,7 +94,7 @@ int pal_signal_set(pal_signal_t *signal, size_t mask, int from_isr)
 		}
 		else
 		{
-			if (pdPASS == xEventGroupSetBits((EventGroupHandle_t)signal, mask))
+			if (pdPASS == xEventGroupSetBits((EventGroupHandle_t)*signal, mask))
 			{
 				ret_code = 0;
 			}
@@ -108,7 +108,7 @@ int pal_signal_clear(pal_signal_t *signal, size_t mask)
 	int ret_code = -1;
 	if (signal)
 	{
-		ret_code = (pdPASS == xEventGroupClearBits((EventGroupHandle_t)signal, mask)) ? 0 : -1;
+		ret_code = (pdPASS == xEventGroupClearBits((EventGroupHandle_t)*signal, mask)) ? 0 : -1;
 	}
 	return ret_code;
 }
@@ -116,11 +116,10 @@ int pal_signal_clear(pal_signal_t *signal, size_t mask)
 int pal_signal_destroy(pal_signal_t **signal)
 {
 	int ret_code = -1;
-	if (signal && *signal)
+	if (signal)
 	{
 		vEventGroupDelete((EventGroupHandle_t)*signal);
-		vPortFree(*signal);
-		*signal = NULL;
+		ret_code = 0;
 	}
 	return ret_code;
 }

@@ -9,6 +9,10 @@ extern "C"
 // Includes
 // ============================
 #include <stddef.h>
+#if PAL_OS_LINUX
+#include <pthread.h>
+#include <semaphore.h>
+#endif
 
 // ============================
 // Macros and Constants
@@ -17,7 +21,24 @@ extern "C"
 // ============================
 // Type Definitions
 // ============================
+#if PAL_OS_LINUX
+struct pal_queue_s
+{
+	size_t			item_size;	//!< Size of each item in the queue
+	size_t			max_items;	//!< Maximum number of items in the queue
+	size_t			head;		//!< Index of the head of the queue
+	size_t			tail;		//!< Index of the tail of the queue
+	pthread_mutex_t mutex;		//!< Mutex for thread safety
+	pthread_cond_t	full;		//!< Condition variable for full queue
+	pthread_cond_t	empty;		//!< Condition variable for empty queue
+	void		   *data;		//!< Pointer to the queue data
+};
 typedef struct pal_queue_s pal_queue_t;
+
+#elif PAL_OS_FREERTOS
+typedef void *pal_queue_t;
+
+#endif
 
 // ============================
 // Function Declarations
@@ -31,7 +52,7 @@ typedef struct pal_queue_s pal_queue_t;
  * @param[in] max_items Maximum number of items the queue can hold.
  * @return 0 on success, or -1 on failure.
  */
-int pal_queue_create(pal_queue_t **queue, size_t item_size, size_t max_items);
+int pal_queue_create(pal_queue_t *queue, size_t item_size, size_t max_items);
 
 /**
  * @brief Enqueue an item into the queue.
@@ -84,9 +105,9 @@ size_t pal_queue_get_items(pal_queue_t *queue, int from_isr);
 /**
  * @brief Destroy the queue and releases associated resources.
  *
- * @param[in,out] queue Pointer to the queue handle to be destroyed. Set to NULL after destruction.
+ * @param[in,out] queue Pointer to the queue handle to be destroyed.
  */
-void pal_queue_destroy(pal_queue_t **queue);
+void pal_queue_destroy(pal_queue_t *queue);
 
 #ifdef __cplusplus
 }

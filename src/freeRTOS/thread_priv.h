@@ -22,14 +22,6 @@ extern "C"
 // ============================
 // Type Definitions
 // ============================
-struct pal_thread_s
-{
-	TaskHandle_t	   thread_handle;		//!< POSIX thread identifier
-	EventGroupHandle_t event_group_handle;	//!< Event group handle for synchronization
-	pal_thread_func_t  func;				//!< Function to be executed by the thread
-	void			  *arg;					//!< Argument to be passed to the thread function
-	pal_thread_state_t state;				//!< Thread state
-};
 
 // ============================
 // Function Declarations
