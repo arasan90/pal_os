@@ -1,9 +1,5 @@
 cmake_minimum_required(VERSION 3.25)
 
-if(${TARGET_PLATFORM} STREQUAL "freeRTOS")
-    set(CMAKE_TOOLCHAIN_FILE $ENV{IDF_PATH}/tools/cmake/toolchain-esp32.cmake)
-endif()
-
 project(pal_os
     VERSION 0.1
     LANGUAGES C)
@@ -61,20 +57,5 @@ if(NOT ${TARGET_PLATFORM} STREQUAL "freeRTOS" AND PERFORM_UNIT_TESTS)
     if(COMPILE_MOCK)
         add_subdirectory(libs/fff)
         add_subdirectory(mock)
-    endif()
-endif()
-
-if(${COMPILE_TEST_APP})
-    if(${TARGET_PLATFORM} STREQUAL "freeRTOS")
-        include($ENV{IDF_PATH}/tools/cmake/idf.cmake)
-        idf_build_process(esp32)
-        add_definitions(-DESP_PLATFORM)
-        add_executable(${PROJECT_NAME}_dummy.elf app/main.c)
-        add_library(pal_os_freertos INTERFACE)
-        target_link_libraries(pal_os_freertos INTERFACE idf::freertos)
-        target_link_libraries(${PROJECT_NAME}_dummy.elf ${PROJECT_NAME} idf::newlib)
-        idf_build_executable(${PROJECT_NAME}_dummy.elf)
-    else()
-        add_subdirectory(app)
     endif()
 endif()
