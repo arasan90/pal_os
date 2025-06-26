@@ -22,7 +22,7 @@ if(${TARGET_PLATFORM} STREQUAL "linux")
     SET(GCC_COVERAGE_LINK_FLAGS "-coverage -lgcov")
     set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wall -Wextra -Wpedantic -Werror ${GCC_COVERAGE_COMPILE_FLAGS}")
     set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} ${GCC_COVERAGE_LINK_FLAGS}")
-    add_definitions(-DPAL_OS_LINUX)
+    target_compile_definitions(${PROJECT_NAME} PUBLIC PAL_OS_LINUX)
     set(${PROJECT_NAME}_SRCS
         src/${TARGET_PLATFORM}/thread.c
         src/${TARGET_PLATFORM}/queue.c
@@ -32,9 +32,8 @@ if(${TARGET_PLATFORM} STREQUAL "linux")
         src/${TARGET_PLATFORM}/time.c
         src/${TARGET_PLATFORM}/timer.c
     )
-    set(${PROJECT_NAME}_LIBS)
 elseif(${TARGET_PLATFORM} STREQUAL "freeRTOS")
-    add_definitions(-DPAL_OS_FREERTOS)
+    target_compile_definitions(${PROJECT_NAME} PUBLIC PAL_OS_FREERTOS)
     set(${PROJECT_NAME}_SRCS
         src/freeRTOS/thread.c
         src/freeRTOS/queue.c

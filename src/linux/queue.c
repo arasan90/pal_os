@@ -66,11 +66,10 @@ int pal_queue_create(pal_queue_t *queue, size_t item_size, size_t max_items)
 	return ret_code;
 }
 
-int pal_queue_enqueue(pal_queue_t *queue, void *const item, size_t timeout_ms, int from_isr)
+int pal_queue_enqueue(pal_queue_t *queue, void *const item, size_t timeout_ms)
 {
 	int ret_code = -1;
 	int error	 = 0;
-	(void)from_isr;
 	if (NULL != queue && NULL != item)
 	{
 		pthread_mutex_lock(&queue->mutex);
@@ -112,11 +111,100 @@ int pal_queue_enqueue(pal_queue_t *queue, void *const item, size_t timeout_ms, i
 	return ret_code;
 }
 
-int pal_queue_dequeue(pal_queue_t *queue, void *const item, size_t timeout_ms, int from_isr)
+int pal_queue_enqueue_from_isr(pal_queue_t *queue, void *const item, size_t timeout_ms)
 {
 	int ret_code = -1;
 	int error	 = 0;
-	(void)from_isr;
+	if (NULL != queue && NULL != item)
+	{
+		pthread_mutex_lock(&queue->mutex);
+		size_t free_slots = queue->max_items - (queue->tail - queue->head);
+		if (0 == free_slots)
+		{
+			if (PAL_OS_NO_TIMEOUT == timeout_ms)
+			{
+				error = 1;
+			}
+			else if (PAL_OS_INFINITE_TIMEOUT == timeout_ms)
+			{
+				pthread_cond_wait(&queue->full, &queue->mutex);
+			}
+			else
+			{
+				struct timespec timeout = {0};
+				clock_gettime(CLOCK_REALTIME, &timeout);
+				timeout.tv_sec += timeout_ms / 1000;
+				timeout.tv_nsec += (timeout_ms % 1000) * 1000000;
+				timeout.tv_sec += timeout.tv_nsec / 1000000000;
+				timeout.tv_nsec = timeout.tv_nsec % 1000000000;
+				if (ETIMEDOUT == pthread_cond_timedwait(&queue->full, &queue->mutex, &timeout))
+				{
+					error = 1;
+				}
+			}
+		}
+		if (!error)
+		{
+			int idx = queue->tail % queue->max_items;
+			memcpy((char *)queue->data + (idx * queue->item_size), item, queue->item_size);
+			queue->tail++;
+			ret_code = 0;
+		}
+		pthread_cond_signal(&queue->empty);
+		pthread_mutex_unlock(&queue->mutex);
+	}
+	return ret_code;
+}
+
+int pal_queue_dequeue(pal_queue_t *queue, void *const item, size_t timeout_ms)
+{
+	int ret_code = -1;
+	int error	 = 0;
+	if (NULL != queue && NULL != item)
+	{
+		pthread_mutex_lock(&queue->mutex);
+		size_t used_slots = queue->tail - queue->head;
+		if (0 == used_slots)
+		{
+			if (PAL_OS_NO_TIMEOUT == timeout_ms)
+			{
+				error = 1;
+			}
+			else if (PAL_OS_INFINITE_TIMEOUT == timeout_ms)
+			{
+				pthread_cond_wait(&queue->empty, &queue->mutex);
+			}
+			else
+			{
+				struct timespec timeout = {0};
+				clock_gettime(CLOCK_REALTIME, &timeout);
+				timeout.tv_sec += timeout_ms / 1000;
+				timeout.tv_nsec += (timeout_ms % 1000) * 1000000;
+				timeout.tv_sec += timeout.tv_nsec / 1000000000;
+				timeout.tv_nsec = timeout.tv_nsec % 1000000000;
+				if (ETIMEDOUT == pthread_cond_timedwait(&queue->empty, &queue->mutex, &timeout))
+				{
+					error = 1;
+				}
+			}
+		}
+		if (!error)
+		{
+			int idx = queue->head % queue->max_items;
+			memcpy(item, (char *)queue->data + (idx * queue->item_size), queue->item_size);
+			queue->head++;
+			ret_code = 0;
+		}
+		pthread_cond_signal(&queue->full);
+		pthread_mutex_unlock(&queue->mutex);
+	}
+	return ret_code;
+}
+
+int pal_queue_dequeue_from_isr(pal_queue_t *queue, void *const item, size_t timeout_ms)
+{
+	int ret_code = -1;
+	int error	 = 0;
 	if (NULL != queue && NULL != item)
 	{
 		pthread_mutex_lock(&queue->mutex);
@@ -177,10 +265,21 @@ size_t pal_queue_get_free_slots(pal_queue_t *queue)
 	return free_slots;
 }
 
-size_t pal_queue_get_items(pal_queue_t *queue, int from_isr)
+size_t pal_queue_get_items(pal_queue_t *queue)
 {
 	size_t items = 0;
-	(void)from_isr;
+	if (NULL != queue)
+	{
+		pthread_mutex_lock(&queue->mutex);
+		items = queue->tail - queue->head;
+		pthread_mutex_unlock(&queue->mutex);
+	}
+	return items;
+}
+
+size_t pal_queue_get_items_from_isr(pal_queue_t *queue)
+{
+	size_t items = 0;
 	if (NULL != queue)
 	{
 		pthread_mutex_lock(&queue->mutex);

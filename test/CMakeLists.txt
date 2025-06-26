@@ -24,7 +24,7 @@ add_executable(${PROJECT_NAME} ${${PROJECT_NAME}_SRC})
 
 # Collega Google Test al tuo test
 target_link_libraries(${PROJECT_NAME} gtest gtest_main pal_os)
-target_include_directories(${PROJECT_NAME} PRIVATE ${CMAKE_SOURCE_DIR}/src/${TARGET_PLATFORM})
+target_include_directories(${PROJECT_NAME} PRIVATE ../src/${TARGET_PLATFORM})
 
 include(GoogleTest)
 gtest_discover_tests(${PROJECT_NAME})

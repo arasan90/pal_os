@@ -75,29 +75,32 @@ pal_signal_ret_code_t pal_signal_wait(pal_signal_t *signal, size_t mask, size_t 
 	return ret_code;
 }
 
-int pal_signal_set(pal_signal_t *signal, size_t mask, int from_isr)
+int pal_signal_set(pal_signal_t *signal, size_t mask)
 {
 	int ret_code = -1;
 	if (signal)
 	{
-		if (from_isr)
+		if (pdPASS == xEventGroupSetBits((EventGroupHandle_t)*signal, mask))
 		{
-			BaseType_t xHigherPriorityTaskWoken = pdFALSE;
-			if (pdPASS == xEventGroupSetBitsFromISR((EventGroupHandle_t)*signal, mask, &xHigherPriorityTaskWoken))
-			{
-				if (xHigherPriorityTaskWoken)
-				{
-					portYIELD_FROM_ISR();
-				}
-				ret_code = 0;
-			}
+			ret_code = 0;
 		}
-		else
+	}
+	return ret_code;
+}
+
+int pal_signal_set_from_isr(pal_signal_t *signal, size_t mask)
+{
+	int ret_code = -1;
+	if (signal)
+	{
+		BaseType_t xHigherPriorityTaskWoken = pdFALSE;
+		if (pdPASS == xEventGroupSetBitsFromISR((EventGroupHandle_t)*signal, mask, &xHigherPriorityTaskWoken))
 		{
-			if (pdPASS == xEventGroupSetBits((EventGroupHandle_t)*signal, mask))
+			if (xHigherPriorityTaskWoken)
 			{
-				ret_code = 0;
+				portYIELD_FROM_ISR();
 			}
+			ret_code = 0;
 		}
 	}
 	return ret_code;
@@ -113,7 +116,7 @@ int pal_signal_clear(pal_signal_t *signal, size_t mask)
 	return ret_code;
 }
 
-int pal_signal_destroy(pal_signal_t **signal)
+int pal_signal_destroy(pal_signal_t *signal)
 {
 	int ret_code = -1;
 	if (signal)

@@ -82,8 +82,7 @@ int pal_thread_create(pal_thread_t *thread, pal_thread_priority_t priority, size
 			thread->func				  = func;
 			thread->arg					  = arg;
 			thread->state				  = PAL_THREAD_STATE_STOPPED;
-			if (pdPASS ==
-				xTaskCreate(pal_thread_generic_func, name, stack_size / sizeof(StackType_t), arg, freertos_priority, (TaskHandle_t *)thread->thread_handle))
+			if (pdPASS == xTaskCreate(pal_thread_generic_func, name, stack_size / sizeof(StackType_t), thread, freertos_priority, &thread->thread_handle))
 			{
 				ret_code = 0;
 			}
@@ -132,7 +131,7 @@ void pal_thread_free(pal_thread_t *thread)
 {
 	if (thread && PAL_THREAD_STATE_TERMINATED == thread->state)
 	{
-		vEventGroupDelete((*thread)->event_group_handle);
+		vEventGroupDelete(thread->event_group_handle);
 		thread->event_group_handle = NULL;
 	}
 }

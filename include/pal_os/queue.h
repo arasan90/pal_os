@@ -9,7 +9,7 @@ extern "C"
 // Includes
 // ============================
 #include <stddef.h>
-#if PAL_OS_LINUX
+#ifdef PAL_OS_LINUX
 #include <pthread.h>
 #include <semaphore.h>
 #endif
@@ -21,7 +21,7 @@ extern "C"
 // ============================
 // Type Definitions
 // ============================
-#if PAL_OS_LINUX
+#ifdef PAL_OS_LINUX
 struct pal_queue_s
 {
 	size_t			item_size;	//!< Size of each item in the queue
@@ -60,10 +60,19 @@ int pal_queue_create(pal_queue_t *queue, size_t item_size, size_t max_items);
  * @param[in] queue Pointer to the queue handle.
  * @param[in] item Pointer to the item to be enqueued.
  * @param[in] timeout_ms Timeout in milliseconds to wait if the queue is full.
- * @param[in] from_isr Flag indicating if the function is called from an ISR context.
  * @return 0 on success, or -1 on failure.
  */
-int pal_queue_enqueue(pal_queue_t *queue, void *const item, size_t timeout_ms, int from_isr);
+int pal_queue_enqueue(pal_queue_t *queue, void *const item, size_t timeout_ms);
+
+/**
+ * @brief Enqueue an item into the queue from ISR.
+ *
+ * @param[in] queue Pointer to the queue handle.
+ * @param[in] item Pointer to the item to be enqueued.
+ * @param[in] timeout_ms Timeout in milliseconds to wait if the queue is full.
+ * @return 0 on success, or -1 on failure.
+ */
+int pal_queue_enqueue_from_isr(pal_queue_t *queue, void *const item, size_t timeout_ms);
 
 /**
  * @brief Dequeue an item from the queue.
@@ -71,10 +80,19 @@ int pal_queue_enqueue(pal_queue_t *queue, void *const item, size_t timeout_ms, i
  * @param[in] queue Pointer to the queue handle.
  * @param[out] item Pointer to the memory where the dequeued item will be stored.
  * @param[in] timeout_ms Timeout in milliseconds to wait if the queue is empty.
- * @param[in] from_isr Flag indicating if the function is called from an ISR context.
  * @return 0 on success, or -1 on failure.
  */
-int pal_queue_dequeue(pal_queue_t *queue, void *const item, size_t timeout_ms, int from_isr);
+int pal_queue_dequeue(pal_queue_t *queue, void *const item, size_t timeout_ms);
+
+/**
+ * @brief Dequeue an item from the queue from ISR.
+ *
+ * @param[in] queue Pointer to the queue handle.
+ * @param[out] item Pointer to the memory where the dequeued item will be stored.
+ * @param[in] timeout_ms Timeout in milliseconds to wait if the queue is empty.
+ * @return 0 on success, or -1 on failure.
+ */
+int pal_queue_dequeue_from_isr(pal_queue_t *queue, void *const item, size_t timeout_ms);
 
 /**
  * @brief Reset the queue.
@@ -96,11 +114,19 @@ size_t pal_queue_get_free_slots(pal_queue_t *queue);
  * @brief Get the number of items currently in the queue.
  *
  * @param[in] queue Pointer to the queue handle.
- * @param[in] from_isr Flag indicating if the function is called from an ISR context.
  * @return Number of items in the queue.
  * @note Will return 0 if the queue is NULL.
  */
-size_t pal_queue_get_items(pal_queue_t *queue, int from_isr);
+size_t pal_queue_get_items(pal_queue_t *queue);
+
+/**
+ * @brief Get the number of items currently in the queue from ISR.
+ *
+ * @param[in] queue Pointer to the queue handle.
+ * @return Number of items in the queue.
+ * @note Will return 0 if the queue is NULL.
+ */
+size_t pal_queue_get_items_from_isr(pal_queue_t *queue);
 
 /**
  * @brief Destroy the queue and releases associated resources.
