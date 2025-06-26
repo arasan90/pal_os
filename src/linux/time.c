@@ -60,6 +60,17 @@ size_t pal_get_system_time(void)
 	return system_time;
 }
 
+size_t pal_get_system_time_from_isr(void)
+{
+	size_t			system_time = -1;
+	struct timespec ts;
+	if (0 == clock_gettime(CLOCK_MONOTONIC, &ts))
+	{
+		system_time = (size_t)(ts.tv_sec * 1000 + ts.tv_nsec / 1000000);
+	}
+	return system_time;
+}
+
 void pal_set_unix_time(size_t unix_time)
 {
 	// This function is not implemented for Linux.

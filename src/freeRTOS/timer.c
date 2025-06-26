@@ -44,7 +44,7 @@
  * ---------------------------------------------------------------------------
  */
 
-int pal_timer_create(pal_timer_t **timer, const char *name, pal_timer_type_t type, size_t period, pal_timer_callback_t callback, int auto_start, void *arg)
+int pal_timer_create(pal_timer_t *timer, const char *name, pal_timer_type_t type, size_t period, pal_timer_callback_t callback, int auto_start, void *arg)
 {
 	int ret_code = -1;
 	if (timer && callback && period)
@@ -63,104 +63,116 @@ int pal_timer_create(pal_timer_t **timer, const char *name, pal_timer_type_t typ
 	return ret_code;
 }
 
-int pal_timer_start(pal_timer_t *timer, int from_isr)
+int pal_timer_start(pal_timer_t *timer)
 {
 	int ret_code = -1;
 	if (timer)
 	{
-		if (from_isr)
+		xTimerStart((TimerHandle_t)timer, portMAX_DELAY);
+		ret_code = 0;
+	}
+	return ret_code;
+}
+
+PAL_OS_RAM_ATTR int pal_timer_start_from_isr(pal_timer_t *timer)
+{
+	int ret_code = -1;
+	if (timer)
+	{
+		BaseType_t xHigherPriorityTaskWoken = pdFALSE;
+		if (pdPASS == xTimerStartFromISR((TimerHandle_t)timer, &xHigherPriorityTaskWoken))
 		{
-			BaseType_t xHigherPriorityTaskWoken = pdFALSE;
-			if (pdPASS == xTimerStartFromISR((TimerHandle_t)timer, &xHigherPriorityTaskWoken))
+			if (xHigherPriorityTaskWoken)
 			{
-				if (xHigherPriorityTaskWoken)
-				{
-					portYIELD_FROM_ISR();
-				}
-				ret_code = 0;
+				portYIELD_FROM_ISR();
 			}
-		}
-		else
-		{
-			xTimerStart((TimerHandle_t)timer, portMAX_DELAY);
 			ret_code = 0;
 		}
 	}
 	return ret_code;
 }
 
-int pal_timer_stop(pal_timer_t *timer, int from_isr)
+int pal_timer_stop(pal_timer_t *timer)
 {
 	int ret_code = -1;
 	if (timer)
 	{
-		if (from_isr)
+		xTimerStop((TimerHandle_t)timer, portMAX_DELAY);
+		ret_code = 0;
+	}
+	return ret_code;
+}
+
+PAL_OS_RAM_ATTR int pal_timer_stop_from_isr(pal_timer_t *timer)
+{
+	int ret_code = -1;
+	if (timer)
+	{
+		BaseType_t xHigherPriorityTaskWoken = pdFALSE;
+		if (pdPASS == xTimerStopFromISR((TimerHandle_t)timer, &xHigherPriorityTaskWoken))
 		{
-			BaseType_t xHigherPriorityTaskWoken = pdFALSE;
-			if (pdPASS == xTimerStopFromISR((TimerHandle_t)timer, &xHigherPriorityTaskWoken))
+			if (xHigherPriorityTaskWoken)
 			{
-				if (xHigherPriorityTaskWoken)
-				{
-					portYIELD_FROM_ISR();
-				}
-				ret_code = 0;
+				portYIELD_FROM_ISR();
 			}
-		}
-		else
-		{
-			xTimerStop((TimerHandle_t)timer, portMAX_DELAY);
 			ret_code = 0;
 		}
 	}
 	return ret_code;
 }
 
-int pal_timer_restart(pal_timer_t *timer, int from_isr)
+int pal_timer_restart(pal_timer_t *timer)
 {
 	int ret_code = -1;
 	if (timer)
 	{
-		if (from_isr)
+		xTimerReset((TimerHandle_t)timer, portMAX_DELAY);
+		ret_code = 0;
+	}
+	return ret_code;
+}
+
+PAL_OS_RAM_ATTR int pal_timer_restart_from_isr(pal_timer_t *timer)
+{
+	int ret_code = -1;
+	if (timer)
+	{
+		BaseType_t xHigherPriorityTaskWoken = pdFALSE;
+		if (pdPASS == xTimerResetFromISR((TimerHandle_t)timer, &xHigherPriorityTaskWoken))
 		{
-			BaseType_t xHigherPriorityTaskWoken = pdFALSE;
-			if (pdPASS == xTimerResetFromISR((TimerHandle_t)timer, &xHigherPriorityTaskWoken))
+			if (xHigherPriorityTaskWoken)
 			{
-				if (xHigherPriorityTaskWoken)
-				{
-					portYIELD_FROM_ISR();
-				}
-				ret_code = 0;
+				portYIELD_FROM_ISR();
 			}
-		}
-		else
-		{
-			xTimerReset((TimerHandle_t)timer, portMAX_DELAY);
 			ret_code = 0;
 		}
 	}
 	return ret_code;
 }
 
-int pal_timer_change_period(pal_timer_t *timer, size_t new_period, int from_isr)
+int pal_timer_change_period(pal_timer_t *timer, size_t new_period)
 {
 	int ret_code = -1;
 	if (timer && new_period)
 	{
-		if (from_isr)
+		xTimerChangePeriod((TimerHandle_t)timer, new_period, portMAX_DELAY);
+		ret_code = 0;
+	}
+	return ret_code;
+}
+
+PAL_OS_RAM_ATTR int pal_timer_change_period_from_isr(pal_timer_t *timer, size_t new_period)
+{
+	int ret_code = -1;
+	if (timer && new_period)
+	{
+		BaseType_t xHigherPriorityTaskWoken = pdFALSE;
+		if (pdPASS == xTimerChangePeriodFromISR((TimerHandle_t)timer, new_period, &xHigherPriorityTaskWoken))
 		{
-			BaseType_t xHigherPriorityTaskWoken = pdFALSE;
-			if (pdPASS == xTimerChangePeriodFromISR((TimerHandle_t)timer, new_period, &xHigherPriorityTaskWoken))
+			if (xHigherPriorityTaskWoken)
 			{
-				if (xHigherPriorityTaskWoken)
-				{
-					portYIELD_FROM_ISR();
-				}
-				ret_code = 0;
+				portYIELD_FROM_ISR();
 			}
-		}
-		else
-		{
-			xTimerChangePeriod((TimerHandle_t)timer, new_period, portMAX_DELAY);
 			ret_code = 0;
 		}
 	}
@@ -177,13 +189,12 @@ int pal_is_timer_active(pal_timer_t *timer)
 	return ret_code;
 }
 
-int pal_timer_delete(pal_timer_t **timer)
+int pal_timer_delete(pal_timer_t *timer)
 {
 	int ret_code = -1;
-	if (timer && *timer)
+	if (timer)
 	{
 		xTimerDelete((TimerHandle_t)*timer, portMAX_DELAY);
-		*timer	 = NULL;
 		ret_code = 0;
 	}
 	return ret_code;

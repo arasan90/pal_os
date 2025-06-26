@@ -187,7 +187,7 @@ void *pal_timer_thread_fn(void *arg)
 				if (timer->is_periodic)
 				{
 					// Add the period to the expiry time
-					pal_timer_restart(timer, 0);
+					pal_timer_restart(timer);
 				}
 				else
 				{
@@ -223,7 +223,7 @@ int pal_timer_create(pal_timer_t *timer, const char *name, pal_timer_type_t type
 		timer->period_ms   = period;
 		if (auto_start)
 		{
-			pal_timer_start(timer, 0);
+			pal_timer_start(timer);
 		}
 		pthread_cond_signal(&pal_timer_environment.cond);
 		ret_code = 0;
@@ -231,10 +231,9 @@ int pal_timer_create(pal_timer_t *timer, const char *name, pal_timer_type_t type
 	return ret_code;
 }
 
-int pal_timer_start(pal_timer_t *timer, int from_isr)
+int pal_timer_start(pal_timer_t *timer)
 {
 	int ret_code = -1;
-	(void)from_isr;
 	if (timer && !timer->is_started)
 	{
 		struct timespec current_time;
@@ -254,10 +253,31 @@ int pal_timer_start(pal_timer_t *timer, int from_isr)
 	return ret_code;
 }
 
-int pal_timer_stop(pal_timer_t *timer, int from_isr)
+int pal_timer_start_from_isr(pal_timer_t *timer)
 {
 	int ret_code = -1;
-	(void)from_isr;
+	if (timer && !timer->is_started)
+	{
+		struct timespec current_time;
+		clock_gettime(CLOCK_MONOTONIC, &current_time);
+		timer->expiry_time.tv_sec  = current_time.tv_sec + timer->period_ms / 1000;
+		timer->expiry_time.tv_nsec = current_time.tv_nsec + (timer->period_ms % 1000) * 1000000;
+		if (timer->expiry_time.tv_nsec >= 1000000000)
+		{
+			timer->expiry_time.tv_sec++;
+			timer->expiry_time.tv_nsec -= 1000000000;
+		}
+		pal_os_timer_insert_sorted(timer);
+		timer->is_started = 1;
+		pthread_cond_signal(&pal_timer_environment.cond);
+		ret_code = 0;
+	}
+	return ret_code;
+}
+
+int pal_timer_stop(pal_timer_t *timer)
+{
+	int ret_code = -1;
 	if (timer)
 	{
 		pal_os_timer_remove(timer);
@@ -268,27 +288,62 @@ int pal_timer_stop(pal_timer_t *timer, int from_isr)
 	return ret_code;
 }
 
-int pal_timer_restart(pal_timer_t *timer, int from_isr)
+int pal_timer_stop_from_isr(pal_timer_t *timer)
 {
 	int ret_code = -1;
-	(void)from_isr;
 	if (timer)
 	{
-		pal_timer_stop(timer, 0);
-		pal_timer_start(timer, 0);
+		pal_os_timer_remove(timer);
+		timer->is_started = 0;
+		pthread_cond_signal(&pal_timer_environment.cond);
 		ret_code = 0;
 	}
 	return ret_code;
 }
 
-int pal_timer_change_period(pal_timer_t *timer, size_t new_period, int from_isr)
+int pal_timer_restart(pal_timer_t *timer)
 {
 	int ret_code = -1;
-	(void)from_isr;
+	if (timer)
+	{
+		pal_timer_stop(timer);
+		pal_timer_start(timer);
+		ret_code = 0;
+	}
+	return ret_code;
+}
+
+int pal_timer_restart_from_isr(pal_timer_t *timer)
+{
+	int ret_code = -1;
+	if (timer)
+	{
+		pal_timer_stop(timer);
+		pal_timer_start(timer);
+		ret_code = 0;
+	}
+	return ret_code;
+}
+
+int pal_timer_change_period(pal_timer_t *timer, size_t new_period)
+{
+	int ret_code = -1;
 	if (timer && new_period)
 	{
 		timer->period_ms = new_period;
-		pal_timer_restart(timer, 0);
+		pal_timer_restart(timer);
+		ret_code = 0;
+	}
+	return ret_code;
+}
+
+int pal_timer_change_period_from_isr(pal_timer_t *timer, size_t new_period)
+{
+	int ret_code = -1;
+	if (timer && new_period)
+	{
+		timer->period_ms = new_period;
+		pal_timer_restart(timer);
 		ret_code = 0;
 	}
 	return ret_code;
@@ -309,7 +364,7 @@ int pal_timer_delete(pal_timer_t *timer)
 	int ret_code = -1;
 	if (timer)
 	{
-		pal_timer_stop(timer, 0);
+		pal_timer_stop(timer);
 		return 0;
 	}
 	return ret_code;

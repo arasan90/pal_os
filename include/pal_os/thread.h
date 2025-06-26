@@ -9,7 +9,7 @@ extern "C"
 // Includes
 // ============================
 #include <stddef.h>
-#if PAL_OS_LINUX
+#ifdef PAL_OS_LINUX
 #include <pthread.h>
 #elif PAL_OS_FREERTOS
 #include "freertos/FreeRTOS.h"

@@ -39,6 +39,12 @@ void pal_set_unix_time(size_t unix_time);
  */
 size_t pal_get_system_time(void);
 
+/**
+ * @brief Get the current time in milliseconds since the system started from ISR.
+ * @return The current time in milliseconds since the system started.
+ */
+size_t pal_get_system_time_from_isr(void);
+
 #ifdef __cplusplus
 }
 #endif
