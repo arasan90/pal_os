@@ -62,7 +62,7 @@ pal_signal_ret_code_t pal_signal_wait(pal_signal_t *signal, size_t mask, size_t 
 			timeout_ticks = pdMS_TO_TICKS(timeout_ms);
 		}
 		bits = xEventGroupWaitBits((EventGroupHandle_t)*signal, mask, clear_mask, wait_all, timeout_ticks);
-		if ((wait_all && (bits == mask)) || !wait_all && (bits & mask))
+		if ((wait_all && (bits == mask)) || (!wait_all && (bits & mask)))
 		{
 			ret_code = PAL_SIGNAL_SUCCESS;
 		}

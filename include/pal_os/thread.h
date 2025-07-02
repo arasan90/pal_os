@@ -11,7 +11,7 @@ extern "C"
 #include <stddef.h>
 #ifdef PAL_OS_LINUX
 #include <pthread.h>
-#elif PAL_OS_FREERTOS
+#elif defined PAL_OS_FREERTOS
 #include "freertos/FreeRTOS.h"
 #include "freertos/event_groups.h"
 #include "freertos/task.h"
@@ -48,7 +48,7 @@ typedef enum pal_thread_state_e
 	PAL_THREAD_STATE_TERMINATED,  //!< Thread is terminated
 } pal_thread_state_t;
 
-#if PAL_OS_LINUX
+#ifdef PAL_OS_LINUX
 struct pal_thread_s
 {
 	pthread_t			  thread;	   // POSIX thread identifier
@@ -59,7 +59,7 @@ struct pal_thread_s
 	pal_thread_priority_t priority;	   // Thread priority
 	const char			 *name;		   // Thread name
 };
-#elif PAL_OS_FREERTOS
+#elif defined PAL_OS_FREERTOS
 struct pal_thread_s
 {
 	TaskHandle_t	   thread_handle;		//!< POSIX thread identifier

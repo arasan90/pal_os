@@ -32,7 +32,7 @@ struct pal_signal_s
 };
 typedef struct pal_signal_s pal_signal_t;
 
-#elif PAL_OS_FREERTOS
+#elif defined PAL_OS_FREERTOS
 typedef void *pal_signal_t;
 
 #endif

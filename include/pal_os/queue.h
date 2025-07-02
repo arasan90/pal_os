@@ -35,7 +35,7 @@ struct pal_queue_s
 };
 typedef struct pal_queue_s pal_queue_t;
 
-#elif PAL_OS_FREERTOS
+#elif defined PAL_OS_FREERTOS
 typedef void *pal_queue_t;
 
 #endif

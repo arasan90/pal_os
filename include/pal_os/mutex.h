@@ -11,7 +11,7 @@ extern "C"
 #include <stddef.h>
 #ifdef PAL_OS_LINUX
 #include <pthread.h>
-#elif PAL_OS_FREERTOS
+#elif defined PAL_OS_FREERTOS
 #include "freertos/FreeRTOS.h"
 #include "freertos/semphr.h"
 #endif
@@ -23,12 +23,12 @@ extern "C"
 // ============================
 // Type Definitions
 // ============================
-#if PAL_OS_LINUX
+#ifdef PAL_OS_LINUX
 struct pal_mutex_s
 {
 	pthread_mutex_t mutex;	//!< Mutex for thread safety
 };
-#elif PAL_OS_FREERTOS
+#elif defined PAL_OS_FREERTOS
 struct pal_mutex_s
 {
 	SemaphoreHandle_t mutex_handle;	 //!< Mutex handle

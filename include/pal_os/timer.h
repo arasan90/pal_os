@@ -35,7 +35,7 @@ struct pal_timer_s
 };
 typedef struct pal_timer_s pal_timer_t;
 
-#elif PAL_OS_FREERTOS
+#elif defined PAL_OS_FREERTOS
 typedef void *pal_timer_t;
 
 #endif
