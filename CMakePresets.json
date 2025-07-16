@@ -2,17 +2,6 @@
     "version": 4,
     "configurePresets": [
         {
-            "name": "esp32",
-            "displayName": "ESP32",
-            "description": "esp32 compilation",
-            "generator": "Ninja",
-            "binaryDir": "${sourceDir}/buildFreeRTOS/",
-            "cacheVariables": {
-                "CMAKE_BUILD_TYPE": "Debug",
-                "TARGET_PLATFORM": "freeRTOS"
-            }
-        },
-        {
             "name": "linux",
             "displayName": "LINUX",
             "description": "linux compilation",
@@ -21,16 +10,12 @@
             "cacheVariables": {
                 "CMAKE_BUILD_TYPE": "Debug",
                 "TARGET_PLATFORM": "linux",
-                "PERFORM_UNIT_TESTS": true
+                "PERFORM_UNIT_TESTS": true,
+                "PAL_OS_DEV": true
             }
         }
     ],
     "buildPresets": [
-        {
-            "name": "esp32",
-            "configurePreset": "esp32",
-            "jobs": 4
-        },
         {
             "name": "linux",
             "configurePreset": "linux",

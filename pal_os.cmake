@@ -39,8 +39,20 @@ function(pal_os_get_private_headers OUT_VAR)
         PARENT_SCOPE)
 endfunction()
 
-function(pal_os_get_linked_libs OUT_VAR)
+function(pal_os_get_private_linked_libs OUT_VAR)
+    set(${OUT_VAR}
+        ${private_linked_libs}
+        PARENT_SCOPE)
+endfunction()
+
+function(pal_os_get_public_linked_libs OUT_VAR)
     set(${OUT_VAR}
         ${linked_libs}
         PARENT_SCOPE)
+endfunction()
+
+function (pal_os_create_mock_library)
+    add_library(pal_os_mock ${CMAKE_CURRENT_LIST_DIR}/mock/pal_os_mock.c)
+    target_include_directories(pal_os_mock PUBLIC ${CMAKE_CURRENT_LIST_DIR}/include)
+    target_include_directories(pal_os_mock PRIVATE ${CMAKE_CURRENT_LIST_DIR}/mock ${CMAKE_CURRENT_LIST_DIR}/src/${TARGET_PLATFORM})
 endfunction()
