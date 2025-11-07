@@ -11,6 +11,8 @@ extern "C"
 #include <stddef.h>
 #ifdef PAL_OS_LINUX
 #include <pthread.h>
+
+#include "stdbool.h"
 #elif defined PAL_OS_FREERTOS
 #include "freertos/FreeRTOS.h"
 #include "freertos/semphr.h"
@@ -26,7 +28,8 @@ extern "C"
 #ifdef PAL_OS_LINUX
 struct pal_mutex_s
 {
-	pthread_mutex_t mutex;	//!< Mutex for thread safety
+	pthread_mutex_t mutex;	  //!< Mutex for thread safety
+	bool			created;  //!< Flag indicating if the mutex has been created
 };
 #elif defined PAL_OS_FREERTOS
 struct pal_mutex_s

@@ -54,7 +54,8 @@ int pal_mutex_create(pal_mutex_t *mutex, int recursive)
 		}
 		pthread_mutex_init(&mutex->mutex, &attr);
 		pthread_mutexattr_destroy(&attr);
-		ret_code = 0;
+		mutex->created = true;
+		ret_code	   = 0;
 	}
 	return ret_code;
 }
@@ -101,10 +102,11 @@ int pal_mutex_unlock(pal_mutex_t *mutex)
 int pal_mutex_destroy(pal_mutex_t *mutex)
 {
 	int ret_code = -1;
-	if (mutex)
+	if (mutex && mutex->created)
 	{
 		pthread_mutex_destroy(&mutex->mutex);
-		ret_code = 0;
+		mutex->created = 0;
+		ret_code	   = 0;
 	}
 	return ret_code;
 }
